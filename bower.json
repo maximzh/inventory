@@ -1,0 +1,21 @@
+{
+  "name": "inventory",
+  "description": "inventory =========",
+  "main": "index.js",
+  "authors": [
+    "Maxim Zhurilo"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/maximzh/inventory",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
