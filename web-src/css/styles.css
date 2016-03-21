@@ -1,3 +1,17 @@
+body {
+    padding-top: 70px;
+}
+
 #google-login {
     margin-top: 30%;
+}
+
+.new-employee-container {
+    margin-top: 5%;
+}
+
+.logout-btn {
+    position: fixed;
+    right: 50px;
+    top: 10px;
 }

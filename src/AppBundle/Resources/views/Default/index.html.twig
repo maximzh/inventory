@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr class="bg-info">
+                        <th class="text-primary">
+                            ФИО сотрудника
+                        </th>
+                        <th class="text-primary">
+                            Дата приема на работу
+                        </th>
+                        <th class="text-primary">
+                            Позиция
+                        </th>
+                    </tr>
+                    </thead>
+                    {% for employee in employees %}
+                        <tr>
+                            <td>
+                                {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
+                            </td>
+                            <td>
+                                {{ employee.employeeSince|date }}
+                            </td>
+                            <td>
+                                {{ employee.position }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
