@@ -1,0 +1,18 @@
+{#
+{% extends "FOSUserBundle::layout.html.twig" %}
+#}
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-4" id="google-login">
+                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google' }) }}">
+                    <img src="{{ asset('images/login-google.png') }}">
+                </a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
