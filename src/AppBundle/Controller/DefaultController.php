@@ -20,14 +20,8 @@ class DefaultController extends Controller
         //return $this->render('default/index.html.twig', array(
         //    'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         //));
-        $allUsers = $this->getDoctrine()
-            ->getRepository('AppBundle:User')
-            ->findAll();
-
-        $str = '';
-        foreach ($allUsers as $user) {
-            $str.= ' '.$user->getEmail();
-        }
-        return new Response($str);
+        $user = $this->getUser();
+        $userRealName = $user->getRealName();
+        return new Response('Hello '.$userRealName);
     }
 }

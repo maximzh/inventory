@@ -10,6 +10,7 @@ namespace AppBundle\Entity;
 
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -25,6 +26,11 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=false)
+     */
+    protected $realName;
 
     /**
      * @ORM\Column(name="google_id", type="string", length=255, nullable=true)
@@ -88,5 +94,29 @@ class User extends BaseUser
     public function getGoogleAccessToken()
     {
         return $this->googleAccessToken;
+    }
+
+    /**
+     * Set realName
+     *
+     * @param string $realName
+     *
+     * @return User
+     */
+    public function setRealName($realName)
+    {
+        $this->realName = $realName;
+
+        return $this;
+    }
+
+    /**
+     * Get realName
+     *
+     * @return string
+     */
+    public function getRealName()
+    {
+        return $this->realName;
     }
 }
