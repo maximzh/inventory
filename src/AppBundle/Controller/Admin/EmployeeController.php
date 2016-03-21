@@ -10,8 +10,8 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Employee;
 use AppBundle\Form\EmployeeType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,6 +59,37 @@ class EmployeeController extends Controller
         return [
             'employee' => $employee,
             'form' => $form->createView(),
+        ];
+
+    }
+
+    /**
+     * @param Request $request
+     * @param Employee $employee
+     *
+     * @Route("/edit/{id}", name="edit_employee")
+     *
+     * @Method({"GET", "POST"})
+     *
+     * @Template()
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function editAction(Request $request, Employee $employee)
+    {
+        $editForm = $this->createForm(EmployeeType::class, $employee);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        return [
+            'employee' => $employee,
+            'edit_form' => $editForm->createView(),
         ];
 
     }

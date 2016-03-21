@@ -16,6 +16,7 @@ class EmployeeRepository extends EntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e')
+            ->orderBy('e.lastName', 'ASC')
             ->getQuery()
             ->getResult();
     }

@@ -16,6 +16,9 @@
                         <th class="text-primary">
                             Позиция
                         </th>
+                        <th>
+                            Редактировать
+                        </th>
                     </tr>
                     </thead>
                     {% for employee in employees %}
@@ -24,10 +27,15 @@
                                 {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
                             </td>
                             <td>
-                                {{ employee.employeeSince|date }}
+                                {{ employee.employeeSince|date('d.m.Y') }}
                             </td>
                             <td>
                                 {{ employee.position }}
+                            </td>
+                            <td>
+                                <a href="{{ path('edit_employee', {'id': employee.id}) }}">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                </a>
                             </td>
                         </tr>
                     {% endfor %}
