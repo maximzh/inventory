@@ -16,7 +16,7 @@
             <div class="container">
                 <div class="row">
 
-                    <div class="col-md-9 com-md-offset-3">
+                    <div class="col-md-8 com-md-offset-2">
                         <div class="navbar-text">
                             {{ 'Добро пожаловать' }}, <span class="text-primary">{{ app.user.realName }}
                                 ({{ app.user.email }})  </span>
@@ -40,8 +40,29 @@
                     </div>
 
                 </div>
-
             </div>
+            <div class="container">
+                <div class="row">
+                    <ul class="nav nav-tabs">
+                        <li class="dropdown">
+                            <a href="{{ path('homepage') }}" data-toggle="dropdown" class="dropdown-toggle">
+                                <span class="glyphicon glyphicon-user"></span>  Сотрудники <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ path('homepage') }}">Все сотрудники</a>
+                                </li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('new_employee') }}">Добавить сотрудника</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
         </nav>
     {% endblock header %}
 {% endif %}
