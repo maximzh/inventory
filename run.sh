@@ -56,6 +56,8 @@ app/console doctrine:schema:update --force
 npm run gulp
 npm run gulp less
 npm run gulp lib-js
+npm-run gulp fonts
+npm-run-gulp images
 ;;
 
 0)
