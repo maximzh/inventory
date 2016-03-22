@@ -10,11 +10,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class DefaultController
+ * @Security("has_role('ROLE_USER')")
+ */
 class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
-     * @Security("has_role('ROLE_USER')")
+     *
+     * @Method("GET")
      *
      * @Template()
      */
@@ -28,8 +33,17 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Сотрудники не найдены');
         }
 
+        $deleteForms = array();
+        $formGenerator = $this->get('app.form_generator');
+        foreach ($employees as $employee) {
+            $deleteForms[$employee->getId()] = $formGenerator
+                ->createEmployeeDeleteForm($employee)
+                ->createView();
+        }
+
         return [
             'employees' => $employees,
+            'deleteForms' => $deleteForms,
         ];
     }
 

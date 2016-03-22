@@ -20,6 +20,9 @@
                             <th>
                                 Редактировать
                             </th>
+                            <th>
+                                Удалить
+                            </th>
                         {% endif %}
 
                     </tr>
@@ -44,6 +47,11 @@
                             <a href="{{ path('edit_employee', {'id': employee.id}) }}">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </a>
+                            </td>
+                            <td>
+                                {{ form_start(deleteForms[employee.id], {attr : {onsubmit: 'return confirm("Удалить сотрудника?");' }}) }}
+                                {{ form_widget(deleteForms[employee.id].submit) }}
+                                {{ form_end(deleteForms[employee.id]) }}
                             </td>
                         {% endif %}
 
