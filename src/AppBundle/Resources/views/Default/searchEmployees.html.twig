@@ -22,27 +22,32 @@
                             <th class="text-primary">
                                 Позиция
                             </th>
-                            <th>
-                                Редактировать
-                            </th>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <th>
+                                    Редактировать
+                                </th>
+                            {% endif %}
                         </tr>
                         </thead>
                         {% for employee in employees %}
                             <tr>
                                 <td>
-                                    {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
-                                </td>
+                                    <a href="{{ path('show_employee', {'id': employee.id}) }}">
+                                        {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
+                                    </a>                                </td>
                                 <td>
                                     {{ employee.employeeSince|date('d.m.Y') }}
                                 </td>
                                 <td>
                                     {{ employee.position }}
                                 </td>
-                                <td>
-                                    <a href="{{ path('edit_employee', {'id': employee.id}) }}">
-                                        <i class="glyphicon glyphicon-pencil"></i>
-                                    </a>
-                                </td>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <td>
+                                        <a href="{{ path('edit_employee', {'id': employee.id}) }}">
+                                            <i class="glyphicon glyphicon-pencil"></i>
+                                        </a>
+                                    </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </table>
@@ -50,5 +55,9 @@
             </div>
         </div>
     </div>
+    <p class="hidden" id="query">{{ search_text }}</p>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
 {% endblock %}
 

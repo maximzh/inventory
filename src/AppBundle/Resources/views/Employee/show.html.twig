@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4 class="text-primary">ФИО: </h4>
+                    {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
+                    <h4 class="text-primary">Дата приема на работу: </h4>
+                    {{ employee.employeeSince|date('d.m.Y') }}
+                    <h4 class="text-primary">Должность: </h4>
+                    {{ employee.position }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock body %}
