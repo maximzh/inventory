@@ -1,0 +1,54 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% if employees is empty %}
+                    <div class="alert alert-warning">
+                        <strong class="text-center">По вашему запросу ничего не найдено</strong>
+                        <a href="{{ path('homepage') }}">Вернуться на главную</a>
+                    </div>
+                {% else %}
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr class="bg-info">
+                            <th class="text-primary">
+                                ФИО сотрудника
+                            </th>
+                            <th class="text-primary">
+                                Дата приема на работу
+                            </th>
+                            <th class="text-primary">
+                                Позиция
+                            </th>
+                            <th>
+                                Редактировать
+                            </th>
+                        </tr>
+                        </thead>
+                        {% for employee in employees %}
+                            <tr>
+                                <td>
+                                    {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
+                                </td>
+                                <td>
+                                    {{ employee.employeeSince|date('d.m.Y') }}
+                                </td>
+                                <td>
+                                    {{ employee.position }}
+                                </td>
+                                <td>
+                                    <a href="{{ path('edit_employee', {'id': employee.id}) }}">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

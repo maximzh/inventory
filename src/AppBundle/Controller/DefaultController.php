@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -30,5 +31,27 @@ class DefaultController extends Controller
         return [
             'employees' => $employees,
         ];
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Route("/search", name="search")
+     *
+     * @Method("GET")
+     *
+     * @Template()
+     *
+     * @return array
+     */
+    public function searchEmployeesAction(Request $request)
+    {
+        $result = $this->get('app.search_manager')->search($request);
+
+        return [
+            'employees' => $result['employees'],
+            'search_text' => $result['search_text'],
+        ];
+
     }
 }

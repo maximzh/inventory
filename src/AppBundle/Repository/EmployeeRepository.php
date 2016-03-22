@@ -21,4 +21,17 @@ class EmployeeRepository extends EntityRepository
             ->getResult();
     }
 
+    public function searchEmployees($text)
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e')
+            ->where('e.lastName like :text')
+            ->orWhere('e.firstName like :text')
+            ->orWhere('e.fatherName like :text')
+            ->orWhere('e.position like :text')
+            ->setParameter('text', '%'.$text.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
 }
