@@ -36,8 +36,20 @@ class EmployeeController extends Controller
             throw $this->createNotFoundException('Сотрудник не найден');
         }
 
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $deleteForm = $this->get('app.form_generator')
+                ->createEmployeeDeleteForm($employee)
+                ->createView();
+
+            return  [
+                'employee' => $employee,
+                'deleteForm' => $deleteForm,
+            ];
+        }
+
         return [
             'employee' => $employee,
+            'deleteForm' => null,
         ];
     }
 

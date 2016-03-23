@@ -33,17 +33,9 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Сотрудники не найдены');
         }
 
-        $deleteForms = array();
-        $formGenerator = $this->get('app.form_generator');
-        foreach ($employees as $employee) {
-            $deleteForms[$employee->getId()] = $formGenerator
-                ->createEmployeeDeleteForm($employee)
-                ->createView();
-        }
 
         return [
             'employees' => $employees,
-            'deleteForms' => $deleteForms,
         ];
     }
 

@@ -22,11 +22,6 @@
                             <th class="text-primary">
                                 Позиция
                             </th>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <th>
-                                    Редактировать
-                                </th>
-                            {% endif %}
                         </tr>
                         </thead>
                         {% for employee in employees %}
@@ -41,13 +36,6 @@
                                 <td>
                                     {{ employee.position }}
                                 </td>
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <td>
-                                        <a href="{{ path('edit_employee', {'id': employee.id}) }}">
-                                            <i class="glyphicon glyphicon-pencil"></i>
-                                        </a>
-                                    </td>
-                                {% endif %}
                             </tr>
                         {% endfor %}
                     </table>
