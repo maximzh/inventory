@@ -59,6 +59,15 @@
                                 {% endif %}
                             </ul>
                         </li>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <li>
+                                <a href="{{ path('all_users') }}">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    Пользователи
+                                </a>
+                            </li>
+                        {% endif %}
+
                     </ul>
                 </div>
             </div>

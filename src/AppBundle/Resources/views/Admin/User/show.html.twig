@@ -1,0 +1,70 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4 class="text-primary">Имя пользователя: </h4>
+                        {{ user.realName }}
+                        <h4 class="text-primary">Email: </h4>
+                        {{ user.email }}
+                        <h4 class="text-primary">Роль: </h4>
+                        {% if user.hasRole('ROLE_ADMIN') == true %}
+                            Админ
+                        {% else %}
+                            Пользователь
+                        {% endif %}
+
+                        <h4 class="text-primary">Статус: </h4>
+                        {% if user.locked == true %}
+
+                            <span class="text-danger">Заблокирован</span>
+                        {% else %}
+                            <span class="text-success">Разблокирован</span>
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                {% if user.hasRole('ROLE_ADMIN') == true %}
+                    <a href="{{ path('remove_role_admin', {'id': user.id}) }}" class="btn btn-lg btn-success btn-block">
+                        <span class="glyphicon glyphicon-user"></span>
+                        Сделать простым пользователем
+                    </a>
+                {% else %}
+                    <a href="{{ path('add_role_admin', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-block">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        Сделать админом
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                {% if user.locked == false %}
+                    <a href="{{ path('lock_user', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-block">
+                        <span class="glyphicon glyphicon-lock"></span>
+                        Заблокировать
+                    </a>
+                {% else %}
+                    <a href="{{ path('unlock_user', {'id': user.id}) }}" class="btn btn-lg btn-success btn-block">
+                        Разблокировать
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                <a href="{{ path('remove_user', {'id': user.id}) }}" class="btn btn-lg btn-warning btn-block">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    Удалить пользователя
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
