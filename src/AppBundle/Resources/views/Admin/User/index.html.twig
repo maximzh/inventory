@@ -1,0 +1,38 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>
+                            Имя пользователя
+                        </th>
+                        <th>
+                            Email пользователя
+                        </th>
+
+                    </tr>
+                    </thead>
+                    {% for user in users %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('admin_show_user', {'id': user.id}) }}">
+                                    {{ user.realName }}
+                                </a>
+
+                            </td>
+                            <td>
+                                {{ user.email }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock body %}

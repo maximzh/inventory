@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4 class="text-primary">ФИО: </h4>
+                        {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
+                        <h4 class="text-primary">Дата приема на работу: </h4>
+                        {{ employee.employeeSince|date('d.m.Y') }}
+                        <h4 class="text-primary">Должность: </h4>
+                        {{ employee.position }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>
+                                Редактировать
+                            </th>
+                            <th class="text-right">
+                                Удалить
+                            </th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td>
+                                <a href="{{ path('edit_employee', {'id': employee.id}) }}">
+                                    <i class="glyphicon glyphicon-pencil btn btn-info btn-lg pull-left">
+                                    </i>
+
+                                </a>
+                            </td>
+                            <td>
+                                {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить сотрудника?");' }}) }}
+                                {{ form_widget(deleteForm.submit) }}
+                                {{ form_end(deleteForm) }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock body %}
