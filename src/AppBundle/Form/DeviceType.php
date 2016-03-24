@@ -25,12 +25,12 @@ class DeviceType extends AbstractType
                         'label' => 'Тип устройства',
                         'required' => false,
                         'choices'  => array(
-                            'Клавиатура' => 'Клавиатура',
-                            'Монитор' => 'Монитор',
+                            'keyboard' => 'Клавиатура',
+                            'monitor' => 'Монитор',
                             'Mac' => 'Mac',
-                            'Мышь' => 'Мышь',
-                            'Кресло' => 'Кресло',
-                            'Наушники' => 'Наушники',
+                            'mouse' => 'Мышь',
+                            'armchair' => 'Кресло',
+                            'headphones' => 'Наушники',
                         ),
                     )
             )
@@ -38,8 +38,8 @@ class DeviceType extends AbstractType
                 'label' => 'Статус',
                 'required' => false,
                     'choices'  => array(
-                        'Свободен' => true,
-                        'Занят' => false,
+                        'free' => "Свободен",
+                        'busy' => "Занят",
                     ),
                 )
             )

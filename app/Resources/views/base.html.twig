@@ -48,6 +48,7 @@
                             <a href="{{ path('homepage') }}" data-toggle="dropdown" class="dropdown-toggle">
                                 <span class="glyphicon glyphicon-user"></span>  Сотрудники <b class="caret"></b>
                             </a>
+
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="{{ path('homepage') }}">Все сотрудники</a>
@@ -55,6 +56,21 @@
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li>
                                         <a href="{{ path('new_employee') }}">Добавить сотрудника</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="" data-toggle="dropdown" class="dropdown-toggle">
+                                <span class="glyphicon glyphicon-hdd"></span>  Оборудование <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ path('devices') }}">Все устройства</a>
+                                </li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('add-device') }}">Добавить устройство</a>
                                     </li>
                                 {% endif %}
                             </ul>
