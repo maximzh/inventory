@@ -29,7 +29,7 @@ class DefaultController extends Controller
         $query = $em->createQuery($dql);
 
         $pager = $this->get('knp_paginator');
-        $pagination = $pager->paginate($query, $request->query->getInt('page', 1), 50);
+        $pagination = $pager->paginate($query, $request->query->getInt('page', 1), 100);
 
         return [
             'employees' => $pagination,
