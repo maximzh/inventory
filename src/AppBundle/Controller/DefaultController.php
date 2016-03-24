@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DefaultController
@@ -25,17 +24,15 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $employees = $this->getDoctrine()
-            ->getRepository('AppBundle:Employee')
-            ->findAllEmployees();
+        $em = $this->getDoctrine()->getManager();
+        $dql = "SELECT e FROM AppBundle:Employee e";
+        $query = $em->createQuery($dql);
 
-        if (!$employees) {
-            throw $this->createNotFoundException('Сотрудники не найдены');
-        }
-
+        $pager = $this->get('knp_paginator');
+        $pagination = $pager->paginate($query, $request->query->getInt('page', 1), 50);
 
         return [
-            'employees' => $employees,
+            'employees' => $pagination,
         ];
     }
 
