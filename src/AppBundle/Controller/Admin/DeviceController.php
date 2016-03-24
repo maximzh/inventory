@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Device;
 use AppBundle\Form\DeviceType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -42,25 +43,32 @@ class DeviceController extends Controller
         return ['form_device' => $form->createView()];
     }
 
-//    /**
-//     * @Route("/edit-device", name="edit-device")
-//     * @Template()
-//     */
-//    public function editDeviceAction(Request $request)
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//        $device = new Device();
-//
-//        $form = $this->createForm(DeviceType::class, $device);
-//        $form->handleRequest($request);
-//
-//        if($request->getMethod() == Request::METHOD_POST){
-//            if ($form->isValid()) {
-//                $em->persist($device);
-//                $em->flush();
-//                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
-//            }
-//        }
-//        return ['form_device' => $form->createView()];
-//    }
+    /**
+     * @Route("/edit-device/{id}", name="edit-device")
+     * @Template()
+     * @param $id
+     *
+     * @Method({"GET", "POST"})
+     *
+     * @return array
+     */
+    public function editDeviceAction(Request $request, $id)
+    {
+        $device = $this->getDoctrine()->getManager()->getRepository('AppBundle:Device')->find($id);
+
+        $form = $this->createForm(DeviceType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST) {
+            if ($form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+            }
+        }
+
+        return [
+            'device' => $device,
+            'form_device' => $form->createView()
+        ];
+    }
 }
