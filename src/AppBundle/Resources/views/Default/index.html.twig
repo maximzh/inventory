@@ -4,6 +4,15 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+
+                {% for flash_message in app.session.flashBag.get('notice') %}
+                    <div class="alert alert-success">
+                        <strong>
+                            {{ flash_message }}
+                        </strong>
+                    </div>
+                {% endfor %}
+
                 {# total items count #}
                 <div class="well">
                     <span class="text-success">Всего сотрудников:</span> {{ employees.getTotalItemCount }}

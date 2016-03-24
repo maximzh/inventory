@@ -80,6 +80,11 @@ class UserController extends Controller
             $user->addRole('ROLE_ADMIN');
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Роль пользователя была изменена.'
+            );
         }
 
         return $this->redirectToRoute('admin_show_user', ['id' => $user->getId()]);
@@ -100,6 +105,11 @@ class UserController extends Controller
             $user->removeRole('ROLE_ADMIN');
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Роль пользователя была изменена.'
+            );
         }
 
         return $this->redirectToRoute('admin_show_user', ['id' => $user->getId()]);
@@ -120,6 +130,11 @@ class UserController extends Controller
             $user->setLocked(true);
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Пользователь заблокирован.'
+            );
         }
 
         return $this->redirectToRoute('admin_show_user', ['id' => $user->getId()]);
@@ -142,6 +157,11 @@ class UserController extends Controller
             $user->setLocked(false);
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Пользователь разблокирован.'
+            );
         }
 
         return $this->redirectToRoute('admin_show_user', ['id' => $user->getId()]);
@@ -161,6 +181,11 @@ class UserController extends Controller
     {
         $userManager = $this->get('fos_user.user_manager');
         $userManager->deleteUser($user);
+
+        $this->addFlash(
+            'notice',
+            'Пользователь успешно удален.'
+        );
 
         return $this->redirectToRoute('all_users');
     }

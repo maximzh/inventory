@@ -4,6 +4,15 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
+
+                {% for flash_message in app.session.flashBag.get('notice') %}
+                    <div class="alert alert-success">
+                        <strong>
+                            {{ flash_message }}
+                        </strong>
+                    </div>
+                {% endfor %}
+
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h4 class="text-primary">Имя пользователя: </h4>

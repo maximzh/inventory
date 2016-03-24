@@ -52,6 +52,11 @@ class EmployeeController extends Controller
                 $em->persist($employee);
                 $em->flush();
 
+                $this->addFlash(
+                    'notice',
+                    'Новый сотрудник успешно добавлен.'
+                );
+
                 return $this->redirectToRoute('homepage');
             }
         }
@@ -84,6 +89,11 @@ class EmployeeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
+            $this->addFlash(
+                'notice',
+                'Данные сотрудника были изменены.'
+            );
+
             return $this->redirectToRoute('homepage');
         }
 
@@ -115,6 +125,11 @@ class EmployeeController extends Controller
             $em->remove($employee);
             $em->flush();
         }
+
+        $this->addFlash(
+            'notice',
+            'Сотрудник был успешно удален.'
+        );
 
         return $this->redirectToRoute('homepage');
     }
