@@ -52,7 +52,7 @@ class UserController extends Controller
      *
      * @return array
      *
-     * @Route("/{id}", name="admin_show_user")
+     * @Route("/{id}", name="admin_show_user", requirements={"id": "\d+"})
      *
      * @ParamConverter("user", class="AppBundle:User")
      *
@@ -68,9 +68,11 @@ class UserController extends Controller
     /**
      * @param User $user
      *
-     * @Route("/add_role_admin/{id}", name="add_role_admin")
+     * @Route("/add_role_admin/{id}", name="add_role_admin", requirements={"id": "\d+"})
      *
      * @ParamConverter("user", class="AppBundle:User")
+     *
+     * @Method("PUT")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|void
      */
@@ -93,9 +95,11 @@ class UserController extends Controller
     /**
      * @param User $user
      *
-     * @Route("/remove_role_admin/{id}", name="remove_role_admin")
+     * @Route("/remove_role_admin/{id}", name="remove_role_admin", requirements={"id": "\d+"})
      *
      * @ParamConverter("user", class="AppBundle:User")
+     *
+     * @Method("PUT")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -118,9 +122,11 @@ class UserController extends Controller
     /**
      * @param User $user
      *
-     * @Route("/lock/{id}", name="lock_user")
+     * @Route("/lock/{id}", name="lock_user", requirements={"id": "\d+"})
      *
      * @ParamConverter("user", class="AppBundle:User")
+     *
+     * @Method("PUT")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -145,9 +151,11 @@ class UserController extends Controller
     /**
      * @param User $user
      *
-     * @Route("/unlock/{id}", name="unlock_user")
+     * @Route("/unlock/{id}", name="unlock_user", requirements={"id": "\d+"})
      *
      * @ParamConverter("user", class="AppBundle:User")
+     *
+     * @Method("PUT")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -171,9 +179,12 @@ class UserController extends Controller
     /**
      * @param User $user
      *
-     * @Route("/remove/{id}", name="remove_user")
+     * @Route("/remove/{id}", name="remove_user", requirements={"id": "\d+"})
      *
      * @ParamConverter("user", class="AppBundle:User")
+     *
+     * @Method("DELETE")
+     *
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

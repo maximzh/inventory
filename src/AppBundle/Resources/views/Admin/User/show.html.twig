@@ -43,12 +43,12 @@
         <div class="row">
             <div class="col-md-4">
                 {% if user.hasRole('ROLE_ADMIN') == true %}
-                    <a href="{{ path('remove_role_admin', {'id': user.id}) }}" class="btn btn-lg btn-success btn-block">
+                    <a href="{{ path('remove_role_admin', {'id': user.id}) }}" class="btn btn-lg btn-success btn-block as-form" data-method="put">
                         <span class="glyphicon glyphicon-user"></span>
                         Сделать простым пользователем
                     </a>
                 {% else %}
-                    <a href="{{ path('add_role_admin', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-block">
+                    <a href="{{ path('add_role_admin', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-block as-form" data-method="put">
                         <span class="glyphicon glyphicon-user"></span>
                         <span class="glyphicon glyphicon-star"></span>
                         Сделать админом
@@ -57,23 +57,64 @@
             </div>
             <div class="col-md-4">
                 {% if user.locked == false %}
-                    <a href="{{ path('lock_user', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-block">
+                    <a href="{{ path('lock_user', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-block as-form" data-method="put">
                         <span class="glyphicon glyphicon-lock"></span>
                         Заблокировать
                     </a>
                 {% else %}
-                    <a href="{{ path('unlock_user', {'id': user.id}) }}" class="btn btn-lg btn-success btn-block">
+                    <a href="{{ path('unlock_user', {'id': user.id}) }}" class="btn btn-lg btn-success btn-block as-form" data-method="put">
                         Разблокировать
                     </a>
                 {% endif %}
             </div>
             <div class="col-md-4">
-                <a href="{{ path('remove_user', {'id': user.id}) }}" class="btn btn-lg btn-warning btn-block">
+                <a href="{{ path('remove_user', {'id': user.id}) }}" class="btn btn-lg btn-warning btn-block as-form" data-method="delete" {# data-csrf="_token: {{ csrf_token(('authenticate')) }}" #}>
                     <span class="glyphicon glyphicon-trash"></span>
                     Удалить пользователя
                 </a>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+<script type="text/javascript">
+    $('.as-form').on('click',function(){
+
+        var $form = $('<form/>').hide();
+
+        //form options
+        $form.attr({
+            'action' : $(this).attr('href'),
+            'method':'post'
+        })
+
+        //adding the _method hidden field
+        $form.append($('<input/>',{
+            type:'hidden',
+            name:'_method'
+        }).val($(this).data('method')));
+
+        //adding a CSRF if needs
+        if ($(this).data('csrf'))
+        {
+            var csrf = $(this).data('csrf').split(':');
+            $form.append($('<input/>',{
+                type:'hidden',
+                name:csrf[0]
+            }).val(csrf[1]));
+        }
+
+        //add form to parent node
+        $(this).parent().append($form);
+
+        $form.submit();
+
+        return false;
+    });
+</script>
 {% endblock %}
 

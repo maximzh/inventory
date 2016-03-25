@@ -72,7 +72,7 @@ class EmployeeController extends Controller
      * @param Request $request
      * @param Employee $employee
      *
-     * @Route("/edit/{id}", name="edit_employee")
+     * @Route("/edit/{id}", name="edit_employee", requirements={"id": "\d+"})
      *
      * @Method({"GET", "POST"})
      *
@@ -108,7 +108,7 @@ class EmployeeController extends Controller
      * @param Request $request
      * @param Employee $employee
      *
-     * @Route("/remove/{id}", name="remove_employee")
+     * @Route("/remove/{id}", name="remove_employee", requirements={"id": "\d+"})
      *
      * @Method("DELETE")
      *
