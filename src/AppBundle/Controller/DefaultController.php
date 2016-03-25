@@ -24,12 +24,11 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $dql = "SELECT e FROM AppBundle:Employee e";
-        $query = $em->createQuery($dql);
+        $query = $this->getDoctrine()->getRepository('AppBundle:Employee')
+            ->findAllEmployeesQuery();
 
-        $pager = $this->get('knp_paginator');
-        $pagination = $pager->paginate($query, $request->query->getInt('page', 1), 100);
+        $pagination = $this->get('knp_paginator')
+            ->paginate($query, $request->query->getInt('page', 1), 100);
 
         return [
             'employees' => $pagination,
