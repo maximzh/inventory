@@ -5,19 +5,13 @@
         <div class="row">
             <div class="col-lg-12">
 
-                {% for flash_message in app.session.flashBag.get('notice') %}
-                    <div class="alert alert-success">
-                        <strong>
-                            {{ flash_message }}
-                        </strong>
-                    </div>
-                {% endfor %}
+                {% include '@App/Common/flash_message.html.twig' %}
 
                 {# total items count #}
                 <div class="well">
                     <span class="text-success">Всего сотрудников:</span> {{ employees.getTotalItemCount }}
                 </div>
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover main-employees-list">
                     <thead>
                     <tr class="bg-info">
                         <th class="text-primary">

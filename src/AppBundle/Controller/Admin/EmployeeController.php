@@ -94,7 +94,7 @@ class EmployeeController extends Controller
                 'Данные сотрудника были изменены.'
             );
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
         }
 
         return [

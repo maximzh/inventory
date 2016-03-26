@@ -40,9 +40,8 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="father_name", type="string", length=100, unique=false)
+     * @ORM\Column(name="father_name", type="string", length=100, unique=false, nullable=true)
      *
-     * @Assert\NotBlank(message="Отчество сотрудника должно быть указано")
      */
     private $fatherName;
 

@@ -13,3 +13,29 @@ body {
 .logout-btn {
     margin-left: 50px;
 }
+
+.buttons-user-manage a {
+
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+
+}
+
+.buttons-user-manage .user-info-item {
+    border: 1px solid #F8F8F8 ;
+    border-radius: 10px;
+    background-color: #F8F8F8;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.user-info-item {
+    margin: 10px;
+    border: 1px solid #F8F8F8 ;
+    border-radius: 10px;
+    background-color: #F8F8F8;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
