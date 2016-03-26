@@ -98,16 +98,6 @@
             name:'_method'
         }).val($(this).data('method')));
 
-        //adding a CSRF if needs
-        if ($(this).data('csrf'))
-        {
-            var csrf = $(this).data('csrf').split(':');
-            $form.append($('<input/>',{
-                type:'hidden',
-                name:csrf[0]
-            }).val(csrf[1]));
-        }
-
         //add form to parent node
         $(this).parent().append($form);
 
