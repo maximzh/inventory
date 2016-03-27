@@ -35,7 +35,10 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    #form_themes: ['form_div_layout.html.twig']
     form_themes: ['bootstrap_3_layout.html.twig']
+    #form_themes:
+    #    - LexikFormFilterBundle:Form:form_div_layout.html.twig
 
 # Doctrine Configuration
 doctrine:
@@ -98,3 +101,8 @@ hwi_oauth:
             options:
                 csrf: true
 
+# app/config/config.yml
+lexik_form_filter:
+    listeners:
+        doctrine_orm: true
+    #where_method: and

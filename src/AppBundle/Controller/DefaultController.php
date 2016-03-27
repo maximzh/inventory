@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Filter\EmployeeFilterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,6 +25,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $form = $this->get('form.factory')->create(new EmployeeFilterType());
         $query = $this->getDoctrine()->getRepository('AppBundle:Employee')
             ->findAllEmployeesQuery();
 
@@ -32,6 +34,7 @@ class DefaultController extends Controller
 
         return [
             'employees' => $pagination,
+            'filter_form' => $form->createView(),
         ];
     }
 
