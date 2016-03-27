@@ -42,11 +42,13 @@ class EmployeeFilterType extends AbstractType
                 'label' => 'Принят на работу (в период):',
                 'left_date_options' => array(
                     'label' => 'От:',
-                    'years' => range(2000, 2021)
+                    'years' => range(2001, 2021),
+                    'data' => new \DateTime('2001-01-01')
                 ),
                 'right_date_options' => array(
                     'label' => 'До:',
-                    'years' => range(2000, 2021)
+                    'years' => range(2001, 2021),
+                    'data' => new \DateTime('2021-01-01')
                 )
             ))
         ;
@@ -61,9 +63,10 @@ class EmployeeFilterType extends AbstractType
     {
         $resolver->setDefaults(array(
             //'data_class' => 'AppBundle\Entity\Employee',
+            'error_bubbling'    => true,
             'csrf_protection'   => false,
-            'validation_groups' => array('filtering') // avoid NotBlank() constraint-related message
-
+            'validation_groups' => array('filtering'),// avoid NotBlank() constraint-related message
+            'method'            => 'get',
         ));
     }
 }

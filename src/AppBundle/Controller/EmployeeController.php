@@ -63,7 +63,7 @@ class EmployeeController extends Controller
      * @param Employee $employee
      * @return Response
      *
-     * @Route("/{id}", name="show_employee")
+     * @Route("/{id}", name="show_employee", requirements={"id": "\d+"})
      *
      * @ParamConverter("employee", class="AppBundle:Employee")
      *
