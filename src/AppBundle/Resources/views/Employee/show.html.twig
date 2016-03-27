@@ -3,6 +3,85 @@
 {% block body %}
     <div class="container">
         <div class="row">
+            <div class="col-md-12">
+                {% include '@App/Common/flash_message.html.twig' %}
+
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td>
+                            <h4 class="text-primary text-center">ФИО: </h4>
+                        </td>
+                        <td>
+                            <div class="text-success text-center">
+                                {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="text-primary text-center">Дата приема на работу: </h4>
+
+                        </td>
+                        <td>
+                            <div class="text-success text-center">
+                                {{ employee.employeeSince|date('d.m.Y') }}
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="text-primary text-center">Должность: </h4>
+
+                        </td>
+                        <td>
+                            <div class="text-success text-center">
+                                {{ employee.position }}
+                            </div>
+
+                        </td>
+                    </tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+
+                        <tr>
+                            <td>
+                                <h2 class="text-center">
+                                    Редактировать
+                                </h2>
+                                <a href="{{ path('edit_employee', {'id': employee.id}) }}">
+                                    <i class="glyphicon glyphicon-edit btn btn-info btn-lg btn-block pull-left">
+                                    </i>
+
+                                </a>
+                            </td>
+                            <td>
+                                <h2 class="text-center">
+                                    Удалить
+                                </h2>
+                                {% if deleteForm is not null %}
+                                    {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить сотрудника?");' }}) }}
+                                    {{ form_widget(deleteForm.submit) }}
+                                    {{ form_end(deleteForm) }}
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                    {% endif %}
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    {#
+
+    <div class="container">
+        <div class="row">
             <div class="col-md-12 col-md-offset-0">
                 {% include '@App/Common/flash_message.html.twig' %}
                 <div class="panel panel-default">
@@ -60,7 +139,11 @@
                 </div>
             </div>
         </div>
+         {% endif %}
+    #}
 
-    {% endif %}
+
+
+
 
 {% endblock body %}

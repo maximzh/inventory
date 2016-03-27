@@ -3,12 +3,102 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-12">
+                {% include '@App/Common/flash_message.html.twig' %}
+                <div>
 
-                <div class="panel panel-primaryl-">
-                    <div class="panel-body text-center">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <h4 class="text-primary">Email: </h4>
+                                <strong>
+                                <span>
+                                    {{ user.email }}
+                                </span>
+                                </strong>
+                            </td>
+                            <td>
 
-                        {% include '@App/Common/flash_message.html.twig' %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4 class="text-primary">Имя пользователя: </h4>
+                                <strong>
+                                <span>
+                                    {{ user.realName }}
+                                </span>
+                                </strong>
+                            </td>
+                            <td>
+                                <a href="{{ path('remove_user', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-lg btn-block as-form" data-method="delete">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                    Удалить пользователя
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <h4 class="text-primary">Роль: </h4>
+                                <strong>
+                                <span>
+                                    {% if user.hasRole('ROLE_ADMIN') == true %}
+                                        Админ
+                                        <span class="glyphicon  glyphicon-user  pull-right"></span>
+                                        <span class="glyphicon  glyphicon-star  pull-right"></span>
+                                    {% else %}
+                                        Пользователь
+                                    {% endif %}
+                                </span>
+                                </strong>
+                            </td>
+                            <td>
+                                {% if user.hasRole('ROLE_ADMIN') == true %}
+                                    <a href="{{ path('remove_role_admin', {'id': user.id}) }}" class="btn btn-primary btn-lg btn-block as-form" data-method="put">
+                                        <span class="glyphicon glyphicon-minus-sign"></span>
+                                        Убрать роль администратора
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path('add_role_admin', {'id': user.id}) }}" class="btn btn-primary btn-lg btn-block as-form" data-method="put">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>
+                                        Дать роль администратора
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4 class="text-primary">Статус: </h4>
+                                <strong>
+                                    {% if user.locked == true %}
+
+                                        <span class="text-danger">Заблокирован</span>
+                                        <span class="glyphicon glyphicon-lock pull-right"></span>
+                                    {% else %}
+                                        <span class="text-success">Разблокирован</span>
+
+                                    {% endif %}
+                                </strong>
+                            </td>
+                            <td>
+                                {% if user.locked == false %}
+                                    <a href="{{ path('lock_user', {'id': user.id}) }}" class="btn  btn-primary btn-lg btn-block as-form" data-method="put">
+                                        <span class="glyphicon glyphicon-lock"></span>
+                                        Заблокировать
+                                    </a><br>
+                                {% else %}
+
+                                    <a href="{{ path('unlock_user', {'id': user.id}) }}" class="btn  btn-primary btn-lg btn-block as-form" data-method="put">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                        Разблокировать
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                    {#
+
 
                         <div class="user-info-item">
                             <h4 class="text-primary">Имя пользователя: </h4>
@@ -84,7 +174,7 @@
                                 {% endif %}
 
 
-                                <a href="{{ path('remove_user', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-block as-form" data-method="delete" {# data-csrf="_token: {{ csrf_token(('authenticate')) }}" #}>
+                                <a href="{{ path('remove_user', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-block as-form" data-method="delete">
                                     <span class="glyphicon glyphicon-trash"></span>
                                     Удалить пользователя
                                 </a>
@@ -93,6 +183,9 @@
 
 
                     </div>
+                    #}
+
+
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 body {
-    padding-top: 170px;
+    padding-top: 200px;
 }
 
 #google-login {
@@ -10,11 +10,8 @@ body {
     margin-top: 5%;
 }
 
-.logout-btn {
-    margin-left: 50px;
-}
-
-.buttons-user-manage a {
+/*
+ .buttons-user-manage a {
 
     margin-top: 30px;
     margin-bottom: 30px;
@@ -30,8 +27,9 @@ body {
     padding-right: 20px;
 }
 
-.user-info-item {
-    margin: 10px;
+    .user-info-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
     border: 1px solid #F8F8F8 ;
     border-radius: 10px;
     background-color: #F8F8F8;
@@ -39,6 +37,11 @@ body {
     padding-right: 20px;
 
 }
+ */
+
+
+
+
 
 .filter-div {
     padding: 20px;
