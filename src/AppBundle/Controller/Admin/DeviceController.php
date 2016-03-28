@@ -11,19 +11,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-///**
-// * Class DeviceController
-// *
-// * @Security("has_role('ROLE_SUPER_ADMIN')")
-// *
-// * @Route("/admin/devices")
-// *
-// */
+/**
+ * Class DeviceController
+ * @Route("/admin/devices")
+ *
+ */
 class DeviceController extends Controller
 {
     /**
      * @Route("/add-device", name="add-device")
      * @Template()
+     *
+     * @Method({"GET", "POST"})
+     *
      */
     public function addDeviceAction(Request $request)
     {

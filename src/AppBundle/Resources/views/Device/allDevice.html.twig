@@ -21,10 +21,7 @@
                     {% for device in devices %}
                         <tr>
                             <td>
-                                <a href="{#{{ path('show_employee', {'id': employee.id}) }}#}">
-                                    {{ device.name }}
-                                </a>
-
+                                {{ device.name }}
                             </td>
                             <td>
                                 {{ device.type }}

@@ -31,6 +31,7 @@ class DeviceType extends AbstractType
                             'mouse' => 'Мышь',
                             'armchair' => 'Кресло',
                             'headphones' => 'Наушники',
+                            'ssd' => 'SSD',
                         ),
                     )
             )
