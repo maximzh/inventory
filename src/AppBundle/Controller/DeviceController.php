@@ -10,13 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DeviceController extends Controller
 {
-    /**
-     * @Route("/devices", name="devices")
-     * @Template()
-     */
-    public function allDeviceAction(Request $request)
-    {
-        $devices = $this->getDoctrine()->getRepository('AppBundle:Device')->findAll();
-        return ['devices' => $devices];
-    }
+//    /**
+//     * @Route("/devices", name="devices")
+//     * @Template()
+//     */
+//    public function allDeviceAction(Request $request)
+//    {
+//        $devices = $this->getDoctrine()->getRepository('AppBundle:Device')->findAll();
+//        return ['devices' => $devices];
+//    }
 }

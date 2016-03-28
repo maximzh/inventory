@@ -4,36 +4,37 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
-class DeviceType extends AbstractType
+class MacType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name', TextType::class, array(
-                'label' => 'Название устройства',
-                'required' => false,
+                'label' => 'Марка Mac',
+                'required' => true,
                 )
             )
-            ->add('type', ChoiceType::class,
-                array(
-                        'label' => 'Тип устройства',
-                        'required' => false,
-                        'choices'  => array(
-                            'keyboard' => 'Клавиатура',
-                            'monitor' => 'Монитор',
-                            'Mac' => 'Mac',
-                            'mouse' => 'Мышь',
-                            'armchair' => 'Кресло',
-                            'headphones' => 'Наушники',
-                            'ssd' => 'SSD',
-                        ),
-                    )
+            ->add('ssd', IntegerType::class, array(
+                    'label' => 'Емкость SSD',
+                    'required' => false,
+                )
+            )
+            ->add('hdd', IntegerType::class, array(
+                    'label' => 'Емкость HDD',
+                    'required' => false,
+                )
+            )
+            ->add('ram', IntegerType::class, array(
+                    'label' => 'Размер RAM',
+                    'required' => false,
+                )
             )
             ->add('status', ChoiceType::class, array(
                 'label' => 'Статус',
@@ -50,14 +51,9 @@ class DeviceType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'AppBundle\Entity\Device',
+                'data_class' => 'AppBundle\Entity\Mac',
                 'em' => null,
             )
         );
     }
-//
-//    public function getBlockPrefix()
-//    {
-//        return "device";
-//    }
 }

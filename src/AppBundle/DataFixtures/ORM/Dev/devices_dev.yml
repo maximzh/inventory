@@ -1,5 +1,5 @@
-AppBundle\Entity\Device:
-    device{1..50}:
+AppBundle\Entity\Monitor:
+    monitor{1..50}:
         name: <word()>
         type: <randomElement(['Клавиатура', 'Монитор','Mac', 'Мышь','Кресло', 'Наушники'])>
         status: <randomElement(['free', 'busy'])>
