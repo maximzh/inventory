@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\Armchair;
 use AppBundle\Entity\Mac;
 use AppBundle\Entity\Monitor;
+use AppBundle\Form\ArmchairType;
 use AppBundle\Form\MacType;
 use AppBundle\Form\MonitorType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -113,6 +115,61 @@ class DeviceController extends Controller
     public function editMacAction(Request $request, $id)
     {
         $device = $this->getDoctrine()->getManager()->getRepository('AppBundle:Mac')->find($id);
+
+        $form = $this->createForm(MacType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST) {
+            if ($form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirect($this->generateUrl('homepage', array('device' => $device)));
+            }
+        }
+
+        return [
+            'device' => $device,
+            'form_device' => $form->createView()
+        ];
+    }
+
+    /**
+     * @Route("/add-armchair", name="add-armchair")
+     * @Template()
+     *
+     * @Method({"GET", "POST"})
+     *
+     */
+    public function addArmchairAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $device = new Armchair();
+        $device->setType('Armchair');
+
+        $form = $this->createForm(ArmchairType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST){
+            if ($form->isValid()) {
+                $em->persist($device);
+                $em->flush();
+                return $this->redirect($this->generateUrl('homepage', array('device' => $device)));
+            }
+        }
+        return ['form_device' => $form->createView()];
+    }
+
+    /**
+     * @Route("/edit-armchair/{id}", name="edit-armchair")
+     * @Template()
+     * @param $id
+     *
+     * @Method({"GET", "POST"})
+     *
+     * @return array
+     */
+    public function editArmchairAction(Request $request, $id)
+    {
+        $device = $this->getDoctrine()->getManager()->getRepository('AppBundle:Armchair')->find($id);
 
         $form = $this->createForm(MacType::class, $device);
         $form->handleRequest($request);

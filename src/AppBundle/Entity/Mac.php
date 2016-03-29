@@ -47,6 +47,7 @@ class Mac
      *
      * @ORM\Column(name="ram", type="integer")
      */
+    
     private $ram;
 
     /**
