@@ -29,6 +29,34 @@
 
                     </tr>
                     </thead>
+
+                    {% if superAdmins is not empty %}
+
+                        {% for superAdmin in superAdmins %}
+                            <tr class="bg-success">
+                                <td>
+                                    {{ superAdmin.realName }}
+                                </td>
+                                <td>
+                                    {{ superAdmin.email }}
+                                </td>
+                                <td>
+                                <span class="text-uppercase">
+                                    Супер админ
+                                </span>
+                                </td>
+                                <td class="text-center">
+                                    {% if superAdmin.email == app.user.email %}
+                                        <span class="text-success text-uppercase">
+                                        Это Вы
+                                    </span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                    {% endif %}
+
                     {% for user in users %}
                         <tr>
                             <td>

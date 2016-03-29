@@ -10,11 +10,18 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Employee;
 use AppBundle\Form\EmployeeType;
+use Google\Spreadsheet\SpreadsheetService;
+use Google_Auth_AssertionCredentials;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+
+use Google\Spreadsheet\DefaultServiceRequest;
+use Google\Spreadsheet\ServiceRequestFactory;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -132,6 +139,60 @@ class EmployeeController extends Controller
         );
 
         return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     *
+     * @Route("/export")
+     */
+    public function importAction()
+    {
+        //$user = $this->getUser();
+        //$accessToken = $user->getGoogleAccessToken();
+
+        $client = new \Google_Client();
+        //$client->setApplicationName('Invent');
+        //$clientId = "116075106357728342687";
+        //$client->setClientId($clientId);
+
+
+        $cred = new Google_Auth_AssertionCredentials(
+            "invent-1264@appspot.gserviceaccount.com",
+            array('https://spreadsheets.google.com/feeds'),
+            file_get_contents('Invent.p12', FILE_USE_INCLUDE_PATH)
+        );
+        $client->setAssertionCredentials($cred);
+
+        if($client->isAccessTokenExpired()) {
+            $client->getAuth()->refreshTokenWithAssertion($cred);
+        }
+
+        $obj_token  = json_decode($client->getAccessToken());
+        $accessToken = $obj_token->access_token;
+
+        $serviceRequest = new DefaultServiceRequest($accessToken);
+        ServiceRequestFactory::setInstance($serviceRequest);
+
+        $spreadsheetService = new SpreadsheetService();
+        $spreadsheetFeed = $spreadsheetService->getSpreadsheets();
+
+        $spreadsheet = $spreadsheetFeed->getByTitle('Employees');
+        $worksheetFeed = $spreadsheet->getWorksheets();
+        $worksheet = $worksheetFeed->getByTitle('sheet');
+
+        $listFeed = $worksheet->getListFeed();
+
+        $entries = $listFeed->getEntries();
+        $listEntry = $entries[0];
+        $values = $listEntry->getValues();
+
+        //return new Response(var_dump($values));
+
+        $row = array('name'=>'hfjufg', 'position'=>'wascdorsker');
+        $listFeed->insert($row);
+        return new Response();
+
     }
 
 }
