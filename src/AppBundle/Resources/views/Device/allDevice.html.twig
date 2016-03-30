@@ -18,16 +18,81 @@
                         </th>
                     </tr>
                     </thead>
-                    {% for device in devices %}
+                    {% for mac in macs %}
                         <tr>
                             <td>
-                                {{ device.name }}
+                                {{ mac.name }}
                             </td>
                             <td>
-                                {{ device.type }}
+                                {{ mac.type }}
                             </td>
                             <td>
-                                {{ device.status }}
+                                {{ mac.status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for keyboard in keyboards %}
+                        <tr>
+                            <td>
+                                {{ keyboard.name }}
+                            </td>
+                            <td>
+                                {{ keyboard.type }}
+                            </td>
+                            <td>
+                                {{ keyboard.status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for headphone in headphones %}
+                        <tr>
+                            <td>
+                                {{ headphone.name }}
+                            </td>
+                            <td>
+                                {{ headphone.type }}
+                            </td>
+                            <td>
+                                {{ headphone.status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for armchair in armchairs %}
+                        <tr>
+                            <td>
+                                {{ armchair.name }}
+                            </td>
+                            <td>
+                                {{ armchair.type }}
+                            </td>
+                            <td>
+                                {{ armchair.status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for monitor in monitors %}
+                        <tr>
+                            <td>
+                                {{ monitor.name }}
+                            </td>
+                            <td>
+                                {{ monitor.type }}
+                            </td>
+                            <td>
+                                {{ monitor.status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for mouse in mouses %}
+                        <tr>
+                            <td>
+                                {{ mouse.name }}
+                            </td>
+                            <td>
+                                {{ mouse.type }}
+                            </td>
+                            <td>
+                                {{ mouse.status }}
                             </td>
                         </tr>
                     {% endfor %}

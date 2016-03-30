@@ -3,11 +3,17 @@
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Armchair;
+use AppBundle\Entity\Headphones;
+use AppBundle\Entity\Keyboard;
 use AppBundle\Entity\Mac;
 use AppBundle\Entity\Monitor;
+use AppBundle\Entity\Mouse;
 use AppBundle\Form\ArmchairType;
+use AppBundle\Form\HeadphonesType;
+use AppBundle\Form\KeyboardType;
 use AppBundle\Form\MacType;
 use AppBundle\Form\MonitorType;
+use AppBundle\Form\MouseType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -42,7 +48,7 @@ class DeviceController extends Controller
             if ($form->isValid()) {
                 $em->persist($device);
                 $em->flush();
-                return $this->redirect($this->generateUrl('homepage', array('device' => $device)));
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
             }
         }
         return ['form_device' => $form->createView()];
@@ -67,7 +73,7 @@ class DeviceController extends Controller
         if($request->getMethod() == Request::METHOD_POST) {
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirect($this->generateUrl('homepage', array('device' => $device)));
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
             }
         }
 
@@ -97,7 +103,7 @@ class DeviceController extends Controller
             if ($form->isValid()) {
                 $em->persist($device);
                 $em->flush();
-                return $this->redirect($this->generateUrl('homepage', array('device' => $device)));
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
             }
         }
         return ['form_device' => $form->createView()];
@@ -122,7 +128,7 @@ class DeviceController extends Controller
         if($request->getMethod() == Request::METHOD_POST) {
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirect($this->generateUrl('homepage', array('device' => $device)));
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
             }
         }
 
@@ -152,7 +158,7 @@ class DeviceController extends Controller
             if ($form->isValid()) {
                 $em->persist($device);
                 $em->flush();
-                return $this->redirect($this->generateUrl('homepage', array('device' => $device)));
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
             }
         }
         return ['form_device' => $form->createView()];
@@ -177,7 +183,172 @@ class DeviceController extends Controller
         if($request->getMethod() == Request::METHOD_POST) {
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirect($this->generateUrl('homepage', array('device' => $device)));
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+            }
+        }
+
+        return [
+            'device' => $device,
+            'form_device' => $form->createView()
+        ];
+    }
+
+    /**
+     * @Route("/add-headphones", name="add-headphones")
+     * @Template()
+     *
+     * @Method({"GET", "POST"})
+     *
+     */
+    public function addHeadphonesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $device = new Headphones();
+        $device->setType('Headphones');
+
+        $form = $this->createForm(HeadphonesType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST){
+            if ($form->isValid()) {
+                $em->persist($device);
+                $em->flush();
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+            }
+        }
+        return ['form_device' => $form->createView()];
+    }
+
+    /**
+     * @Route("/edit-headphones/{id}", name="edit-headphones")
+     * @Template()
+     * @param $id
+     *
+     * @Method({"GET", "POST"})
+     *
+     * @return array
+     */
+    public function editHeadphonesAction(Request $request, $id)
+    {
+        $device = $this->getDoctrine()->getManager()->getRepository('AppBundle:Headphones')->find($id);
+
+        $form = $this->createForm(HeadphonesType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST) {
+            if ($form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+            }
+        }
+
+        return [
+            'device' => $device,
+            'form_device' => $form->createView()
+        ];
+    }
+
+    /**
+     * @Route("/add-keyboard", name="add-keyboard")
+     * @Template()
+     *
+     * @Method({"GET", "POST"})
+     *
+     */
+    public function addKeyboardAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $device = new Keyboard();
+        $device->setType('Keyboard');
+
+        $form = $this->createForm(KeyboardType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST){
+            if ($form->isValid()) {
+                $em->persist($device);
+                $em->flush();
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+            }
+        }
+        return ['form_device' => $form->createView()];
+    }
+
+    /**
+     * @Route("/edit-keyboard/{id}", name="edit-keyboard")
+     * @Template()
+     * @param $id
+     *
+     * @Method({"GET", "POST"})
+     *
+     * @return array
+     */
+    public function editKeyboardAction(Request $request, $id)
+    {
+        $device = $this->getDoctrine()->getManager()->getRepository('AppBundle:Keyboard')->find($id);
+
+        $form = $this->createForm(KeyboardType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST) {
+            if ($form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+            }
+        }
+
+        return [
+            'device' => $device,
+            'form_device' => $form->createView()
+        ];
+    }
+
+    /**
+     * @Route("/add-mouse", name="add-mouse")
+     * @Template()
+     *
+     * @Method({"GET", "POST"})
+     *
+     */
+    public function addMouseAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $device = new Mouse();
+        $device->setType('Mouse');
+
+        $form = $this->createForm(MouseType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST){
+            if ($form->isValid()) {
+                $em->persist($device);
+                $em->flush();
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+            }
+        }
+        return ['form_device' => $form->createView()];
+    }
+
+    /**
+     * @Route("/edit-mouse/{id}", name="edit-mouse")
+     * @Template()
+     * @param $id
+     *
+     * @Method({"GET", "POST"})
+     *
+     * @return array
+     */
+    public function editMouseAction(Request $request, $id)
+    {
+        $device = $this->getDoctrine()->getManager()->getRepository('AppBundle:Mouse')->find($id);
+
+        $form = $this->createForm(MouseType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST) {
+            if ($form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
             }
         }
 
