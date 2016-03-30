@@ -101,6 +101,11 @@
                                         <a href="{{ path('add-mouse') }}">Добавить мышь</a>
                                     </li>
                                 {% endif %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('add-usbhub') }}">Добавить USB HUB</a>
+                                    </li>
+                                {% endif %}
                             </ul>
                         </li>
                         {% if is_granted('ROLE_SUPER_ADMIN') %}

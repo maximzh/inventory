@@ -96,6 +96,19 @@
                             </td>
                         </tr>
                     {% endfor %}
+                    {% for usbhub in usbhubs %}
+                        <tr>
+                            <td>
+                                {{ usbhub.name }}
+                            </td>
+                            <td>
+                                {{ usbhub.type }}
+                            </td>
+                            <td>
+                                {{ usbhub.status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </table>
             </div>
         </div>

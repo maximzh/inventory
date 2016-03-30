@@ -43,6 +43,11 @@ class Keyboard
     protected $status;
 
     /**
+     * @ORM\OneToOne(targetEntity="Employee", mappedBy="keyboard")
+     */
+    private $employee;
+
+    /**
      * Get id
      *
      * @return int
@@ -125,6 +130,22 @@ class Keyboard
         return $this->status;
     }
 
+    /**
+     * @return Employee
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
+
+    /**
+     * @param Employee $employee
+     */
+    public function setEmployee($employee)
+    {
+        $this->employee = $employee;
+    }
+    
     /**
      * @return string
      */

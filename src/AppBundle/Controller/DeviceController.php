@@ -27,6 +27,7 @@ class DeviceController extends Controller
         $macs = $this->getDoctrine()->getRepository('AppBundle:Mac')->findAll();
         $armchairs = $this->getDoctrine()->getRepository('AppBundle:Armchair')->findAll();
         $headphones = $this->getDoctrine()->getRepository('AppBundle:Headphones')->findAll();
+        $usbHubs = $this->getDoctrine()->getRepository('AppBundle:UsbHub')->findAll();
         return [
             'mouses' => $mouses,
             'monitors' => $monitors,
@@ -34,6 +35,7 @@ class DeviceController extends Controller
             'macs' => $macs,
             'armchairs' => $armchairs,
             'headphones' => $headphones,
+            'usbhubs' => $usbHubs,
         ];
     }
 }

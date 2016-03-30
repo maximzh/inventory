@@ -8,6 +8,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -71,6 +72,46 @@ class Employee
      * @Assert\NotBlank(message="Должность сотрудника должна быть указана")
      */
     private $position;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Mac", mappedBy="employee")
+     */
+    private $mac;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Monitor", mappedBy="employee")
+     */
+    private $monitors;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Keyboard", inversedBy="employee")
+     */
+    private $keyboard;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Mouse", inversedBy="employee")
+     */
+    private $mouse;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Armchair", mappedBy="employee")
+     */
+    private $armchair;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Headphones", inversedBy="employee")
+     */
+    private $headphones;
+
+    /**
+     * @ORM\OneToOne(targetEntity="UsbHub", mappedBy="employee")
+     */
+    private $usbHub;
+
+    public function __construct()
+    {
+        $this->monitors = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -200,5 +241,153 @@ class Employee
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * @return Mac
+     */
+    public function getMac()
+    {
+        return $this->mac;
+    }
+
+    /**
+     * @param Mac $mac
+     */
+    public function setMac($mac)
+    {
+        $this->mac = $mac;
+    }
+
+    /**
+     * @return Monitor
+     */
+    public function getMonitors()
+    {
+        return $this->monitors;
+    }
+
+    /**
+     * @param Monitor $monitor
+     */
+    public function setMonitor($monitor)
+    {
+        $this->monitors = $monitor;
+    }
+
+    /**
+     * @return Keyboard
+     */
+    public function getKeyboard()
+    {
+        return $this->keyboard;
+    }
+
+    /**
+     * @param Keyboard $keyboard
+     */
+    public function setKeyboard($keyboard)
+    {
+        $this->keyboard = $keyboard;
+    }
+
+    /**
+     * @return Mouse
+     */
+    public function getMouse()
+    {
+        return $this->mouse;
+    }
+
+    /**
+     * @param Mouse $mouse
+     */
+    public function setMouse($mouse)
+    {
+        $this->mouse = $mouse;
+    }
+
+    /**
+     * @return Armchair
+     */
+    public function getArmchair()
+    {
+        return $this->armchair;
+    }
+
+    /**
+     * @param Armchair $armchair
+     */
+    public function setArmchair($armchair)
+    {
+        $this->armchair = $armchair;
+    }
+
+    /**
+     * @return Headphones
+     */
+    public function getHeadphones()
+    {
+        return $this->headphones;
+    }
+
+    /**
+     * @param Headphones $headphones
+     */
+    public function setHeadphones($headphones)
+    {
+        $this->headphones = $headphones;
+    }
+
+    /**
+     * @return UsbHub
+     */
+    public function getUsbHub()
+    {
+        return $this->usbHub;
+    }
+
+    /**
+     * @param UsbHub $usbHub
+     */
+    public function setUsbHub($usbHub)
+    {
+        $this->usbHub = $usbHub;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function __toString() {
+        $name = $this->getFirstName().' '.$this->getLastName().' '.$this->getFatherName();
+        return (string) $name;
+    }
+
+    /**
+     * Add monitor
+     *
+     * @param Monitor $monitor
+     *
+     * @return Employee
+     */
+    public function addMonitor($monitor)
+    {
+        $this->monitors[] = $monitor;
+        if ($monitor) {
+            $monitor->setEmployee($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove monitor
+     *
+     * @param Monitor $monitor
+     */
+    public function removeMonitor($monitor)
+    {
+        $this->monitors->removeElement($monitor);
     }
 }

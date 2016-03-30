@@ -41,6 +41,11 @@ class Mouse
      * @ORM\Column(name="status", type="string", length=255)
      */
     protected $status;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Employee", mappedBy="mouse")
+     */
+    private $employee;
     
     /**
      * Get id
@@ -122,6 +127,22 @@ class Mouse
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * @return Employee
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
+
+    /**
+     * @param Employee $employee
+     */
+    public function setEmployee($employee)
+    {
+        $this->employee = $employee;
     }
 
     /**

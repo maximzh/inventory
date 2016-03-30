@@ -53,18 +53,22 @@ class Mac
     /**
      * @var int
      *
-     * @ORM\Column(name="ssd", type="integer")
+     * @ORM\Column(name="ssd", type="integer", nullable=true)
      */
     private $ssd;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="hdd", type="integer")
+     * @ORM\Column(name="hdd", type="integer", nullable=true)
      */
     private $hdd;
 
-
+    /**
+     * @ORM\OneToOne(targetEntity="Employee", inversedBy="mac")
+     */
+    private $employee;
+    
     /**
      * Get id
      *
@@ -224,6 +228,22 @@ class Mac
     public function getHdd()
     {
         return $this->hdd;
+    }
+
+    /**
+     * @return Employee
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
+
+    /**
+     * @param Employee $employee
+     */
+    public function setEmployee($employee)
+    {
+        $this->employee = $employee;
     }
 }
 
