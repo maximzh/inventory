@@ -137,11 +137,62 @@ class EmployeeController extends Controller
     }
 
     /**
+     * @return array
+     *
+     * @Route("/show_new_worksheet_data", name="show_new_entries")
+     *
+     * @Template()
+     */
+    public function showNewGoogleTableDataAction()
+    {
+        $spreadsheetManager = $this->get('app.spreadsheet_manager');
+        $data = $spreadsheetManager->getNewDataFromGoogleTable();
+
+        return [
+            'new' => $data
+        ];
+    }
+
+    /**
+     * @Route("/import", name="import_from_google_table")
+     *
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      *
-     * @Route("/export")
      */
-    public function exportAction()
+    public function importAction()
+    {
+        $spreadSheetManager = $this->get('app.spreadsheet_manager');
+        $preparedData = $spreadSheetManager->prepareDataToImport();
+        $validator = $this->get('validator');
+        $em = $this->getDoctrine()->getManager();
+
+        foreach ($preparedData as $item) {
+            $errors = $validator->validate($item);
+            $fail = 0;
+            $success = 0;
+            if (0 == count($errors)) {
+                $em->persist($item);
+                $success++;
+            } else {
+                $fail++;
+            }
+        }
+        $em->flush();
+
+        $this->addFlash(
+            'notice',
+            "$success Imported, $fail failed"
+            );
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     *
+     * @Route("/export", name="export_all")
+     */
+    public function exportAllAction()
     {
         //$user = $this->getUser();
         //$accessToken = $user->getGoogleAccessToken();

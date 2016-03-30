@@ -18,6 +18,9 @@
                 {# total items count #}
                 <div class="well">
                     <span class="text-success">Всего сотрудников:</span> {{ employees.getTotalItemCount }}
+                    <a href="{{ path('export_all') }}">Export all</a><br>
+                    <a href="{{ path('show_new_entries') }}">Show new in Google table</a><br>
+
                 </div>
                 <table class="table table-bordered table-hover main-employees-list">
                     <thead>

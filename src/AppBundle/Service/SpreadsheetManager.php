@@ -9,6 +9,7 @@
 namespace AppBundle\Service;
 
 
+use AppBundle\Entity\Employee;
 use Google\Spreadsheet\DefaultServiceRequest;
 use Google\Spreadsheet\ServiceRequestFactory;
 use Google\Spreadsheet\SpreadsheetService;
@@ -27,18 +28,82 @@ class SpreadsheetManager
 
     protected $doctrine;
     protected $router;
-    protected $googleServiceEmail;
+    protected $googleClientEmail;
 
 
-    public function __construct(RegistryInterface $doctrine,
+    public function __construct(
+        RegistryInterface $doctrine,
         RouterInterface $router,
         $googleServiceEmail
-    )
-    {
+    ) {
         $this->doctrine = $doctrine;
         $this->router = $router;
         $this->googleServiceEmail = $googleServiceEmail;
 
+    }
+
+    public function getNewDataFromGoogleTable()
+    {
+        $worksheet = $this->getWorksheet(self::SPREADSHEET_TITLE, self::WORKSHEET_TITLE);
+        $listFeed = $worksheet->getListFeed();
+        $entries = $listFeed->getEntries();
+        $new = array();
+        //$existing = array();
+        foreach ($entries as $key => $entry) {
+            $fullNameFromTable = strtolower($entry->getValues()['name']);
+
+            $employees = $this->doctrine->getRepository('AppBundle:Employee')
+                ->findAll();
+
+            foreach ($employees as $employee) {
+                $nameFromDB = strtolower($employee->getLastName().' '.$employee->getFirstName());
+                if ($fullNameFromTable == $nameFromDB) {
+                    //$existing[] = $entry->getValues();
+                    unset($entries[$key]);
+                    break;
+                }
+            }
+        }
+        foreach ($entries as $entry) {
+            $new[] = $entry->getValues();
+        }
+
+        return $new;
+
+        //return [
+        //    'new' => $new,
+        //    //'existing' => $existing
+        //];
+    }
+
+    public function prepareDataToImport()
+    {
+        $dataToImport = $this->getNewDataFromGoogleTable();
+        $preparedData = array();
+
+        foreach ($dataToImport as $item) {
+            $fullName = $item['name'];
+            $array = explode(' ', $fullName);
+            if (2 == count($array)) {
+                $lastName = $array[0];
+                $firstName = $array[1];
+            } else {
+                throw new \Exception('Wrong name format');
+            }
+            $position = $item['position'];
+            $startDateString = $item['startdate'];
+            $startDate = \DateTime::createFromFormat('d.m.Y', $startDateString);
+
+            $employee = new Employee();
+            $employee->setLastName($lastName);
+            $employee->setFirstName($firstName);
+            $employee->setPosition($position);
+            $employee->setEmployeeSince($startDate);
+
+            $preparedData[] = $employee;
+        }
+
+        return $preparedData;
     }
 
     public function exportAllEmployees()
@@ -55,30 +120,35 @@ class SpreadsheetManager
         $listFeed = $worksheet->getListFeed();
         $entries = $listFeed->getEntries();
 
+        foreach ($entries as $entry) {
+
+            $entryValues = $entry->getValues();
+
+            foreach ($employees as $key => $employee) {
+                $employeeName = $employee->getLastName().' '.$employee->getFirstName();
+                $employeePosition = $employee->getPosition();
+                $startDate = $employee->getEmployeeSince()->format("d.m.Y");
+
+                if ($entryValues['name'] == $employeeName && $entryValues['startdate'] == $startDate) {
+                    $entry->update(array('position' => $employeePosition));
+                    unset($employees[$key]);
+                }
+            }
+        }
+
         while (!empty($employees)) {
             $employee = array_shift($employees);
+
             $date = $employee->getEmployeeSince()
                 ->format("d.m.Y");
             $name = $employee->getLastName().' '.$employee->getFirstName();
             $position = $employee->getPosition();
+
             $row = array('name' => $name, 'startdate' => $date, 'position' => $position);
             $listFeed->insert($row);
         }
-        /*
-        foreach ($employees as $employee) {
-
-            $date = $employee->getEmployeeSince();
-            $date = $date->format("d.m.Y");
-            $row = array(
-                'name' => $employee->getLastName().' '.$employee->getFirstName(),
-                'position' => $employee->getPosition(),
-                'startdate' => $date
-            );
-
-            $listFeed->insert($row);
-        }
-        */
     }
+
 
     private function getWorksheet($spreadsheetTitle, $worksheetTitle)
     {
@@ -91,11 +161,11 @@ class SpreadsheetManager
         );
         $client->setAssertionCredentials($cred);
 
-        if($client->isAccessTokenExpired()) {
+        if ($client->isAccessTokenExpired()) {
             $client->getAuth()->refreshTokenWithAssertion($cred);
         }
 
-        $obj_token  = json_decode($client->getAccessToken());
+        $obj_token = json_decode($client->getAccessToken());
         $accessToken = $obj_token->access_token;
 
         $serviceRequest = new DefaultServiceRequest($accessToken);
@@ -135,42 +205,6 @@ class SpreadsheetManager
         }
 
         return $worksheet;
-    }
-
-
-
-    private function setSpreadsheetService()
-    {
-        $client = new \Google_Client();
-
-        $cred = new Google_Auth_AssertionCredentials(
-            $this->googleServiceEmail,
-            array(self::SCOPE),
-            file_get_contents(self::PRIVATE_KEY, FILE_USE_INCLUDE_PATH)
-        );
-        $client->setAssertionCredentials($cred);
-
-        if($client->isAccessTokenExpired()) {
-            $client->getAuth()->refreshTokenWithAssertion($cred);
-        }
-
-        $obj_token  = json_decode($client->getAccessToken());
-        $accessToken = $obj_token->access_token;
-
-        $serviceRequest = new DefaultServiceRequest($accessToken);
-        ServiceRequestFactory::setInstance($serviceRequest);
-
-        $spreadsheetService = new SpreadsheetService();
-
-        $this->spreadsheetService = $spreadsheetService;
-
-        if (!$spreadsheetService) {
-            throw new \Exception('Error getting Spreadsheet Service. ');
-        }
-
-        //return $this->spreadsheetService;
-
-        //return $spreadsheetService;
     }
 
 }
