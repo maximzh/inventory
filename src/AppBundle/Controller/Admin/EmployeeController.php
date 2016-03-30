@@ -146,35 +146,41 @@ class EmployeeController extends Controller
      *
      * @Route("/export")
      */
-    public function importAction()
+    public function exportAction()
     {
         //$user = $this->getUser();
         //$accessToken = $user->getGoogleAccessToken();
 
-        $client = new \Google_Client();
+        //$client = new \Google_Client();
         //$client->setApplicationName('Invent');
         //$clientId = "116075106357728342687";
         //$client->setClientId($clientId);
 
 
-        $cred = new Google_Auth_AssertionCredentials(
-            "invent-1264@appspot.gserviceaccount.com",
-            array('https://spreadsheets.google.com/feeds'),
-            file_get_contents('Invent.p12', FILE_USE_INCLUDE_PATH)
-        );
-        $client->setAssertionCredentials($cred);
+        //$cred = new Google_Auth_AssertionCredentials(
+        //    "invent-1264@appspot.gserviceaccount.com",
+         //   array('https://spreadsheets.google.com/feeds'),
+        //    file_get_contents('Invent.p12', FILE_USE_INCLUDE_PATH)
+        //);
+        //$client->setAssertionCredentials($cred);
 
-        if($client->isAccessTokenExpired()) {
-            $client->getAuth()->refreshTokenWithAssertion($cred);
-        }
+        //if($client->isAccessTokenExpired()) {
+        //    $client->getAuth()->refreshTokenWithAssertion($cred);
+        //}
 
-        $obj_token  = json_decode($client->getAccessToken());
-        $accessToken = $obj_token->access_token;
+        //$obj_token  = json_decode($client->getAccessToken());
+        //$accessToken = $obj_token->access_token;
 
-        $serviceRequest = new DefaultServiceRequest($accessToken);
-        ServiceRequestFactory::setInstance($serviceRequest);
+        //$serviceRequest = new DefaultServiceRequest($accessToken);
+        //ServiceRequestFactory::setInstance($serviceRequest);
 
-        $spreadsheetService = new SpreadsheetService();
+        //$spreadsheetService = new SpreadsheetService();
+
+
+        /*
+        $spreadsheetService = $this->get('app.spreadsheet_manager')
+            ->getSpreadsheetService();
+
         $spreadsheetFeed = $spreadsheetService->getSpreadsheets();
 
         $spreadsheet = $spreadsheetFeed->getByTitle('Employees');
@@ -189,9 +195,16 @@ class EmployeeController extends Controller
 
         //return new Response(var_dump($values));
 
-        $row = array('name'=>'hfjufg', 'position'=>'wascdorsker');
+        $row = array('name'=>'putin', 'position'=>'xuylo');
         $listFeed->insert($row);
         return new Response();
+        */
+
+        $spreadsheetManager = $this->get('app.spreadsheet_manager');
+        if ($spreadsheetManager->exportAllEmployees()) {
+
+            return new Response('success');
+        }
 
     }
 
