@@ -101,10 +101,10 @@
                                 {{ employee.position }}
                             </td>
                             <td>
-                                {% if employee.mac.ssd is defined and employee.mac.ssd > 0 %}
-                                    {{ 1 }}
+                                {% if employee.monitors|length != 0 and employee.monitors != null %}
+                                    {{ employee.monitors|length }}
                                 {% else %}
-                                    {{ 0 }}
+                                    {{ employee.monitors|length }}
                                 {% endif %}
                             </td>
                             <td>
