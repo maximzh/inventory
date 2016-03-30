@@ -3,68 +3,227 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12 col-md-offset-0">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h4 class="text-primary">Имя пользователя: </h4>
-                        {{ user.realName }}
-                        <h4 class="text-primary">Email: </h4>
-                        {{ user.email }}
-                        <h4 class="text-primary">Роль: </h4>
-                        {% if user.hasRole('ROLE_ADMIN') == true %}
-                            Админ
-                        {% else %}
-                            Пользователь
-                        {% endif %}
+            <div class="col-md-12">
+                {% include '@App/Common/flash_message.html.twig' %}
+                <div>
 
-                        <h4 class="text-primary">Статус: </h4>
-                        {% if user.locked == true %}
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <h4 class="text-primary">Email: </h4>
+                                <strong>
+                                <span>
+                                    {{ user.email }}
+                                </span>
+                                </strong>
+                            </td>
+                            <td>
 
-                            <span class="text-danger">Заблокирован</span>
-                        {% else %}
-                            <span class="text-success">Разблокирован</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4 class="text-primary">Имя пользователя: </h4>
+                                <strong>
+                                <span>
+                                    {{ user.realName }}
+                                </span>
+                                </strong>
+                            </td>
+                            <td>
+                                <a href="{{ path('remove_user', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-lg btn-block as-form" data-method="delete">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                    Удалить пользователя
+                                </a>
+                            </td>
+                        </tr>
 
-                        {% endif %}
+                        <tr>
+                            <td>
+                                <h4 class="text-primary">Роль: </h4>
+                                <strong>
+                                <span>
+                                    {% if user.hasRole('ROLE_ADMIN') == true %}
+                                        Админ
+                                        <span class="glyphicon  glyphicon-user  pull-right"></span>
+                                        <span class="glyphicon  glyphicon-star  pull-right"></span>
+                                    {% else %}
+                                        Пользователь
+                                    {% endif %}
+                                </span>
+                                </strong>
+                            </td>
+                            <td>
+                                {% if user.hasRole('ROLE_ADMIN') == true %}
+                                    <a href="{{ path('remove_role_admin', {'id': user.id}) }}" class="btn btn-primary btn-lg btn-block as-form" data-method="put">
+                                        <span class="glyphicon glyphicon-minus-sign"></span>
+                                        Убрать роль администратора
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path('add_role_admin', {'id': user.id}) }}" class="btn btn-primary btn-lg btn-block as-form" data-method="put">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>
+                                        Дать роль администратора
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4 class="text-primary">Статус: </h4>
+                                <strong>
+                                    {% if user.locked == true %}
+
+                                        <span class="text-danger">Заблокирован</span>
+                                        <span class="glyphicon glyphicon-lock pull-right"></span>
+                                    {% else %}
+                                        <span class="text-success">Разблокирован</span>
+
+                                    {% endif %}
+                                </strong>
+                            </td>
+                            <td>
+                                {% if user.locked == false %}
+                                    <a href="{{ path('lock_user', {'id': user.id}) }}" class="btn  btn-primary btn-lg btn-block as-form" data-method="put">
+                                        <span class="glyphicon glyphicon-lock"></span>
+                                        Заблокировать
+                                    </a><br>
+                                {% else %}
+
+                                    <a href="{{ path('unlock_user', {'id': user.id}) }}" class="btn  btn-primary btn-lg btn-block as-form" data-method="put">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                        Разблокировать
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                    {#
+
+
+                        <div class="user-info-item">
+                            <h4 class="text-primary">Имя пользователя: </h4>
+                            <strong>
+                                <span>
+                                    {{ user.realName }}
+                                </span>
+                            </strong>
+
+
+                        </div>
+                        <div class="user-info-item">
+                            <h4 class="text-primary">Email: </h4>
+                            <strong>
+                                <span>
+                                    {{ user.email }}
+                                </span>
+                            </strong>
+
+                        </div>
+                        <div class="user-info-item">
+                            <h4 class="text-primary">Роль: </h4>
+                            <strong>
+                                <span>
+                                    {% if user.hasRole('ROLE_ADMIN') == true %}
+                                        Админ
+                                    {% else %}
+                                        Пользователь
+                                    {% endif %}
+                                </span>
+                            </strong>
+
+                        </div>
+                        <div class="user-info-item">
+                            <h4 class="text-primary">Статус: </h4>
+                            <strong>
+                                {% if user.locked == true %}
+
+                                    <span class="text-danger">Заблокирован</span>
+                                {% else %}
+                                    <span class="text-success">Разблокирован</span>
+
+                                {% endif %}
+                            </strong>
+
+
+                        </div>
+                        <div class="user-info-item">
+                            <div class="button-container">
+
+                                <br><br>
+                                {% if user.hasRole('ROLE_ADMIN') == true %}
+                                    <a href="{{ path('remove_role_admin', {'id': user.id}) }}" class="btn btn-info btn-block as-form" data-method="put">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        Сделать простым пользователем
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path('add_role_admin', {'id': user.id}) }}" class="btn btn-default btn-block as-form" data-method="put">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        Сделать админом
+                                    </a>
+                                {% endif %}<br>
+                                {% if user.locked == false %}
+                                    <a href="{{ path('lock_user', {'id': user.id}) }}" class="btn  btn-default btn-block as-form" data-method="put">
+                                        <span class="glyphicon glyphicon-lock"></span>
+                                        Заблокировать
+                                    </a><br>
+                                {% else %}
+                                    <a href="{{ path('unlock_user', {'id': user.id}) }}" class="btn  btn-info btn-block as-form" data-method="put">
+                                        Разблокировать
+                                    </a><br>
+                                {% endif %}
+
+
+                                <a href="{{ path('remove_user', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-block as-form" data-method="delete">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                    Удалить пользователя
+                                </a>
+                            </div>
+                        </div>
+
+
                     </div>
+                    #}
+
+
                 </div>
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                {% if user.hasRole('ROLE_ADMIN') == true %}
-                    <a href="{{ path('remove_role_admin', {'id': user.id}) }}" class="btn btn-lg btn-success btn-block">
-                        <span class="glyphicon glyphicon-user"></span>
-                        Сделать простым пользователем
-                    </a>
-                {% else %}
-                    <a href="{{ path('add_role_admin', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-block">
-                        <span class="glyphicon glyphicon-user"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        Сделать админом
-                    </a>
-                {% endif %}
-            </div>
-            <div class="col-md-4">
-                {% if user.locked == false %}
-                    <a href="{{ path('lock_user', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-block">
-                        <span class="glyphicon glyphicon-lock"></span>
-                        Заблокировать
-                    </a>
-                {% else %}
-                    <a href="{{ path('unlock_user', {'id': user.id}) }}" class="btn btn-lg btn-success btn-block">
-                        Разблокировать
-                    </a>
-                {% endif %}
-            </div>
-            <div class="col-md-4">
-                <a href="{{ path('remove_user', {'id': user.id}) }}" class="btn btn-lg btn-warning btn-block">
-                    <span class="glyphicon glyphicon-trash"></span>
-                    Удалить пользователя
-                </a>
-            </div>
-        </div>
-    </div>
+    {#
+
+    #}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+<script type="text/javascript">
+    $('.as-form').on('click',function(){
+
+        var $form = $('<form/>').hide();
+
+        //form options
+        $form.attr({
+            'action' : $(this).attr('href'),
+            'method':'post'
+        })
+
+        //adding the _method hidden field
+        $form.append($('<input/>',{
+            type:'hidden',
+            name:'_method'
+        }).val($(this).data('method')));
+
+        //add form to parent node
+        $(this).parent().append($form);
+
+        $form.submit();
+
+        return false;
+    });
+</script>
 {% endblock %}
 

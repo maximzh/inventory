@@ -12,13 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class EmployeeRepository extends EntityRepository
 {
-    public function findAllEmployees()
+    public function findAllEmployeesQuery()
     {
         return $this->createQueryBuilder('e')
             ->select('e')
-            ->orderBy('e.lastName', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
     }
 
     public function searchEmployees($text)

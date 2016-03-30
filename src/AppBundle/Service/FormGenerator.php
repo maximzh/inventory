@@ -40,7 +40,7 @@ class FormGenerator
             ->add(
                 'submit',
                 SubmitType::class,
-                ['label' => ' ', 'attr' => ['class' => 'glyphicon glyphicon-trash btn-danger btn-lg pull-right']]
+                ['label' => ' ', 'attr' => ['class' => 'glyphicon glyphicon-trash btn-danger btn-block btn-lg pull-right']]
             )
             ->getForm();
 

@@ -52,7 +52,7 @@ class UserController extends Controller
      *
      * @return array
      *
-     * @Route("/{id}", name="admin_show_user")
+     * @Route("/{id}", name="admin_show_user", requirements={"id": "\d+"})
      *
      * @ParamConverter("user", class="AppBundle:User")
      *
@@ -68,9 +68,11 @@ class UserController extends Controller
     /**
      * @param User $user
      *
-     * @Route("/add_role_admin/{id}", name="add_role_admin")
+     * @Route("/add_role_admin/{id}", name="add_role_admin", requirements={"id": "\d+"})
      *
      * @ParamConverter("user", class="AppBundle:User")
+     *
+     * @Method("PUT")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|void
      */
@@ -80,6 +82,11 @@ class UserController extends Controller
             $user->addRole('ROLE_ADMIN');
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Роль пользователя была изменена.'
+            );
         }
 
         return $this->redirectToRoute('admin_show_user', ['id' => $user->getId()]);
@@ -88,9 +95,11 @@ class UserController extends Controller
     /**
      * @param User $user
      *
-     * @Route("/remove_role_admin/{id}", name="remove_role_admin")
+     * @Route("/remove_role_admin/{id}", name="remove_role_admin", requirements={"id": "\d+"})
      *
      * @ParamConverter("user", class="AppBundle:User")
+     *
+     * @Method("PUT")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -100,6 +109,11 @@ class UserController extends Controller
             $user->removeRole('ROLE_ADMIN');
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Роль пользователя была изменена.'
+            );
         }
 
         return $this->redirectToRoute('admin_show_user', ['id' => $user->getId()]);
@@ -108,9 +122,11 @@ class UserController extends Controller
     /**
      * @param User $user
      *
-     * @Route("/lock/{id}", name="lock_user")
+     * @Route("/lock/{id}", name="lock_user", requirements={"id": "\d+"})
      *
      * @ParamConverter("user", class="AppBundle:User")
+     *
+     * @Method("PUT")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -120,6 +136,11 @@ class UserController extends Controller
             $user->setLocked(true);
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Пользователь заблокирован.'
+            );
         }
 
         return $this->redirectToRoute('admin_show_user', ['id' => $user->getId()]);
@@ -130,9 +151,11 @@ class UserController extends Controller
     /**
      * @param User $user
      *
-     * @Route("/unlock/{id}", name="unlock_user")
+     * @Route("/unlock/{id}", name="unlock_user", requirements={"id": "\d+"})
      *
      * @ParamConverter("user", class="AppBundle:User")
+     *
+     * @Method("PUT")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -142,6 +165,11 @@ class UserController extends Controller
             $user->setLocked(false);
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Пользователь разблокирован.'
+            );
         }
 
         return $this->redirectToRoute('admin_show_user', ['id' => $user->getId()]);
@@ -151,9 +179,12 @@ class UserController extends Controller
     /**
      * @param User $user
      *
-     * @Route("/remove/{id}", name="remove_user")
+     * @Route("/remove/{id}", name="remove_user", requirements={"id": "\d+"})
      *
      * @ParamConverter("user", class="AppBundle:User")
+     *
+     * @Method("DELETE")
+     *
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -161,6 +192,11 @@ class UserController extends Controller
     {
         $userManager = $this->get('fos_user.user_manager');
         $userManager->deleteUser($user);
+
+        $this->addFlash(
+            'notice',
+            'Пользователь успешно удален.'
+        );
 
         return $this->redirectToRoute('all_users');
     }

@@ -52,6 +52,11 @@ class EmployeeController extends Controller
                 $em->persist($employee);
                 $em->flush();
 
+                $this->addFlash(
+                    'notice',
+                    'Новый сотрудник успешно добавлен.'
+                );
+
                 return $this->redirectToRoute('homepage');
             }
         }
@@ -67,7 +72,7 @@ class EmployeeController extends Controller
      * @param Request $request
      * @param Employee $employee
      *
-     * @Route("/edit/{id}", name="edit_employee")
+     * @Route("/edit/{id}", name="edit_employee", requirements={"id": "\d+"})
      *
      * @Method({"GET", "POST"})
      *
@@ -84,7 +89,12 @@ class EmployeeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            $this->addFlash(
+                'notice',
+                'Данные сотрудника были изменены.'
+            );
+
+            return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
         }
 
         return [
@@ -92,6 +102,36 @@ class EmployeeController extends Controller
             'edit_form' => $editForm->createView(),
         ];
 
+    }
+
+    /**
+     * @param Request $request
+     * @param Employee $employee
+     *
+     * @Route("/remove/{id}", name="remove_employee", requirements={"id": "\d+"})
+     *
+     * @Method("DELETE")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeAction(Request $request, Employee $employee)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('app.form_generator')
+            ->createEmployeeDeleteForm($employee);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em->remove($employee);
+            $em->flush();
+        }
+
+        $this->addFlash(
+            'notice',
+            'Сотрудник был успешно удален.'
+        );
+
+        return $this->redirectToRoute('homepage');
     }
 
 }

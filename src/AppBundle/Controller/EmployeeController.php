@@ -3,7 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Employee;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use AppBundle\Filter\EmployeeFilterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -21,10 +21,49 @@ use Symfony\Component\HttpFoundation\Response;
 class EmployeeController extends Controller
 {
     /**
+     * @param Request $request
+     * @return Response
+     *
+     * @Route("/filter", name="filter_employees")
+     */
+    public function employeeFilterAction(Request $request)
+    {
+        $form = $this->get('form.factory')->create(new EmployeeFilterType());
+
+        if ($request->query->has($form->getName())) {
+            // manually bind values from the request
+            if ('employee_filter' == $form->getName())
+
+                $form->submit($request->query->get($form->getName()));
+
+            // initialize a query builder
+            $filterBuilder = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:Employee')
+                ->createQueryBuilder('e');
+
+            // build the query from the given form object
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+            //var_dump($filterBuilder->getDql());
+
+            $result = $filterBuilder
+                ->getQuery()
+                ->getResult();
+
+        }
+
+        return $this->render(
+            '@App/Employee/filtered.html.twig',
+            array(
+                'employees' => $result,
+            )
+        );
+    }
+
+    /**
      * @param Employee $employee
      * @return Response
      *
-     * @Route("/{id}", name="show_employee")
+     * @Route("/{id}", name="show_employee", requirements={"id": "\d+"})
      *
      * @ParamConverter("employee", class="AppBundle:Employee")
      *
@@ -32,16 +71,12 @@ class EmployeeController extends Controller
      */
     public function showAction(Employee $employee)
     {
-        if (!$employee) {
-            throw $this->createNotFoundException('Сотрудник не найден');
-        }
-
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
             $deleteForm = $this->get('app.form_generator')
                 ->createEmployeeDeleteForm($employee)
                 ->createView();
 
-            return  [
+            return [
                 'employee' => $employee,
                 'deleteForm' => $deleteForm,
             ];
@@ -53,28 +88,5 @@ class EmployeeController extends Controller
         ];
     }
 
-    /**
-     * @param Request $request
-     * @param Employee $employee
-     *
-     * @Route("/remove/{id}", name="remove_employee")
-     *
-     * @Method("DELETE")
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function removeAction(Request $request, Employee $employee)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->get('app.form_generator')
-            ->createEmployeeDeleteForm($employee);
 
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em->remove($employee);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('homepage');
-    }
 }
