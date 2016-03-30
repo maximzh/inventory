@@ -10,17 +10,12 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Employee;
 use AppBundle\Form\EmployeeType;
-use Google\Spreadsheet\SpreadsheetService;
-use Google_Auth_AssertionCredentials;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
-use Google\Spreadsheet\DefaultServiceRequest;
-use Google\Spreadsheet\ServiceRequestFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -159,7 +154,7 @@ class EmployeeController extends Controller
 
         //$cred = new Google_Auth_AssertionCredentials(
         //    "invent-1264@appspot.gserviceaccount.com",
-         //   array('https://spreadsheets.google.com/feeds'),
+        //   array('https://spreadsheets.google.com/feeds'),
         //    file_get_contents('Invent.p12', FILE_USE_INCLUDE_PATH)
         //);
         //$client->setAssertionCredentials($cred);
@@ -201,11 +196,14 @@ class EmployeeController extends Controller
         */
 
         $spreadsheetManager = $this->get('app.spreadsheet_manager');
-        if ($spreadsheetManager->exportAllEmployees()) {
+        $spreadsheetManager->exportAllEmployees();
 
-            return new Response('success');
-        }
+        $this->addFlash(
+            'notice',
+            'Сотрудники экспотрированы в Google таблицу'
+        );
 
+        return $this->redirectToRoute('homepage');
     }
 
 }

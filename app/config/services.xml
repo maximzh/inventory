@@ -26,6 +26,7 @@
         <service id="app.spreadsheet_manager" class="AppBundle\Service\SpreadsheetManager">
             <argument key="doctrine" type="service" id="doctrine"/>
             <argument key="router" type="service" id="router"/>
+            <argument key="google_service_email">%google_service_email%</argument>
         </service>
 
     </services>
