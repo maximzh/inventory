@@ -23,6 +23,11 @@
             <argument key="doctrine" type="service" id="doctrine"/>
         </service>
 
+        <service id="app.spreadsheet_manager" class="AppBundle\Service\SpreadsheetManager">
+            <argument key="doctrine" type="service" id="doctrine"/>
+            <argument key="router" type="service" id="router"/>
+        </service>
+
     </services>
 
 </container>

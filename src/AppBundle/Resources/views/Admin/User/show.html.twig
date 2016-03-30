@@ -12,9 +12,9 @@
                             <td>
                                 <h4 class="text-primary">Email: </h4>
                                 <strong>
-                                <span>
+                                <p class="text-large">
                                     {{ user.email }}
-                                </span>
+                                </p>
                                 </strong>
                             </td>
                             <td>
@@ -24,14 +24,17 @@
                         <tr>
                             <td>
                                 <h4 class="text-primary">Имя пользователя: </h4>
+                                <h2 class="glyphicon  glyphicon-user"></h2>
+
                                 <strong>
-                                <span>
+                                <span class="text-large">
                                     {{ user.realName }}
                                 </span>
                                 </strong>
                             </td>
                             <td>
-                                <a href="{{ path('remove_user', {'id': user.id}) }}" class="btn btn-lg btn-danger btn-lg btn-block as-form" data-method="delete">
+                                <br><br>
+                                <a href="{{ path('remove_user', {'id': user.id}) }}" class="btn  btn-danger btn-block as-form" data-method="delete">
                                     <span class="glyphicon glyphicon-trash"></span>
                                     Удалить пользователя
                                 </a>
@@ -44,23 +47,35 @@
                                 <strong>
                                 <span>
                                     {% if user.hasRole('ROLE_ADMIN') == true %}
-                                        Админ
-                                        <span class="glyphicon  glyphicon-user  pull-right"></span>
-                                        <span class="glyphicon  glyphicon-star  pull-right"></span>
+                                        <h3>
+                                            <span class="glyphicon  glyphicon-star pull-left"></span>
+                                        </h3>
+                                        <span class="text-large">
+                                            Админ
+                                        </span>
+
+
                                     {% else %}
-                                        Пользователь
+                                        <h3>
+                                            <span class="glyphicon  glyphicon-star-empty pull-left"></span>
+                                        </h3>
+                                        <span class="text-large">
+                                             Пользователь
+                                        </span>
+
                                     {% endif %}
                                 </span>
                                 </strong>
                             </td>
                             <td>
+                                <br><br>
                                 {% if user.hasRole('ROLE_ADMIN') == true %}
-                                    <a href="{{ path('remove_role_admin', {'id': user.id}) }}" class="btn btn-primary btn-lg btn-block as-form" data-method="put">
+                                    <a href="{{ path('remove_role_admin', {'id': user.id}) }}" class="btn btn-primary btn-block as-form" data-method="put">
                                         <span class="glyphicon glyphicon-minus-sign"></span>
                                         Убрать роль администратора
                                     </a>
                                 {% else %}
-                                    <a href="{{ path('add_role_admin', {'id': user.id}) }}" class="btn btn-primary btn-lg btn-block as-form" data-method="put">
+                                    <a href="{{ path('add_role_admin', {'id': user.id}) }}" class="btn btn-primary btn-block as-form" data-method="put">
                                         <span class="glyphicon glyphicon-plus-sign"></span>
                                         Дать роль администратора
                                     </a>
@@ -73,23 +88,24 @@
                                 <strong>
                                     {% if user.locked == true %}
 
-                                        <span class="text-danger">Заблокирован</span>
-                                        <span class="glyphicon glyphicon-lock pull-right"></span>
+                                        <span class="text-danger text-large">Заблокирован</span>
+                                        <h3 class="glyphicon glyphicon-lock"></h3>
                                     {% else %}
-                                        <span class="text-success">Разблокирован</span>
+                                        <span class="text-success text-large">Разблокирован</span>
 
                                     {% endif %}
                                 </strong>
                             </td>
                             <td>
+                                <br><br>
                                 {% if user.locked == false %}
-                                    <a href="{{ path('lock_user', {'id': user.id}) }}" class="btn  btn-primary btn-lg btn-block as-form" data-method="put">
+                                    <a href="{{ path('lock_user', {'id': user.id}) }}" class="btn  btn-primary btn-block as-form" data-method="put">
                                         <span class="glyphicon glyphicon-lock"></span>
                                         Заблокировать
                                     </a><br>
                                 {% else %}
 
-                                    <a href="{{ path('unlock_user', {'id': user.id}) }}" class="btn  btn-primary btn-lg btn-block as-form" data-method="put">
+                                    <a href="{{ path('unlock_user', {'id': user.id}) }}" class="btn  btn-primary btn-block as-form" data-method="put">
                                         <span class="glyphicon glyphicon-ok"></span>
                                         Разблокировать
                                     </a>
