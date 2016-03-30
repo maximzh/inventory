@@ -9,3 +9,11 @@
 /composer.phar
 /vendor/
 /web/bundles/
+/node_modules/
+/bower_components/
+/web/css/
+/web/js/
+/web/fonts/
+/web/uploads/
+/web/media/
+/src/AppBundle/Entity/*.php~

@@ -1,13 +1,125 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    {% block stylesheets %}
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet"/>
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    {% block header %}
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-8 com-md-offset-2">
+                        <div class="navbar-text">
+                            {{ 'Добро пожаловать' }}, <span class="text-primary">{{ app.user.realName }}
+                                ({{ app.user.email }})  </span>
+                            <a href="{{ path('logout') }}" class="btn btn-primary btn-sm {# logout-btn #}">
+                                <i class="glyphicon glyphicon-log-out"></i>
+                                Выйти
+                            </a>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <form class="navbar-form" role="search" method="GET" action="{{ path('search') }}">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Поиск" name="search_text" id="srch-term">
+
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <ul class="nav nav-tabs">
+                        <li class="dropdown">
+                            <a href="{{ path('homepage') }}" data-toggle="dropdown" class="dropdown-toggle">
+                                <span class="glyphicon glyphicon-user"></span>  Сотрудники <b class="caret"></b>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ path('homepage') }}">Все сотрудники</a>
+                                </li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('new_employee') }}">Добавить сотрудника</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="" data-toggle="dropdown" class="dropdown-toggle">
+                                <span class="glyphicon glyphicon-hdd"></span>  Оборудование <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ path('devices') }}">Все устройства</a>
+                                </li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('add-monitor') }}">Добавить монитор</a>
+                                    </li>
+                                {% endif %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('add-mac') }}">Добавить Mac</a>
+                                    </li>
+                                {% endif %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('add-armchair') }}">Добавить кресло</a>
+                                    </li>
+                                {% endif %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('add-headphones') }}">Добавить наушники</a>
+                                    </li>
+                                {% endif %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('add-keyboard') }}">Добавить клавиатуру</a>
+                                    </li>
+                                {% endif %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('add-mouse') }}">Добавить мышь</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <li>
+                                <a href="{{ path('all_users') }}">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    Пользователи
+                                </a>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+
+        </nav>
+    {% endblock header %}
+{% endif %}
+
+{% block body %}{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+{% endblock %}
+</body>
 </html>

@@ -1,0 +1,7 @@
+AppBundle\Entity\Employee:
+    employee{1..50}:
+        lastName: <lastName()>
+        firstName: <firstNameMale()>
+        fatherName: <firstNameMale()>
+        employeeSince: <dateTimeBetween('-2 years', 'now')>
+        position: <randomElement(['engineer', 'designer', 'junior php developer', 'project manager', 'middle php developer', 'senior php developer', 'java developer'])>

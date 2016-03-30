@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <h2 class="text-primary text-center">Редактирование монитора</h2>
+                </div>
+
+                {{ form_start(form_device) }}
+                {{ form_widget(form_device) }}
+
+                <input type="submit" value="Сохранить" class="btn btn-primary btn-lg btn-block"/>
+                {{ form_end(form_device) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

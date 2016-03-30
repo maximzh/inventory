@@ -1,0 +1,15 @@
+body {
+    padding-top: 170px;
+}
+
+#google-login {
+    margin-top: 15%;
+}
+
+.new-employee-container {
+    margin-top: 5%;
+}
+
+.logout-btn {
+    margin-left: 50px;
+}

@@ -1,0 +1,103 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr class="bg-info">
+                        <th class="text-primary">
+                            Название устройства
+                        </th>
+                        <th class="text-primary">
+                            Тип устройства
+                        </th>
+                        <th class="text-primary">
+                            Статус устройства
+                        </th>
+                    </tr>
+                    </thead>
+                    {% for mac in macs %}
+                        <tr>
+                            <td>
+                                {{ mac.name }}
+                            </td>
+                            <td>
+                                {{ mac.type }}
+                            </td>
+                            <td>
+                                {{ mac.status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for keyboard in keyboards %}
+                        <tr>
+                            <td>
+                                {{ keyboard.name }}
+                            </td>
+                            <td>
+                                {{ keyboard.type }}
+                            </td>
+                            <td>
+                                {{ keyboard.status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for headphone in headphones %}
+                        <tr>
+                            <td>
+                                {{ headphone.name }}
+                            </td>
+                            <td>
+                                {{ headphone.type }}
+                            </td>
+                            <td>
+                                {{ headphone.status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for armchair in armchairs %}
+                        <tr>
+                            <td>
+                                {{ armchair.name }}
+                            </td>
+                            <td>
+                                {{ armchair.type }}
+                            </td>
+                            <td>
+                                {{ armchair.status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for monitor in monitors %}
+                        <tr>
+                            <td>
+                                {{ monitor.name }}
+                            </td>
+                            <td>
+                                {{ monitor.type }}
+                            </td>
+                            <td>
+                                {{ monitor.status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for mouse in mouses %}
+                        <tr>
+                            <td>
+                                {{ mouse.name }}
+                            </td>
+                            <td>
+                                {{ mouse.type }}
+                            </td>
+                            <td>
+                                {{ mouse.status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
