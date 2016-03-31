@@ -378,6 +378,11 @@ class DeviceController extends Controller
 
         if($request->getMethod() == Request::METHOD_POST){
             if ($form->isValid()) {
+                if($device->getEmployee() != null){
+                    $device->setStatus('busy');
+                }else{
+                    $device->setStatus('free');
+                }
                 $em->persist($device);
                 $em->flush();
                 return $this->redirect($this->generateUrl('devices', array('device' => $device)));

@@ -65,23 +65,23 @@
                         </td>
                         <td>
                             <span class="glyphicon glyphicon-sort"></span>
-                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.position') }}
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.wardrobecount') }}
                         </td>
                         <td>
                             <span class="glyphicon glyphicon-sort"></span>
-                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.position') }}
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'm.ram') }}
                         </td>
                         <td>
                             <span class="glyphicon glyphicon-sort"></span>
-                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.position') }}
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'm.ssd') }}
                         </td>
                         <td>
                             <span class="glyphicon glyphicon-sort"></span>
-                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.position') }}
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'a.name') }}
                         </td>
                         <td>
                             <span class="glyphicon glyphicon-sort"></span>
-                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.position') }}
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'u.name') }}
                         </td>
 
                     </tr>
@@ -123,16 +123,16 @@
                             </td>
                             <td>
                                 {% if employee.armchair is defined  and employee.armchair != null %}
-                                    {{ 1 }}
+                                {{ employee.armchair|length }}
                                 {% else %}
-                                    {{ 0 }}
+                                    {{ employee.armchair|length }}
                                 {% endif %}
                             </td>
                             <td>
                                 {% if employee.usbHub is defined  and employee.usbHub != null %}
-                                    {{ 1 }}
+                                    {{ employee.usbHub|length }}
                                 {% else %}
-                                    {{ 0 }}
+                                    {{ employee.usbHub|length }}
                                 {% endif %}
                             </td>
                         </tr>
