@@ -21,7 +21,6 @@ use Symfony\Component\Routing\RouterInterface;
 class SpreadsheetManager
 {
     // move to parameters in prod
-    const PRIVATE_KEY = __DIR__.'/../Resources/google/Invent.p12';
     const SCOPE = 'https://spreadsheets.google.com/feeds';
     const SPREADSHEET_TITLE = 'Employees';
     const WORKSHEET_TITLE = 'sheet';
@@ -29,16 +28,19 @@ class SpreadsheetManager
     protected $doctrine;
     protected $router;
     protected $googleClientEmail;
+    protected $privateKeyPath;
 
 
     public function __construct(
         RegistryInterface $doctrine,
         RouterInterface $router,
-        $googleServiceEmail
+        $googleServiceEmail,
+        $privateKeyPath
     ) {
         $this->doctrine = $doctrine;
         $this->router = $router;
         $this->googleServiceEmail = $googleServiceEmail;
+        $this->privateKeyPath = $privateKeyPath;
 
     }
 
@@ -179,7 +181,7 @@ class SpreadsheetManager
         $cred = new Google_Auth_AssertionCredentials(
             $this->googleServiceEmail,
             array(self::SCOPE),
-            file_get_contents(self::PRIVATE_KEY, FILE_USE_INCLUDE_PATH)
+            file_get_contents($this->privateKeyPath, FILE_USE_INCLUDE_PATH)
         );
         $client->setAssertionCredentials($cred);
 

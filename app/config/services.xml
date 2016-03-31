@@ -27,6 +27,7 @@
             <argument key="doctrine" type="service" id="doctrine"/>
             <argument key="router" type="service" id="router"/>
             <argument key="google_client_email">%google_client_email%</argument>
+            <argument key="private_key_path">%private_key_path%</argument>
         </service>
 
     </services>

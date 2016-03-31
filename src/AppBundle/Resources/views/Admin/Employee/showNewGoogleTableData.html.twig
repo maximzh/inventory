@@ -35,7 +35,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="alert alert-warning fade in">
+                    <div class="alert alert-danger fade in">
                         <a href="{{ path('homepage') }}" class="close" data-dismiss="alert">&times;</a>
                         <h2>
                             Данные для импортирования не обнаружены
@@ -46,40 +46,6 @@
 
         </div>
     {% endif %}
-    {#
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Date</th>
-                        <th>Position</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    {% for employee in existing %}
-                        <tr>
-                            <td>
-                                {{ employee.name }}
-                            </td>
-                            <td>
-                                {{ employee.startdate }}
-                            </td>
-                            <td>
-                                {{ employee.position }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-
-                </table>
-            </div>
-        </div>
-    </div>
-    #}
 
 {% endblock %}
 
