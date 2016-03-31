@@ -11,6 +11,7 @@ namespace AppBundle\Controller\Admin;
 use AppBundle\Entity\Employee;
 use AppBundle\Form\EmployeeType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -181,7 +182,7 @@ class EmployeeController extends Controller
 
         $this->addFlash(
             'notice',
-            "$success Imported, $fail failed"
+            "$success imported, $fail failed"
             );
 
         return $this->redirectToRoute('homepage');
@@ -194,64 +195,33 @@ class EmployeeController extends Controller
      */
     public function exportAllAction()
     {
-        //$user = $this->getUser();
-        //$accessToken = $user->getGoogleAccessToken();
-
-        //$client = new \Google_Client();
-        //$client->setApplicationName('Invent');
-        //$clientId = "116075106357728342687";
-        //$client->setClientId($clientId);
-
-
-        //$cred = new Google_Auth_AssertionCredentials(
-        //    "invent-1264@appspot.gserviceaccount.com",
-        //   array('https://spreadsheets.google.com/feeds'),
-        //    file_get_contents('Invent.p12', FILE_USE_INCLUDE_PATH)
-        //);
-        //$client->setAssertionCredentials($cred);
-
-        //if($client->isAccessTokenExpired()) {
-        //    $client->getAuth()->refreshTokenWithAssertion($cred);
-        //}
-
-        //$obj_token  = json_decode($client->getAccessToken());
-        //$accessToken = $obj_token->access_token;
-
-        //$serviceRequest = new DefaultServiceRequest($accessToken);
-        //ServiceRequestFactory::setInstance($serviceRequest);
-
-        //$spreadsheetService = new SpreadsheetService();
-
-
-        /*
-        $spreadsheetService = $this->get('app.spreadsheet_manager')
-            ->getSpreadsheetService();
-
-        $spreadsheetFeed = $spreadsheetService->getSpreadsheets();
-
-        $spreadsheet = $spreadsheetFeed->getByTitle('Employees');
-        $worksheetFeed = $spreadsheet->getWorksheets();
-        $worksheet = $worksheetFeed->getByTitle('sheet');
-
-        $listFeed = $worksheet->getListFeed();
-
-        $entries = $listFeed->getEntries();
-        $listEntry = $entries[0];
-        $values = $listEntry->getValues();
-
-        //return new Response(var_dump($values));
-
-        $row = array('name'=>'putin', 'position'=>'xuylo');
-        $listFeed->insert($row);
-        return new Response();
-        */
-
         $spreadsheetManager = $this->get('app.spreadsheet_manager');
         $spreadsheetManager->exportAllEmployees();
 
         $this->addFlash(
             'notice',
             'Сотрудники экспотрированы в Google таблицу'
+        );
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/export/{id}", name="export_one", requirements={"id": "\d+"})
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function exportOneAction(Employee $employee)
+    {
+        $spreadsheetManager = $this->get('app.spreadsheet_manager');
+        $spreadsheetManager->exportOne($employee);
+
+        $this->addFlash(
+            'notice',
+            'Сотрудник экспотрирован в Google таблицу'
         );
 
         return $this->redirectToRoute('homepage');

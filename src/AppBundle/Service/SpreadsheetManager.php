@@ -48,17 +48,16 @@ class SpreadsheetManager
         $listFeed = $worksheet->getListFeed();
         $entries = $listFeed->getEntries();
         $new = array();
-        //$existing = array();
+
+        $employees = $this->doctrine->getRepository('AppBundle:Employee')
+            ->findAll();
+
         foreach ($entries as $key => $entry) {
             $fullNameFromTable = strtolower($entry->getValues()['name']);
-
-            $employees = $this->doctrine->getRepository('AppBundle:Employee')
-                ->findAll();
 
             foreach ($employees as $employee) {
                 $nameFromDB = strtolower($employee->getLastName().' '.$employee->getFirstName());
                 if ($fullNameFromTable == $nameFromDB) {
-                    //$existing[] = $entry->getValues();
                     unset($entries[$key]);
                     break;
                 }
@@ -69,11 +68,6 @@ class SpreadsheetManager
         }
 
         return $new;
-
-        //return [
-        //    'new' => $new,
-        //    //'existing' => $existing
-        //];
     }
 
     public function prepareDataToImport()
@@ -106,6 +100,34 @@ class SpreadsheetManager
         return $preparedData;
     }
 
+    public function exportOne(Employee $employee)
+    {
+        $worksheet = $this->getWorksheet(self::SPREADSHEET_TITLE, self::WORKSHEET_TITLE);
+        $listFeed = $worksheet->getListFeed();
+        $entries = $listFeed->getEntries();
+        $employeeFullName = $employee->getLastName().' '.$employee->getFirstName();
+        $employeeStartDate = $employee->getEmployeeSince()->format("d.m.Y");
+        foreach ($entries as $entry) {
+
+            if ($employeeFullName == $entry->getValues()['name']
+                && $employeeStartDate == $entry->getValues()['startdate']
+            ) {
+
+                $entry->update(array('position' => $employee->getPosition()));
+
+                return true;
+            }
+        }
+        $row = array(
+            'name' => $employeeFullName,
+            'startdate' => $employeeStartDate,
+            'position' => $employee->getPosition(),
+        );
+        $listFeed->insert($row);
+
+        return true;
+    }
+
     public function exportAllEmployees()
     {
         $employees = $this->doctrine
@@ -121,7 +143,7 @@ class SpreadsheetManager
         $entries = $listFeed->getEntries();
 
         foreach ($entries as $entry) {
-
+            // if employee already exists in google table, we update existing row
             $entryValues = $entry->getValues();
 
             foreach ($employees as $key => $employee) {
@@ -135,7 +157,7 @@ class SpreadsheetManager
                 }
             }
         }
-
+        // if employee not exists in google table, create a new row
         while (!empty($employees)) {
             $employee = array_shift($employees);
 

@@ -1,12 +1,14 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
+
+{#
+<div class="container">
+
             <div class="col-md-12">
                 {% include '@App/Common/flash_message.html.twig' %}
 
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered">
                     <tr>
                         <td>
                             <h4 class="text-primary text-center">ФИО: </h4>
@@ -66,6 +68,17 @@
                                 {% endif %}
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                export
+                            </td>
+                            <td>
+                                <a class="btn btn-primary btn-lg btn-block" href="{{ path('export_one', {'id': employee.id}) }}">
+                                    <span class="glyphicon glyphicon-export"></span>
+                                    Export
+                                </a>
+                            </td>
+                        </tr>
 
                     {% endif %}
 
@@ -73,77 +86,64 @@
                 </table>
             </div>
         </div>
+
+        </div>
+
     </div>
-
-
-
-
-    {#
-
+#}
     <div class="container">
         <div class="row">
-            <div class="col-md-12 col-md-offset-0">
+            <div class="col-md-12">
                 {% include '@App/Common/flash_message.html.twig' %}
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h4 class="text-primary">ФИО: </h4>
-                        {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
-                        <h4 class="text-primary">Дата приема на работу: </h4>
-                        {{ employee.employeeSince|date('d.m.Y') }}
-                        <h4 class="text-primary">Должность: </h4>
-                        {{ employee.position }}
-                    </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h4 class="text-primary text-center">ФИО: </h4>
+                <div class="text-success text-center">
+                    {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h4 class="text-primary text-center">Дата приема на работу: </h4>
+                <div class="text-success text-center">
+                    {{ employee.employeeSince|date('d.m.Y') }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h4 class="text-primary text-center">Должность: </h4>
+                <div class="text-success text-center">
+                    {{ employee.position }}
                 </div>
             </div>
         </div>
     </div>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <div class="container">
+        <div class="container" style="margin-top: 100px">
+            <div class="col-sm-4">
+                <a href="{{ path('edit_employee', {'id': employee.id}) }}">
+                    <i class="glyphicon glyphicon-edit btn btn-info btn-lg btn-block pull-left">
+                        Редактировать
+                    </i>
 
-            <div class="row">
-
-                <div class="col-md-12">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>
-                                Редактировать
-                            </th>
-                            {% if deleteForm is not null %}
-                                <th class="text-right">
-                                    Удалить
-                                </th>
-                            {% endif %}
-
-                        </tr>
-                        </thead>
-                        <tr>
-                            <td>
-                                <a href="{{ path('edit_employee', {'id': employee.id}) }}">
-                                    <i class="glyphicon glyphicon-pencil btn btn-info btn-lg pull-left">
-                                    </i>
-
-                                </a>
-                            </td>
-                            <td>
-                                {% if deleteForm is not null %}
-                                    {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить сотрудника?");' }}) }}
-                                    {{ form_widget(deleteForm.submit) }}
-                                    {{ form_end(deleteForm) }}
-                                {% endif %}
-
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                </a>
             </div>
+            <div class="col-sm-4">
+                <a class="btn btn-primary btn-lg btn-block" href="{{ path('export_one', {'id': employee.id}) }}">
+                    <span class="glyphicon glyphicon-export"> Экспортировать</span>
+
+                </a>
+            </div>
+            <div class="col-sm-4">
+                {% if deleteForm is not null %}
+                    {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить сотрудника?");' }}) }}
+                    {{ form_widget(deleteForm.submit) }}
+                    {{ form_end(deleteForm) }}
+                {% endif %}
+            </div>
+
         </div>
-         {% endif %}
-    #}
-
-
-
-
+    {% endif %}
 
 {% endblock body %}
