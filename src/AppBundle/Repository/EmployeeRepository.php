@@ -15,7 +15,12 @@ class EmployeeRepository extends EntityRepository
     public function findAllEmployeesQuery()
     {
         return $this->createQueryBuilder('e')
-            ->select('e')
+            ->select('e', 'm', 'u', 'a')
+            ->leftJoin('e.mac', 'm')
+            ->leftJoin('e.usbHub', 'u')
+            ->leftJoin('e.armchair', 'a')
+            ->leftJoin('e.monitors', 'mo')
+//            ->addSelect('COUNT(mo.id)')
             ->getQuery();
     }
 

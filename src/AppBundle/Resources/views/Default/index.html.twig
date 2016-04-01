@@ -31,6 +31,21 @@
                         <th class="text-primary">
                             Позиция
                         </th>
+                        <th class="text-primary">
+                            Мониторы
+                        </th>
+                        <th class="text-primary">
+                            RAM Mac Mini
+                        </th>
+                        <th class="text-primary">
+                            SSD
+                        </th>
+                        <th class="text-primary">
+                            Кресло
+                        </th>
+                        <th class="text-primary">
+                            USB HUB
+                        </th>
                     </tr>
                     </thead>
 
@@ -48,6 +63,27 @@
                             <span class="glyphicon glyphicon-sort"></span>
                             {{ knp_pagination_sortable(employees, 'Сортировать', 'e.position') }}
                         </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.wardrobecount') }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'm.ram') }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'm.ssd') }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'a.name') }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'u.name') }}
+                        </td>
+
                     </tr>
 
                     {% for employee in employees %}
@@ -63,6 +99,41 @@
                             </td>
                             <td>
                                 {{ employee.position }}
+                            </td>
+                            <td>
+                                {% if employee.monitors|length != 0 and employee.monitors != null %}
+                                    {{ employee.monitors|length }}
+                                {% else %}
+                                    {{ employee.monitors|length }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if employee.mac.ram is defined%}
+                                    {{ employee.mac.ram }}
+                                {% else %}
+                                    {{ 0 }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if employee.mac.ssd is defined and employee.mac.ssd > 0 %}
+                                    {{ 1 }}
+                                {% else %}
+                                    {{ 0 }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if employee.armchair is defined  and employee.armchair != null %}
+                                {{ employee.armchair|length }}
+                                {% else %}
+                                    {{ employee.armchair|length }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if employee.usbHub is defined  and employee.usbHub != null %}
+                                    {{ employee.usbHub|length }}
+                                {% else %}
+                                    {{ employee.usbHub|length }}
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

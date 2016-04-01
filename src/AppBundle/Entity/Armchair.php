@@ -43,10 +43,9 @@ class Armchair
     protected $status;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="ram", type="integer")
+     * @ORM\OneToOne(targetEntity="Employee", inversedBy="armchair")
      */
+    private $employee;
 
     /**
      * Get id
@@ -130,6 +129,22 @@ class Armchair
         return $this->status;
     }
 
+    /**
+     * @return Employee
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
+
+    /**
+     * @param Employee $employee
+     */
+    public function setEmployee($employee)
+    {
+        $this->employee = $employee;
+    }
+    
     /**
      * @return string
      */

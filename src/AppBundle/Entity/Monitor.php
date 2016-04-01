@@ -49,6 +49,12 @@ class Monitor
      */
     protected $status;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="monitors")
+     */
+    private $employee;
+
+
 
     /**
      * Get id
@@ -156,6 +162,24 @@ class Monitor
         return $this->status;
     }
 
+    /**
+     * @return Employee
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
+
+    /**
+     * @param Employee $employee
+     */
+    public function setEmployee($employee)
+    {
+        $this->employee = $employee;
+    }
+    
+    
+    
     /**
      * @return string
      */

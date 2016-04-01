@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -36,6 +37,9 @@ class MacType extends AbstractType
                     'required' => false,
                 )
             )
+            ->add('employee', EntityType::class,[
+                'class' => 'AppBundle\Entity\Employee'
+            ])
             ->add('status', ChoiceType::class, array(
                 'label' => 'Статус',
                 'required' => false,
