@@ -56,6 +56,8 @@ class SpreadsheetManager
 
         foreach ($entries as $key => $entry) {
             $fullNameFromTable = strtolower($entry->getValues()['name']);
+            //$startDate = \DateTime::createFromFormat('d.m.Y', $entry->getValues()['startdate']);
+            //$position = $entry->getValues()['position'];
 
             foreach ($employees as $employee) {
                 $nameFromDB = strtolower($employee->getLastName().' '.$employee->getFirstName());
