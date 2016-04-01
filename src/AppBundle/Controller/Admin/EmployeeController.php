@@ -119,12 +119,14 @@ class EmployeeController extends Controller
      */
     public function removeAction(Request $request, Employee $employee)
     {
+        $spreadsheetManager = $this->get('app.spreadsheet_manager');
         $em = $this->getDoctrine()->getManager();
         $form = $this->get('app.form_generator')
             ->createEmployeeDeleteForm($employee);
 
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $spreadsheetManager->deleteOneRow($employee);
             $em->remove($employee);
             $em->flush();
         }

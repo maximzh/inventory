@@ -104,32 +104,38 @@ class SpreadsheetManager
         return $preparedData;
     }
 
+
+
     public function exportOne(Employee $employee)
     {
-        $worksheet = $this->getWorksheet(self::SPREADSHEET_TITLE, self::WORKSHEET_TITLE);
-        $listFeed = $worksheet->getListFeed();
-        $entries = $listFeed->getEntries();
-        $employeeFullName = $employee->getLastName().' '.$employee->getFirstName();
-        $employeeStartDate = $employee->getEmployeeSince()->format("d.m.Y");
-        foreach ($entries as $entry) {
+        $listFeed = $this->getListFeed();
+        $entry = $this->findEmployeeInWorksheet($employee);
+        if ( !$entry) {
+            $row = array(
+                'name' => $employeeFullName = $employee->getLastName().' '.$employee->getFirstName(),
+                'startdate' => $employeeStartDate = $employee->getEmployeeSince()->format("d.m.Y"),
+                'position' => $employee->getPosition(),
+            );
+            $listFeed->insert($row);
 
-            if ($employeeFullName == $entry->getValues()['name']
-                && $employeeStartDate == $entry->getValues()['startdate']
-            ) {
-
-                $entry->update(array('position' => $employee->getPosition()));
-
-                return true;
-            }
+            return true;
         }
-        $row = array(
-            'name' => $employeeFullName,
-            'startdate' => $employeeStartDate,
-            'position' => $employee->getPosition(),
-        );
-        $listFeed->insert($row);
+        $entry->update(array('position' => $employee->getPosition()));
 
         return true;
+    }
+
+    public function deleteOneRow(Employee $employee)
+    {
+        $entry = $this->findEmployeeInWorksheet($employee);
+
+        if (!$entry) {
+            return false;
+        } else {
+            $entry->delete();
+
+            return true;
+        }
     }
 
     public function exportAllEmployees()
@@ -175,6 +181,31 @@ class SpreadsheetManager
         }
     }
 
+
+    private function getListFeed()
+    {
+        $worksheet = $this->getWorksheet(self::SPREADSHEET_TITLE, self::WORKSHEET_TITLE);
+        $listFeed = $worksheet->getListFeed();
+
+        return $listFeed;
+    }
+
+    private function findEmployeeInWorksheet(Employee $employee)
+    {
+        $listFeed = $this->getListFeed();
+        $entries = $listFeed->getEntries();
+        $employeeFullName = $employee->getLastName().' '.$employee->getFirstName();
+        $employeeStartDate = $employee->getEmployeeSince()->format("d.m.Y");
+
+        foreach ($entries as $entry) {
+            if ($employeeFullName == $entry->getValues()['name'] && $employeeStartDate == $entry->getValues()['startdate']) {
+
+                return $entry;
+            }
+        }
+
+        return false;
+    }
 
     private function getWorksheet($spreadsheetTitle, $worksheetTitle)
     {
