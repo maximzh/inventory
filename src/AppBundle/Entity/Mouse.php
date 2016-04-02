@@ -38,12 +38,12 @@ class Mouse
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
     protected $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="Employee", mappedBy="mouse")
+     * @ORM\OneToOne(targetEntity="Employee", inversedBy="mouse")
      */
     private $employee;
     

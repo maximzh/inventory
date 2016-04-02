@@ -38,12 +38,12 @@ class Keyboard
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
     protected $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="Employee", mappedBy="keyboard")
+     * @ORM\OneToOne(targetEntity="Employee", inversedBy="keyboard")
      */
     private $employee;
 

@@ -214,6 +214,81 @@ class EmployeeController extends Controller
         return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
     }
 
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{id}/free_headphones", name="free_employee_headphones")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeHeadphonesAction(Employee $employee)
+    {
+        $headphones = $employee->getHeadphones();
+        if ($headphones) {
+            $em = $this->getDoctrine()->getManager();
+            $headphones->setEmployee(null);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{id}/free_keyboard", name="free_employee_keyboard")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeKeyboardAction(Employee $employee)
+    {
+        $keyboard = $employee->getKeyboard();
+        if ($keyboard) {
+            $em = $this->getDoctrine()->getManager();
+            $keyboard->setEmployee(null);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{id}/free_mouse", name="free_employee_mouse")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeMouseAction(Employee $employee)
+    {
+        $mouse = $employee->getMouse();
+        if ($mouse) {
+            $em = $this->getDoctrine()->getManager();
+            $mouse->setEmployee(null);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
 
 
     /**

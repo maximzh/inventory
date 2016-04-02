@@ -84,12 +84,12 @@ class Employee
     private $monitors;
 
     /**
-     * @ORM\OneToOne(targetEntity="Keyboard", inversedBy="employee")
+     * @ORM\OneToOne(targetEntity="Keyboard", mappedBy="employee")
      */
     private $keyboard;
 
     /**
-     * @ORM\OneToOne(targetEntity="Mouse", inversedBy="employee")
+     * @ORM\OneToOne(targetEntity="Mouse", mappedBy="employee")
      */
     private $mouse;
 
@@ -99,7 +99,7 @@ class Employee
     private $armchair;
 
     /**
-     * @ORM\OneToOne(targetEntity="Headphones", inversedBy="employee")
+     * @ORM\OneToOne(targetEntity="Headphones", mappedBy="employee")
      */
     private $headphones;
 

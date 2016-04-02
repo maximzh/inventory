@@ -42,26 +42,40 @@
                     {% for keyboard in keyboards %}
                         <tr>
                             <td>
-                                {{ keyboard.name }}
+                                <a href="{{ path('edit-keyboard', {'id': keyboard.id}) }}">
+                                    {{ keyboard.name }}
+                                </a>
+
                             </td>
                             <td>
                                 {{ keyboard.type }}
                             </td>
                             <td>
-                                {{ keyboard.status }}
+                                {% if keyboard.employee is not null %}
+                                    {{ keyboard.employee.lastName }} {{ keyboard.employee.firstName }}
+                                {% else %}
+                                    Нет
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
                     {% for headphone in headphones %}
                         <tr>
                             <td>
-                                {{ headphone.name }}
+                                <a href="{{ path('edit-headphones', {'id': headphone.id}) }}">
+                                    {{ headphone.name }}
+                                </a>
+
                             </td>
                             <td>
                                 {{ headphone.type }}
                             </td>
                             <td>
-                                {{ headphone.status }}
+                                {% if headphone.employee is not null %}
+                                    {{ headphone.employee.lastName }} {{ headphone.employee.firstName }}
+                                {% else %}
+                                    Нет
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -101,13 +115,20 @@
                     {% for mouse in mouses %}
                         <tr>
                             <td>
-                                {{ mouse.name }}
+                                <a href="{{ path('edit-mouse', {'id': mouse.id}) }}">
+                                    {{ mouse.name }}
+                                </a>
+
                             </td>
                             <td>
                                 {{ mouse.type }}
                             </td>
                             <td>
-                                {{ mouse.status }}
+                                {% if mouse.employee is not null %}
+                                    {{ mouse.employee.lastName }} {{ mouse.employee.firstName }}
+                                {% else %}
+                                    Нет
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

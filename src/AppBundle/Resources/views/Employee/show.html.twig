@@ -85,11 +85,52 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Email</td>
-                                    <td><a href="mailto:info@support.com">info@support.com</a></td>
+                                    <td>
+                                       Клавиатура
+                                    </td>
+                                    <td>
+                                        {% if employee.keyboard is not null %}
+                                            <span class="text-primary">{{ employee.keyboard.name }}</span><br>
+                                            {% if is_granted('ROLE_ADMIN') %}
+                                                <a href="{{ path('free_employee_keyboard', {'id': employee.id}) }}" class="btn btn-sm btn-danger pull-right" >
+                                                    Освободить устройство
+                                                </a>
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="text-danger">нет</span>
+                                        {% endif %}
+                                    </td>
                                 </tr>
-                                <td>Phone Number</td>
-                                <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
+                                <tr>
+                                    <td>
+                                        Мышь
+                                    </td>
+                                    <td>
+                                        {% if employee.mouse is not null %}
+                                            <span class="text-primary">{{ employee.mouse.name }}</span><br>
+                                            {% if is_granted('ROLE_ADMIN') %}
+                                                <a href="{{ path('free_employee_mouse', {'id': employee.id}) }}" class="btn btn-sm btn-danger pull-right" >
+                                                    Освободить устройство
+                                                </a>
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="text-danger">нет</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                <td>Наушники</td>
+                                <td>
+                                    {% if employee.headphones is not null %}
+                                        <span class="text-primary">{{ employee.headphones.name }}</span><br>
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <a href="{{ path('free_employee_headphones', {'id': employee.id}) }}" class="btn btn-sm btn-danger pull-right" >
+                                                Освободить устройство
+                                            </a>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="text-danger">нет</span>
+                                    {% endif %}
                                 </td>
 
                                 </tr>
@@ -100,11 +141,15 @@
                                 <a href="{{ path('edit_employee', {'id': employee.id}) }}" class="btn btn-primary">Edit</a>
                                 <a href="{{ path('export_one', {'id': employee.id}) }}" class="btn btn-primary">Export</a>
                                 <br><br>
-                                {% if deleteForm is not null %}
-                                    {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить сотрудника?");' }}) }}
-                                    {{ form_widget(deleteForm.submit) }}
-                                    {{ form_end(deleteForm) }}
+                                {% if employee.keyboard is null and employee.armchair is null and employee.keyboard is null and employee.headphones is null and employee.mac is null %}
+                                    {% if deleteForm is not null %}
+                                        {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить сотрудника?");' }}) }}
+                                        {{ form_widget(deleteForm.submit) }}
+                                        {{ form_end(deleteForm) }}
+                                    {% endif %}
                                 {% endif %}
+
+
                             {% endif %}
                         </div>
                     </div>
