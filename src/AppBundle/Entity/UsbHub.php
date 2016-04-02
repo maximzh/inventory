@@ -38,7 +38,7 @@ class UsbHub
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
     protected $status;
 
@@ -152,4 +152,3 @@ class UsbHub
         return (string) $this->getName();
     }
 }
-

@@ -108,9 +108,23 @@ class Employee
      */
     private $usbHub;
 
+
+
+
+    /**
+     * @return string
+     */
+    public function __toString() {
+        $name = $this->getFirstName().' '.$this->getLastName().' '.$this->getFatherName();
+        return (string) $name;
+    }
+
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        $this->monitors = new ArrayCollection();
+        $this->monitors = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -244,7 +258,23 @@ class Employee
     }
 
     /**
-     * @return Mac
+     * Set mac
+     *
+     * @param \AppBundle\Entity\Mac $mac
+     *
+     * @return Employee
+     */
+    public function setMac(\AppBundle\Entity\Mac $mac = null)
+    {
+        $this->mac = $mac;
+
+        return $this;
+    }
+
+    /**
+     * Get mac
+     *
+     * @return \AppBundle\Entity\Mac
      */
     public function getMac()
     {
@@ -252,131 +282,15 @@ class Employee
     }
 
     /**
-     * @param Mac $mac
-     */
-    public function setMac($mac)
-    {
-        $this->mac = $mac;
-    }
-
-    /**
-     * @return Monitor
-     */
-    public function getMonitors()
-    {
-        return $this->monitors;
-    }
-
-    /**
-     * @param Monitor $monitor
-     */
-    public function setMonitor($monitor)
-    {
-        $this->monitors = $monitor;
-    }
-
-    /**
-     * @return Keyboard
-     */
-    public function getKeyboard()
-    {
-        return $this->keyboard;
-    }
-
-    /**
-     * @param Keyboard $keyboard
-     */
-    public function setKeyboard($keyboard)
-    {
-        $this->keyboard = $keyboard;
-    }
-
-    /**
-     * @return Mouse
-     */
-    public function getMouse()
-    {
-        return $this->mouse;
-    }
-
-    /**
-     * @param Mouse $mouse
-     */
-    public function setMouse($mouse)
-    {
-        $this->mouse = $mouse;
-    }
-
-    /**
-     * @return Armchair
-     */
-    public function getArmchair()
-    {
-        return $this->armchair;
-    }
-
-    /**
-     * @param Armchair $armchair
-     */
-    public function setArmchair($armchair)
-    {
-        $this->armchair = $armchair;
-    }
-
-    /**
-     * @return Headphones
-     */
-    public function getHeadphones()
-    {
-        return $this->headphones;
-    }
-
-    /**
-     * @param Headphones $headphones
-     */
-    public function setHeadphones($headphones)
-    {
-        $this->headphones = $headphones;
-    }
-
-    /**
-     * @return UsbHub
-     */
-    public function getUsbHub()
-    {
-        return $this->usbHub;
-    }
-
-    /**
-     * @param UsbHub $usbHub
-     */
-    public function setUsbHub($usbHub)
-    {
-        $this->usbHub = $usbHub;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function __toString() {
-        $name = $this->getFirstName().' '.$this->getLastName().' '.$this->getFatherName();
-        return (string) $name;
-    }
-
-    /**
      * Add monitor
      *
-     * @param Monitor $monitor
+     * @param \AppBundle\Entity\Monitor $monitor
      *
      * @return Employee
      */
-    public function addMonitor($monitor)
+    public function addMonitor(\AppBundle\Entity\Monitor $monitor)
     {
         $this->monitors[] = $monitor;
-        if ($monitor) {
-            $monitor->setEmployee($this);
-        }
 
         return $this;
     }
@@ -384,10 +298,140 @@ class Employee
     /**
      * Remove monitor
      *
-     * @param Monitor $monitor
+     * @param \AppBundle\Entity\Monitor $monitor
      */
-    public function removeMonitor($monitor)
+    public function removeMonitor(\AppBundle\Entity\Monitor $monitor)
     {
         $this->monitors->removeElement($monitor);
+    }
+
+    /**
+     * Get monitors
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMonitors()
+    {
+        return $this->monitors;
+    }
+
+    /**
+     * Set keyboard
+     *
+     * @param \AppBundle\Entity\Keyboard $keyboard
+     *
+     * @return Employee
+     */
+    public function setKeyboard(\AppBundle\Entity\Keyboard $keyboard = null)
+    {
+        $this->keyboard = $keyboard;
+
+        return $this;
+    }
+
+    /**
+     * Get keyboard
+     *
+     * @return \AppBundle\Entity\Keyboard
+     */
+    public function getKeyboard()
+    {
+        return $this->keyboard;
+    }
+
+    /**
+     * Set mouse
+     *
+     * @param \AppBundle\Entity\Mouse $mouse
+     *
+     * @return Employee
+     */
+    public function setMouse(\AppBundle\Entity\Mouse $mouse = null)
+    {
+        $this->mouse = $mouse;
+
+        return $this;
+    }
+
+    /**
+     * Get mouse
+     *
+     * @return \AppBundle\Entity\Mouse
+     */
+    public function getMouse()
+    {
+        return $this->mouse;
+    }
+
+    /**
+     * Set armchair
+     *
+     * @param \AppBundle\Entity\Armchair $armchair
+     *
+     * @return Employee
+     */
+    public function setArmchair(\AppBundle\Entity\Armchair $armchair = null)
+    {
+        $this->armchair = $armchair;
+
+        return $this;
+    }
+
+    /**
+     * Get armchair
+     *
+     * @return \AppBundle\Entity\Armchair
+     */
+    public function getArmchair()
+    {
+        return $this->armchair;
+    }
+
+    /**
+     * Set headphones
+     *
+     * @param \AppBundle\Entity\Headphones $headphones
+     *
+     * @return Employee
+     */
+    public function setHeadphones(\AppBundle\Entity\Headphones $headphones = null)
+    {
+        $this->headphones = $headphones;
+
+        return $this;
+    }
+
+    /**
+     * Get headphones
+     *
+     * @return \AppBundle\Entity\Headphones
+     */
+    public function getHeadphones()
+    {
+        return $this->headphones;
+    }
+
+    /**
+     * Set usbHub
+     *
+     * @param \AppBundle\Entity\UsbHub $usbHub
+     *
+     * @return Employee
+     */
+    public function setUsbHub(\AppBundle\Entity\UsbHub $usbHub = null)
+    {
+        $this->usbHub = $usbHub;
+
+        return $this;
+    }
+
+    /**
+     * Get usbHub
+     *
+     * @return \AppBundle\Entity\UsbHub
+     */
+    public function getUsbHub()
+    {
+        return $this->usbHub;
     }
 }

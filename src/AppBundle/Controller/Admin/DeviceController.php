@@ -179,7 +179,7 @@ class DeviceController extends Controller
     {
         $device = $this->getDoctrine()->getManager()->getRepository('AppBundle:Armchair')->find($id);
 
-        $form = $this->createForm(MacType::class, $device);
+        $form = $this->createForm(ArmchairType::class, $device);
         $form->handleRequest($request);
 
         if($request->getMethod() == Request::METHOD_POST) {

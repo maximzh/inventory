@@ -140,6 +140,83 @@ class EmployeeController extends Controller
     }
 
     /**
+     * @param Employee $employee
+     *
+     * @Route("/{id}/free_mac", name="free_employee_mac")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeMacAction(Employee $employee)
+    {
+        $mac = $employee->getMac();
+        if ($mac) {
+            $em = $this->getDoctrine()->getManager();
+            $mac->setEmployee(null);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{id}/free_armchair", name="free_employee_armchair")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeArmchairAction(Employee $employee)
+    {
+        $armchair = $employee->getArmchair();
+        if ($armchair) {
+            $em = $this->getDoctrine()->getManager();
+            $armchair->setEmployee(null);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{id}/free_usbhub", name="free_employee_usbhub")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeUsbHubAction(Employee $employee)
+    {
+        $hub = $employee->getUsbHub();
+        if ($hub) {
+            $em = $this->getDoctrine()->getManager();
+            $hub->setEmployee(null);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+
+
+    /**
      * @return array
      *
      * @Route("/show_new_worksheet_data", name="show_new_entries")

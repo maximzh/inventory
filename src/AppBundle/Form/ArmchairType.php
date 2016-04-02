@@ -2,12 +2,13 @@
 
 namespace AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
@@ -22,9 +23,29 @@ class ArmchairType extends AbstractType
                 'required' => true,
                 )
             )
-            ->add('employee', EntityType::class,[
-                'class' => 'AppBundle\Entity\Employee'
-            ])
+            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+                $armchair = $event->getData();
+                $form = $event->getForm();
+
+                if (null == $armchair->getEmployee()) {
+                    $form->add('employee', EntityType::class,[
+                        'class' => 'AppBundle\Entity\Employee',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('e')
+                                ->select('e, a')
+                                ->leftJoin('e.armchair', 'a')
+                                ->where('a.employee IS NULL');
+                        },
+                        'required' => false,
+                        'label' => 'Сотрудник'
+                    ]);
+                }
+            })
+            //->add('employee', EntityType::class,[
+            //    'class' => 'AppBundle\Entity\Employee',
+            //    'label' => 'Сотрудник',
+            //])
+            /*
             ->add('status', ChoiceType::class, array(
                 'label' => 'Статус',
                 'required' => false,
@@ -34,6 +55,7 @@ class ArmchairType extends AbstractType
                     ),
                 )
             )
+            */
             ;
     }
     public function configureOptions(OptionsResolver $resolver)

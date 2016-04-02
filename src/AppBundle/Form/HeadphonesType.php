@@ -22,9 +22,9 @@ class HeadphonesType extends AbstractType
                 'required' => true,
                 )
             )
-            ->add('employee', EntityType::class,[
-                'class' => 'AppBundle\Entity\Employee'
-            ])
+            //->add('employee', EntityType::class,[
+            //    'class' => 'AppBundle\Entity\Employee'
+            //])
             ->add('status', ChoiceType::class, array(
                 'label' => 'Статус',
                 'required' => false,

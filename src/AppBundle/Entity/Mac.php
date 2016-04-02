@@ -38,7 +38,7 @@ class Mac
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
     protected $status;
 
@@ -69,10 +69,20 @@ class Mac
      */
     private $employee;
     
+
+    /**
+     * @return string
+     */
+    public function __toString() {
+        return (string) $this->getName();
+    }
+
+
+
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -84,7 +94,7 @@ class Mac
      *
      * @param string $name
      *
-     * @return Monitor
+     * @return Mac
      */
     public function setName($name)
     {
@@ -108,7 +118,7 @@ class Mac
      *
      * @param string $type
      *
-     * @return Monitor
+     * @return Mac
      */
     public function setType($type)
     {
@@ -132,7 +142,7 @@ class Mac
      *
      * @param string $status
      *
-     * @return Monitor
+     * @return Mac
      */
     public function setStatus($status)
     {
@@ -152,13 +162,6 @@ class Mac
     }
 
     /**
-     * @return string
-     */
-    public function __toString() {
-        return (string) $this->getName();
-    }
-
-    /**
      * Set ram
      *
      * @param integer $ram
@@ -175,7 +178,7 @@ class Mac
     /**
      * Get ram
      *
-     * @return int
+     * @return integer
      */
     public function getRam()
     {
@@ -199,7 +202,7 @@ class Mac
     /**
      * Get ssd
      *
-     * @return int
+     * @return integer
      */
     public function getSsd()
     {
@@ -223,7 +226,7 @@ class Mac
     /**
      * Get hdd
      *
-     * @return int
+     * @return integer
      */
     public function getHdd()
     {
@@ -231,19 +234,26 @@ class Mac
     }
 
     /**
-     * @return Employee
+     * Set employee
+     *
+     * @param \AppBundle\Entity\Employee $employee
+     *
+     * @return Mac
+     */
+    public function setEmployee(\AppBundle\Entity\Employee $employee = null)
+    {
+        $this->employee = $employee;
+
+        return $this;
+    }
+
+    /**
+     * Get employee
+     *
+     * @return \AppBundle\Entity\Employee
      */
     public function getEmployee()
     {
         return $this->employee;
     }
-
-    /**
-     * @param Employee $employee
-     */
-    public function setEmployee($employee)
-    {
-        $this->employee = $employee;
-    }
 }
-

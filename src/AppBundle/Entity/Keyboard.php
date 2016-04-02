@@ -153,4 +153,3 @@ class Keyboard
         return (string) $this->getName();
     }
 }
-

@@ -152,4 +152,3 @@ class Headphones
         return (string) $this->getName();
     }
 }
-

@@ -187,4 +187,3 @@ class Monitor
         return (string) $this->getName();
     }
 }
-

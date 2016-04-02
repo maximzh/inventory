@@ -152,4 +152,3 @@ class Mouse
         return (string) $this->getName();
     }
 }
-

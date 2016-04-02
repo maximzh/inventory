@@ -2,11 +2,14 @@
 
 namespace AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
@@ -21,9 +24,28 @@ class UsbHubType extends AbstractType
                 'required' => true,
                 )
             )
-            ->add('employee', EntityType::class,[
-                'class' => 'AppBundle\Entity\Employee'
-            ])
+            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+                $hub = $event->getData();
+                $form = $event->getForm();
+
+                if (null == $hub->getEmployee()) {
+                    $form->add('employee', EntityType::class,[
+                        'class' => 'AppBundle\Entity\Employee',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('e')
+                                ->select('e, h')
+                                ->leftJoin('e.usbHub', 'h')
+                                ->where('h.employee IS NULL');
+                        },
+                        'required' => false,
+                        'label' => 'Сотрудник'
+                    ]);
+                }
+            })
+            //->add('employee', EntityType::class,[
+            //    'class' => 'AppBundle\Entity\Employee'
+            //])
+            /*
             ->add('status', ChoiceType::class, array(
                 'label' => 'Статус',
                 'required' => false,
@@ -33,6 +55,7 @@ class UsbHubType extends AbstractType
                     ),
                 )
             )
+            */
             ;
     }
     public function configureOptions(OptionsResolver $resolver)

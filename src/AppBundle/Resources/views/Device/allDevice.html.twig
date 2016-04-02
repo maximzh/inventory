@@ -14,20 +14,28 @@
                             Тип устройства
                         </th>
                         <th class="text-primary">
-                            Статус устройства
+                            В пользовании у сотрудника
                         </th>
                     </tr>
                     </thead>
                     {% for mac in macs %}
                         <tr>
                             <td>
-                                {{ mac.name }}
+                                <a href="{{ path('edit-mac', {'id': mac.id}) }}">
+                                    {{ mac.name }}
+                                </a>
+
                             </td>
                             <td>
                                 {{ mac.type }}
                             </td>
                             <td>
-                                {{ mac.status }}
+                                {% if mac.employee is not null %}
+                                    {{ mac.employee.lastName }} {{ mac.employee.firstName }}
+                                {% else %}
+                                    Нет
+                                {% endif %}
+
                             </td>
                         </tr>
                     {% endfor %}
@@ -60,13 +68,20 @@
                     {% for armchair in armchairs %}
                         <tr>
                             <td>
-                                {{ armchair.name }}
+                                <a href="{{ path('edit-armchair', {'id': armchair.id}) }}">
+                                    {{ armchair.name }}
+                                </a>
+
                             </td>
                             <td>
                                 {{ armchair.type }}
                             </td>
                             <td>
-                                {{ armchair.status }}
+                                {% if armchair.employee is not null %}
+                                    {{ armchair.employee.lastName }} {{ armchair.employee.firstName }}
+                                {% else %}
+                                    Нет
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -99,13 +114,20 @@
                     {% for usbhub in usbhubs %}
                         <tr>
                             <td>
-                                {{ usbhub.name }}
+                                <a href="{{ path('edit-usbhub', {'id': usbhub.id}) }}">
+                                    {{ usbhub.name }}
+                                </a>
+
                             </td>
                             <td>
                                 {{ usbhub.type }}
                             </td>
                             <td>
-                                {{ usbhub.status }}
+                                {% if usbhub.employee is not null %}
+                                    {{ usbhub.employee.lastName }} {{ usbhub.employee.firstName }}
+                                {% else %}
+                                    Нет
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
