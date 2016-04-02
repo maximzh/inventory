@@ -34,7 +34,7 @@ class MouseType extends AbstractType
                         'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('e')
                                 ->select('e, m')
-                                ->leftJoin('e.armchair', 'm')
+                                ->leftJoin('e.mouse', 'm')
                                 ->where('m.employee IS NULL');
                         },
                         'required' => false,
