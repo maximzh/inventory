@@ -102,13 +102,20 @@
                     {% for monitor in monitors %}
                         <tr>
                             <td>
-                                {{ monitor.name }}
+                                <a href="{{ path('edit-monitor', {'id': monitor.id}) }}">
+                                    {{ monitor.name }} ({{ monitor.diagonal }}'')
+                                </a>
+
                             </td>
                             <td>
                                 {{ monitor.type }}
                             </td>
                             <td>
-                                {{ monitor.status }}
+                                {% if monitor.employee is not null %}
+                                    {{ monitor.employee.lastName }} {{ monitor.employee.firstName }}
+                                {% else %}
+                                    Нет
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

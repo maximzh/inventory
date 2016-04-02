@@ -9,6 +9,7 @@
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Employee;
+use AppBundle\Entity\Monitor;
 use AppBundle\Form\EmployeeType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -286,6 +287,36 @@ class EmployeeController extends Controller
                 "Устройство освободилось"
             );
         }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{employee_id}/free_monitor/{monitor_id}", name="free_employee_monitor")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee", options={"mapping": {"employee_id": "id"}})
+     * @ParamConverter("monitor", class="AppBundle:Monitor", options={"mapping": {"monitor_id": "id"}})
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeMonitorAction(Employee $employee, Monitor $monitor)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $monitors = array();
+        foreach ($employee->getMonitors() as $mon) {
+            $monitors[] = $mon;
+        }
+        if (in_array($monitor, $monitors)) {
+            $employee->removeMonitor($monitor);
+            $em->flush();
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+
         return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
     }
 

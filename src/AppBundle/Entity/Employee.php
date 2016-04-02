@@ -303,6 +303,7 @@ class Employee
     public function removeMonitor(\AppBundle\Entity\Monitor $monitor)
     {
         $this->monitors->removeElement($monitor);
+        $monitor->setEmployee(null);
     }
 
     /**

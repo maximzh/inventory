@@ -2,160 +2,213 @@
 
 {% block body %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            {% include '@App/Common/flash_message.html.twig' %}
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class=" col-md-12 col-lg-12 ">
-                            <table class="table table-user-information">
-                                <tbody>
-                                <tr>
-                                    <td>Позиция:</td>
-                                    <td>{{ employee.position }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Принят на работу:</td>
-                                    <td>{{ employee.employeeSince|date('d.m.Y') }}</td>
-                                </tr>
-                                {##}
-                                <tr>
-                                    <td>Mac Mini</td>
-                                    <td>
-                                        {% if employee.mac is not null %}
-                                            <span class="text-primary">Model: </span>{{ employee.mac.name }}<br>
-                                            <span class="text-primary">RAM: </span>{{ employee.mac.ram }}<br>
-                                            {% if employee.mac.ssd is not null %}
-                                                <span class="text-primary">SSD: </span>{{ employee.mac.ssd }}
-                                            {% endif %}
-                                            {% if employee.mac.hdd is not null %}
-                                                <span class="text-primary">HDD: </span>{{ employee.mac.hdd }}
-                                            {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                {% include '@App/Common/flash_message.html.twig' %}
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong class="panel-title text-center">{{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class=" col-md-12 col-lg-12 ">
+                                <table class="table table-user-information">
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-large">
+                                            Позиция
+                                        </td>
+                                        <td class="text-large">
+                                            {{ employee.position }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-large">
+                                            Принят на работу
+                                        </td>
+                                        <td class="text-large">
+                                            {{ employee.employeeSince|date('d.m.Y') }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-large">
+                                            Mac Mini
+                                        </td>
+                                        <td>
+                                            {% if employee.mac is not null %}
 
-                                            {% if is_granted('ROLE_ADMIN') %}
+                                                    <span class="text-primary">Model: </span>{{ employee.mac.name }}<br>
+                                                    <span class="text-primary">RAM: </span>{{ employee.mac.ram }}<br>
+                                                    {% if employee.mac.ssd is not null %}
+                                                        <span class="text-primary">SSD: </span>{{ employee.mac.ssd }}
+                                                    {% endif %}
+                                                    {% if employee.mac.hdd is not null %}
+                                                        <span class="text-primary">HDD: </span>{{ employee.mac.hdd }}
+                                                    {% endif %}
 
-                                                {% if is_granted('ROLE_ADMIN') %}
-                                                    <a href="{{ path('free_employee_mac', {'id': employee.id}) }}" class="btn btn-sm btn-danger pull-right">
-                                                        Освободить устройство
-                                                    </a>
-                                                {% endif %}
+                                                    {% if is_granted('ROLE_ADMIN') %}
 
-                                            {% endif %}
-                                        {% else %}
-                                            <span class="text-danger">нет</span>
-                                        {% endif %}
-                                    </td>
-                                </tr>
+                                                        {% if is_granted('ROLE_ADMIN') %}
+                                                            <br><br>
+                                                            <a href="{{ path('free_employee_mac', {'id': employee.id}) }}"
+                                                               class="btn btn-sm btn-danger">
+                                                                Освободить устройство
+                                                            </a>
+                                                        {% endif %}
 
-                                <tr>
-                                    <td>
-                                        Кресло
-                                    </td>
-                                    <td>
-                                        {% if employee.armchair is not null %}
-                                            <span class="text-primary">{{ employee.armchair.name }}</span><br>
-                                                {% if is_granted('ROLE_ADMIN') %}
-                                                    <a href="{{ path('free_employee_armchair', {'id': employee.id}) }}" class="btn btn-sm btn-danger pull-right" >
-                                                        Освободить устройство
-                                                    </a>
-                                                {% endif %}
-                                        {% else %}
-                                            <span class="text-danger">нет</span>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Usb Hub</td>
-                                    <td>
-                                        {% if employee.usbHub is not null %}
-                                            <span class="text-primary">{{ employee.usbHub.name }}</span><br>
-                                            {% if is_granted('ROLE_ADMIN') %}
-                                                <a href="{{ path('free_employee_usbhub', {'id': employee.id}) }}" class="btn btn-sm btn-danger pull-right" >
-                                                    Освободить устройство
-                                                </a>
+                                                    {% endif %}
+
+
+                                            {% else %}
+                                                <span class="text-danger">нет</span>
                                             {% endif %}
-                                        {% else %}
-                                            <span class="text-danger">нет</span>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                       Клавиатура
-                                    </td>
-                                    <td>
-                                        {% if employee.keyboard is not null %}
-                                            <span class="text-primary">{{ employee.keyboard.name }}</span><br>
-                                            {% if is_granted('ROLE_ADMIN') %}
-                                                <a href="{{ path('free_employee_keyboard', {'id': employee.id}) }}" class="btn btn-sm btn-danger pull-right" >
-                                                    Освободить устройство
-                                                </a>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-large">
+                                            Кресло
+                                        </td>
+                                        <td>
+                                            {% if employee.armchair is not null %}
+                                                    <span class="text-primary">{{ employee.armchair.name }}</span><br><br>
+                                                    {% if is_granted('ROLE_ADMIN') %}
+                                                        <a href="{{ path('free_employee_armchair', {'id': employee.id}) }}"
+                                                           class="btn btn-sm btn-danger">
+                                                            Освободить устройство
+                                                        </a>
+                                                    {% endif %}
+
+                                            {% else %}
+                                                <span class="text-danger">нет</span>
                                             {% endif %}
-                                        {% else %}
-                                            <span class="text-danger">нет</span>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Мышь
-                                    </td>
-                                    <td>
-                                        {% if employee.mouse is not null %}
-                                            <span class="text-primary">{{ employee.mouse.name }}</span><br>
-                                            {% if is_granted('ROLE_ADMIN') %}
-                                                <a href="{{ path('free_employee_mouse', {'id': employee.id}) }}" class="btn btn-sm btn-danger pull-right" >
-                                                    Освободить устройство
-                                                </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-large">
+                                            Usb Hub
+                                        </td>
+                                        <td>
+                                            {% if employee.usbHub is not null %}
+                                                    <span class="text-primary">{{ employee.usbHub.name }}</span><br><br>
+                                                    {% if is_granted('ROLE_ADMIN') %}
+                                                        <a href="{{ path('free_employee_usbhub', {'id': employee.id}) }}"
+                                                           class="btn btn-sm btn-danger">
+                                                            Освободить устройство
+                                                        </a>
+                                                    {% endif %}
+                                            {% else %}
+                                                <span class="text-danger">нет</span>
                                             {% endif %}
-                                        {% else %}
-                                            <span class="text-danger">нет</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-large">
+                                            Клавиатура
+                                        </td>
+                                        <td>
+                                            {% if employee.keyboard is not null %}
+                                                    <span class="text-primary">{{ employee.keyboard.name }}</span><br><br>
+                                                    {% if is_granted('ROLE_ADMIN') %}
+                                                        <a href="{{ path('free_employee_keyboard', {'id': employee.id}) }}"
+                                                           class="btn btn-sm btn-danger">
+                                                            Освободить устройство
+                                                        </a>
+                                                    {% endif %}
+                                            {% else %}
+                                                <span class="text-danger">нет</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-large">
+                                            Мышь
+                                        </td>
+                                        <td>
+                                            {% if employee.mouse is not null %}
+                                                    <span class="text-primary">{{ employee.mouse.name }}</span><br><br>
+                                                    {% if is_granted('ROLE_ADMIN') %}
+                                                        <a href="{{ path('free_employee_mouse', {'id': employee.id}) }}"
+                                                           class="btn btn-sm btn-danger">
+                                                            Освободить устройство
+                                                        </a>
+                                                    {% endif %}
+                                            {% else %}
+                                                <span class="text-danger">нет</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-large">
+                                            Наушники
+                                        </td>
+                                        <td>
+                                            {% if employee.headphones is not null %}
+                                                    <span class="text-primary">{{ employee.headphones.name }}</span><br><br>
+                                                    {% if is_granted('ROLE_ADMIN') %}
+                                                        <a href="{{ path('free_employee_headphones', {'id': employee.id}) }}"
+                                                           class="btn btn-sm btn-danger">
+                                                            Освободить устройство
+                                                        </a>
+                                                    {% endif %}
+                                            {% else %}
+                                                <span class="text-danger">нет</span>
+                                            {% endif %}
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="text-large">
+                                            Мониторы
+                                        </td>
+                                        <td>
+                                            {% if employee.monitors is not empty %}
+                                                <p>Количество: {{ employee.monitors|length }}</p>
+                                                {% for monitor in employee.monitors %}
+
+
+                                                    <div>
+                                                        <div class="well well-sm">
+                                                            <p>Марка: {{ monitor.name }}</p>
+                                                            <p>Диагональ: {{ monitor.diagonal }}''</p>
+                                                            {% if is_granted('ROLE_ADMIN') %}
+                                                                <a href="{{ path('free_employee_monitor', {'employee_id': employee.id, 'monitor_id': monitor.id}) }}"
+                                                                   class="btn btn-sm btn-danger">
+                                                                    Освободить устройство
+                                                                </a>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            {% else %}
+                                                <span class="text-danger">нет</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('edit_employee', {'id': employee.id}) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ path('export_one', {'id': employee.id}) }}" class="btn btn-primary">Export</a>
+                                    <br><br>
+                                    {% if employee.keyboard is null and employee.armchair is null and employee.keyboard is null and employee.headphones is null and employee.mac is null %}
+                                        {% if deleteForm is not null %}
+                                            {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить сотрудника?");' }}) }}
+                                            {{ form_widget(deleteForm.submit) }}
+                                            {{ form_end(deleteForm) }}
                                         {% endif %}
-                                    </td>
-                                </tr>
-                                <tr>
-                                <td>Наушники</td>
-                                <td>
-                                    {% if employee.headphones is not null %}
-                                        <span class="text-primary">{{ employee.headphones.name }}</span><br>
-                                        {% if is_granted('ROLE_ADMIN') %}
-                                            <a href="{{ path('free_employee_headphones', {'id': employee.id}) }}" class="btn btn-sm btn-danger pull-right" >
-                                                Освободить устройство
-                                            </a>
-                                        {% endif %}
-                                    {% else %}
-                                        <span class="text-danger">нет</span>
                                     {% endif %}
-                                </td>
 
-                                </tr>
 
-                                </tbody>
-                            </table>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('edit_employee', {'id': employee.id}) }}" class="btn btn-primary">Edit</a>
-                                <a href="{{ path('export_one', {'id': employee.id}) }}" class="btn btn-primary">Export</a>
-                                <br><br>
-                                {% if employee.keyboard is null and employee.armchair is null and employee.keyboard is null and employee.headphones is null and employee.mac is null %}
-                                    {% if deleteForm is not null %}
-                                        {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить сотрудника?");' }}) }}
-                                        {{ form_widget(deleteForm.submit) }}
-                                        {{ form_end(deleteForm) }}
-                                    {% endif %}
                                 {% endif %}
-
-
-                            {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
 {% endblock body %}
