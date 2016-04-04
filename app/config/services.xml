@@ -30,6 +30,13 @@
             <argument key="private_key_path">%private_key_path%</argument>
         </service>
 
+        <service id="app.twig_extension"
+                 class="AppBundle\Twig\AppExtension"
+                 public="false">
+            <argument type="service" id="doctrine" />
+            <tag name="twig.extension"/>
+        </service>
+
     </services>
 
 </container>

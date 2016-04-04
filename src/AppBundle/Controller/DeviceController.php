@@ -38,4 +38,45 @@ class DeviceController extends Controller
             'usbhubs' => $usbHubs,
         ];
     }
+
+
+    /**
+     * @Route("/devices/available", name="available_devices")
+     *
+     * @Template()
+     */
+    public function showAvailableDeviceAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $freeMacs = $em->getRepository('AppBundle:Mac')
+            ->findFreeMacs();
+
+        $freeMonitors = $em->getRepository('AppBundle:Monitor')
+            ->findFreeMonitors();
+
+        $freeArmchairs = $em->getRepository('AppBundle:Armchair')
+            ->findFreeArmchairs();
+
+        $freeKeyboards = $em->getRepository('AppBundle:Keyboard')
+            ->findFreeKeyboards();
+
+        $freeMouses = $em->getRepository('AppBundle:Mouse')
+            ->findFreeMouses();
+
+        $freeHeadphones = $em->getRepository('AppBundle:Headphones')
+            ->findFreeHeadphones();
+
+        $freeUsbHubs = $em->getRepository('AppBundle:UsbHub')
+            ->findFreeUsbHubs();
+
+        return [
+            'freeMacs' => $freeMacs,
+            'freeMonitors' => $freeMonitors,
+            'freeArmchairs' => $freeArmchairs,
+            'freeKeyboards' => $freeKeyboards,
+            'freeMouses' => $freeMouses,
+            'freeHeadphones' => $freeHeadphones,
+            'freeUsbHubs' => $freeUsbHubs,
+        ];
+    }
 }

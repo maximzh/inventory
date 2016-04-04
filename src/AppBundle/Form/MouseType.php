@@ -33,9 +33,15 @@ class MouseType extends AbstractType
                         'class' => 'AppBundle\Entity\Employee',
                         'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('e')
-                                ->select('e, m')
-                                ->leftJoin('e.mouse', 'm')
-                                ->where('m.employee IS NULL');
+                                ->select('e, a, k, u, mc, ms, h, mo')
+                                ->leftJoin('e.armchair', 'a')
+                                ->leftJoin('e.keyboard', 'k')
+                                ->leftJoin('e.usbHub', 'u')
+                                ->leftJoin('e.mac', 'mc')
+                                ->leftJoin('e.mouse', 'ms')
+                                ->leftJoin('e.headphones', 'h')
+                                ->leftJoin('e.monitors', 'mo')
+                                ->where('ms.employee IS NULL');
                         },
                         'required' => false,
                         'label' => 'Сотрудник'

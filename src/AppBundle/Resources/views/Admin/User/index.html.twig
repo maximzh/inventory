@@ -5,94 +5,102 @@
         <div class="row">
             <div class="col-md-12">
                 {% for flash_message in app.session.flashBag.get('notice') %}
-                    <div class="alert alert-success">
+                    <div class="alert alert-info">
                         <strong>
                             {{ flash_message }}
                         </strong>
                     </div>
                 {% endfor %}
-                <table class="table table-hover table-bordered">
-                    <thead>
-                    <tr class="bg-warning">
-                        <th>
-                            Имя пользователя
-                        </th>
-                        <th>
-                            Email пользователя
-                        </th>
-                        <th>
-                            Права
-                        </th>
-                        <th>
-                            Статус
-                        </th>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Users
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Имя пользователя
+                                </th>
+                                <th>
+                                    Email пользователя
+                                </th>
+                                <th>
+                                    Права
+                                </th>
+                                <th>
+                                    Статус
+                                </th>
 
-                    </tr>
-                    </thead>
+                            </tr>
+                            </thead>
 
-                    {% if superAdmins is not empty %}
+                            {% if superAdmins is not empty %}
 
-                        {% for superAdmin in superAdmins %}
-                            <tr class="bg-success">
-                                <td>
-                                    {{ superAdmin.realName }}
-                                </td>
-                                <td>
-                                    {{ superAdmin.email }}
-                                </td>
-                                <td>
+                                {% for superAdmin in superAdmins %}
+                                    <tr class="bg-success">
+                                        <td>
+                                            {{ superAdmin.realName }}
+                                        </td>
+                                        <td>
+                                            {{ superAdmin.email }}
+                                        </td>
+                                        <td>
                                 <span class="text-uppercase">
                                     Супер админ
                                 </span>
-                                </td>
-                                <td class="text-center">
-                                    {% if superAdmin.email == app.user.email %}
-                                        <span class="text-success text-uppercase">
-                                        Это Вы
-                                    </span>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% if superAdmin.email == app.user.email %}
+                                                <span class="text-success text-uppercase">
+                                                    Это Вы
+                                                  </span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
 
-                    {% endif %}
+                            {% endif %}
 
-                    {% for user in users %}
-                        <tr>
-                            <td>
-                                <a href="{{ path('admin_show_user', {'id': user.id}) }}">
-                                    {{ user.realName }}
-                                </a>
+                            {% for user in users %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('admin_show_user', {'id': user.id}) }}">
+                                            {{ user.realName }}
+                                        </a>
 
-                            </td>
-                            <td>
-                                {{ user.email }}
-                            </td>
-                            <td>
-                                {% if user.hasRole('ROLE_ADMIN') == true %}
-                                    <span class="text-danger">
+                                    </td>
+                                    <td>
+                                        {{ user.email }}
+                                    </td>
+                                    <td>
+                                        {% if user.hasRole('ROLE_ADMIN') == true %}
+                                            <span class="text-danger">
                                         Админ
                                     </span>
-                                {% else %}
-                                    <span class="text-success">
+                                        {% else %}
+                                            <span class="text-success">
                                         Пользователь
                                     </span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if user.locked == true %}
-                                    <span class="text-danger">
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if user.locked == true %}
+                                            <span class="text-danger">
                                         Заблокирован
                                     </span>
-                                {% else %}
-                                    <span class="text-success">
+                                        {% else %}
+                                            <span class="text-success">
                                         Разблокирован
                                     </span>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

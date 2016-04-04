@@ -34,8 +34,14 @@ class HeadphonesType extends AbstractType
                         'class' => 'AppBundle\Entity\Employee',
                         'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('e')
-                                ->select('e, h')
+                                ->select('e, h, a, k , u, mc, ms, mo')
                                 ->leftJoin('e.headphones', 'h')
+                                ->leftJoin('e.armchair', 'a')
+                                ->leftJoin('e.keyboard', 'k')
+                                ->leftJoin('e.usbHub', 'u')
+                                ->leftJoin('e.mac', 'mc')
+                                ->leftJoin('e.mouse', 'ms')
+                                ->leftJoin('e.monitors', 'mo')
                                 ->where('h.employee IS NULL');
                         },
                         'required' => false,
