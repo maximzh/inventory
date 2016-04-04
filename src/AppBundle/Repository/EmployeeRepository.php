@@ -15,8 +15,11 @@ class EmployeeRepository extends EntityRepository
     public function findAllEmployeesQuery()
     {
         return $this->createQueryBuilder('e')
-            ->select('e', 'm', 'u', 'a')
-            ->leftJoin('e.mac', 'm')
+            ->select('e', 'mc', 'u', 'a', 'ms', 'k', 'h', 'mo')
+            ->leftJoin('e.mac', 'mc')
+            ->leftJoin('e.keyboard', 'k')
+            ->leftJoin('e.headphones', 'h')
+            ->leftJoin('e.mouse', 'ms')
             ->leftJoin('e.usbHub', 'u')
             ->leftJoin('e.armchair', 'a')
             ->leftJoin('e.monitors', 'mo')
