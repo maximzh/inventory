@@ -111,16 +111,12 @@ class SpreadsheetManager
         $listFeed = $this->getListFeed();
         $entry = $this->findEmployeeInWorksheet($employee);
         if ( !$entry) {
-            $row = array(
-                'name' => $employeeFullName = $employee->getLastName().' '.$employee->getFirstName(),
-                'startdate' => $employeeStartDate = $employee->getEmployeeSince()->format("d.m.Y"),
-                'position' => $employee->getPosition(),
-            );
+            $row = $this->getEmployeeData($employee);
             $listFeed->insert($row);
 
             return true;
         }
-        $entry->update(array('position' => $employee->getPosition()));
+        $entry->update($this->getEmployeeData($employee));
 
         return true;
     }
@@ -162,7 +158,7 @@ class SpreadsheetManager
                 $startDate = $employee->getEmployeeSince()->format("d.m.Y");
 
                 if ($entryValues['name'] == $employeeName && $entryValues['startdate'] == $startDate) {
-                    $entry->update(array('position' => $employeePosition));
+                    $entry->update($this->getEmployeeData($employee));
                     unset($employees[$key]);
                 }
             }
@@ -170,15 +166,53 @@ class SpreadsheetManager
         // if employee not exists in google table, create a new row
         while (!empty($employees)) {
             $employee = array_shift($employees);
+            $row = $this->getEmployeeData($employee);
 
-            $date = $employee->getEmployeeSince()
-                ->format("d.m.Y");
-            $name = $employee->getLastName().' '.$employee->getFirstName();
-            $position = $employee->getPosition();
-
-            $row = array('name' => $name, 'startdate' => $date, 'position' => $position);
             $listFeed->insert($row);
         }
+    }
+
+    private function getEmployeeData(Employee $employee)
+    {
+        $countMonitors = 0;
+        $name = $employee->getLastName().' '.$employee->getFirstName();
+        $position = $employee->getPosition();
+        $startDate = $employee->getEmployeeSince()->format('d.m.Y');
+        $ram = 0;
+        $ssd = 0;
+        $softChair = 0;
+        $usbHub = 0;
+
+        if ($employee->getMonitors()) {
+            $countMonitors = count($employee->getMonitors());
+        }
+
+        if ($mac = $employee->getMac()) {
+            $ram = $mac->getRam();
+            if ($mac->getSsd()) {
+                $ssd = $mac->getSsd();
+            }
+        }
+
+        if ($employee->getArmchair()) {
+            $softChair = 1;
+        }
+
+        if ($employee->getUsbHub()) {
+            $usbHub =1;
+        }
+
+        return [
+            'name' => $name,
+            'startdate' => $startDate,
+            'position' => $position,
+            'monitors' => $countMonitors,
+            'rammacmini' => $ram,
+            'ssd' => $ssd,
+            'softchair' => $softChair,
+            'usbhub' => $usbHub,
+        ];
+
     }
 
 

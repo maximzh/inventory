@@ -352,10 +352,11 @@ class EmployeeController extends Controller
         $validator = $this->get('validator');
         $em = $this->getDoctrine()->getManager();
 
+        $fail = 0;
+        $success = 0;
         foreach ($preparedData as $item) {
             $errors = $validator->validate($item);
-            $fail = 0;
-            $success = 0;
+
             if (0 == count($errors)) {
                 $em->persist($item);
                 $success++;
