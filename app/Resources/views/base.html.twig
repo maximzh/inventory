@@ -54,11 +54,17 @@
 
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ path('homepage') }}">Все сотрудники</a>
+                                    <a href="{{ path('homepage') }}">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        Все сотрудники
+                                    </a>
                                 </li>
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li>
-                                        <a href="{{ path('new_employee') }}">Добавить сотрудника</a>
+                                        <a href="{{ path('new_employee') }}">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Добавить сотрудника
+                                        </a>
                                     </li>
                                 {% endif %}
                             </ul>
@@ -69,36 +75,71 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ path('devices') }}">Все устройства</a>
+                                    <a href="{{ path('devices') }}">
+                                        <span class="glyphicon glyphicon-hdd"></span>
+                                        Все устройства
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('available_devices') }}">
+                                        <span class="glyphicon glyphicon-hdd"></span>
+                                        Свободные устройства
+                                    </a>
                                 </li>
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li>
-                                        <a href="{{ path('add-monitor') }}">Добавить монитор</a>
+                                        <a href="{{ path('add-monitor') }}">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Добавить монитор
+                                        </a>
                                     </li>
                                 {% endif %}
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li>
-                                        <a href="{{ path('add-mac') }}">Добавить Mac</a>
+                                        <a href="{{ path('add-mac') }}">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Добавить Mac
+                                        </a>
                                     </li>
                                 {% endif %}
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li>
-                                        <a href="{{ path('add-armchair') }}">Добавить кресло</a>
+                                        <a href="{{ path('add-armchair') }}">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Добавить кресло
+                                        </a>
                                     </li>
                                 {% endif %}
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li>
-                                        <a href="{{ path('add-headphones') }}">Добавить наушники</a>
+                                        <a href="{{ path('add-headphones') }}">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Добавить наушники
+                                        </a>
                                     </li>
                                 {% endif %}
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li>
-                                        <a href="{{ path('add-keyboard') }}">Добавить клавиатуру</a>
+                                        <a href="{{ path('add-keyboard') }}">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Добавить клавиатуру
+                                        </a>
                                     </li>
                                 {% endif %}
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li>
-                                        <a href="{{ path('add-mouse') }}">Добавить мышь</a>
+                                        <a href="{{ path('add-mouse') }}">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Добавить мышь
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('add-usbhub') }}">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Добавить USB HUB
+                                        </a>
                                     </li>
                                 {% endif %}
                             </ul>
@@ -109,6 +150,28 @@
                                     <span class="glyphicon glyphicon-user"></span>
                                     Пользователи
                                 </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <li class="dropdown">
+                                <a href="" data-toggle="dropdown" class="dropdown-toggle">
+                                    <span class="glyphicon glyphicon-hdd"></span>  Импорт/Экспорт <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ path('show_new_entries') }}">
+                                            <span class="glyphicon glyphicon-import"></span>
+                                            Импортировать
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('export_all') }}">
+                                            <span class="glyphicon glyphicon-export"></span>
+                                            Экспортировать
+                                        </a>
+                                    </li>
+                                </ul>
+
                             </li>
                         {% endif %}
 
@@ -123,6 +186,7 @@
 {% block body %}{% endblock %}
 {% block javascripts %}
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-confirmation.js') }}"></script>
 {% endblock %}
 </body>
 </html>

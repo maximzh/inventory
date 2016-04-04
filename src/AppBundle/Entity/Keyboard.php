@@ -38,9 +38,14 @@ class Keyboard
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
     protected $status;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Employee", inversedBy="keyboard")
+     */
+    private $employee;
 
     /**
      * Get id
@@ -126,10 +131,25 @@ class Keyboard
     }
 
     /**
+     * @return Employee
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
+
+    /**
+     * @param Employee $employee
+     */
+    public function setEmployee($employee)
+    {
+        $this->employee = $employee;
+    }
+    
+    /**
      * @return string
      */
     public function __toString() {
         return (string) $this->getName();
     }
 }
-

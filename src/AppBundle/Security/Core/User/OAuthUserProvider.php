@@ -30,6 +30,13 @@ class OAuthUserProvider extends BaseFOSUBProvider
             $user = $this->userManager->createUser();
             $user->$setter_id($username);
             $user->$setter_token($response->getAccessToken());
+
+            //switch ($service) {
+            //    case 'google':
+            //        $refreshToken = $response->getRefreshToken();
+            //        $user->setGoogleRefreshToken($refreshToken);
+            //        break;
+            //}
             //I have set all requested data with the user's username
             //modify here with relevant data
             $user->setUsername($response->getEmail());

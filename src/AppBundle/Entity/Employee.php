@@ -8,6 +8,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -71,6 +72,60 @@ class Employee
      * @Assert\NotBlank(message="Должность сотрудника должна быть указана")
      */
     private $position;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Mac", mappedBy="employee")
+     */
+    private $mac;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Monitor", mappedBy="employee")
+     */
+    private $monitors;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Keyboard", mappedBy="employee")
+     */
+    private $keyboard;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Mouse", mappedBy="employee")
+     */
+    private $mouse;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Armchair", mappedBy="employee")
+     */
+    private $armchair;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Headphones", mappedBy="employee")
+     */
+    private $headphones;
+
+    /**
+     * @ORM\OneToOne(targetEntity="UsbHub", mappedBy="employee")
+     */
+    private $usbHub;
+
+
+
+
+    /**
+     * @return string
+     */
+    public function __toString() {
+        $name = $this->getFirstName().' '.$this->getLastName().' '.$this->getFatherName();
+        return (string) $name;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->monitors = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -200,5 +255,184 @@ class Employee
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Set mac
+     *
+     * @param \AppBundle\Entity\Mac $mac
+     *
+     * @return Employee
+     */
+    public function setMac(\AppBundle\Entity\Mac $mac = null)
+    {
+        $this->mac = $mac;
+
+        return $this;
+    }
+
+    /**
+     * Get mac
+     *
+     * @return \AppBundle\Entity\Mac
+     */
+    public function getMac()
+    {
+        return $this->mac;
+    }
+
+    /**
+     * Add monitor
+     *
+     * @param \AppBundle\Entity\Monitor $monitor
+     *
+     * @return Employee
+     */
+    public function addMonitor(\AppBundle\Entity\Monitor $monitor)
+    {
+        $this->monitors[] = $monitor;
+
+        return $this;
+    }
+
+    /**
+     * Remove monitor
+     *
+     * @param \AppBundle\Entity\Monitor $monitor
+     */
+    public function removeMonitor(\AppBundle\Entity\Monitor $monitor)
+    {
+        $this->monitors->removeElement($monitor);
+        $monitor->setEmployee(null);
+    }
+
+    /**
+     * Get monitors
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMonitors()
+    {
+        return $this->monitors;
+    }
+
+    /**
+     * Set keyboard
+     *
+     * @param \AppBundle\Entity\Keyboard $keyboard
+     *
+     * @return Employee
+     */
+    public function setKeyboard(\AppBundle\Entity\Keyboard $keyboard = null)
+    {
+        $this->keyboard = $keyboard;
+
+        return $this;
+    }
+
+    /**
+     * Get keyboard
+     *
+     * @return \AppBundle\Entity\Keyboard
+     */
+    public function getKeyboard()
+    {
+        return $this->keyboard;
+    }
+
+    /**
+     * Set mouse
+     *
+     * @param \AppBundle\Entity\Mouse $mouse
+     *
+     * @return Employee
+     */
+    public function setMouse(\AppBundle\Entity\Mouse $mouse = null)
+    {
+        $this->mouse = $mouse;
+
+        return $this;
+    }
+
+    /**
+     * Get mouse
+     *
+     * @return \AppBundle\Entity\Mouse
+     */
+    public function getMouse()
+    {
+        return $this->mouse;
+    }
+
+    /**
+     * Set armchair
+     *
+     * @param \AppBundle\Entity\Armchair $armchair
+     *
+     * @return Employee
+     */
+    public function setArmchair(\AppBundle\Entity\Armchair $armchair = null)
+    {
+        $this->armchair = $armchair;
+
+        return $this;
+    }
+
+    /**
+     * Get armchair
+     *
+     * @return \AppBundle\Entity\Armchair
+     */
+    public function getArmchair()
+    {
+        return $this->armchair;
+    }
+
+    /**
+     * Set headphones
+     *
+     * @param \AppBundle\Entity\Headphones $headphones
+     *
+     * @return Employee
+     */
+    public function setHeadphones(\AppBundle\Entity\Headphones $headphones = null)
+    {
+        $this->headphones = $headphones;
+
+        return $this;
+    }
+
+    /**
+     * Get headphones
+     *
+     * @return \AppBundle\Entity\Headphones
+     */
+    public function getHeadphones()
+    {
+        return $this->headphones;
+    }
+
+    /**
+     * Set usbHub
+     *
+     * @param \AppBundle\Entity\UsbHub $usbHub
+     *
+     * @return Employee
+     */
+    public function setUsbHub(\AppBundle\Entity\UsbHub $usbHub = null)
+    {
+        $this->usbHub = $usbHub;
+
+        return $this;
+    }
+
+    /**
+     * Get usbHub
+     *
+     * @return \AppBundle\Entity\UsbHub
+     */
+    public function getUsbHub()
+    {
+        return $this->usbHub;
     }
 }

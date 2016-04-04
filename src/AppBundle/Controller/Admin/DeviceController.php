@@ -8,12 +8,14 @@ use AppBundle\Entity\Keyboard;
 use AppBundle\Entity\Mac;
 use AppBundle\Entity\Monitor;
 use AppBundle\Entity\Mouse;
+use AppBundle\Entity\UsbHub;
 use AppBundle\Form\ArmchairType;
 use AppBundle\Form\HeadphonesType;
 use AppBundle\Form\KeyboardType;
 use AppBundle\Form\MacType;
 use AppBundle\Form\MonitorType;
 use AppBundle\Form\MouseType;
+use AppBundle\Form\UsbHubType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -177,7 +179,7 @@ class DeviceController extends Controller
     {
         $device = $this->getDoctrine()->getManager()->getRepository('AppBundle:Armchair')->find($id);
 
-        $form = $this->createForm(MacType::class, $device);
+        $form = $this->createForm(ArmchairType::class, $device);
         $form->handleRequest($request);
 
         if($request->getMethod() == Request::METHOD_POST) {
@@ -343,6 +345,66 @@ class DeviceController extends Controller
         $device = $this->getDoctrine()->getManager()->getRepository('AppBundle:Mouse')->find($id);
 
         $form = $this->createForm(MouseType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST) {
+            if ($form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+            }
+        }
+
+        return [
+            'device' => $device,
+            'form_device' => $form->createView()
+        ];
+    }
+
+    /**
+     * @Route("/add-usbhub", name="add-usbhub")
+     * @Template()
+     *
+     * @Method({"GET", "POST"})
+     *
+     */
+    public function addUsbHubAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $device = new UsbHub();
+        $device->setType('Usb Hub');
+
+        $form = $this->createForm(UsbHubType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST){
+            if ($form->isValid()) {
+                if($device->getEmployee() != null){
+                    $device->setStatus('busy');
+                }else{
+                    $device->setStatus('free');
+                }
+                $em->persist($device);
+                $em->flush();
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+            }
+        }
+        return ['form_device' => $form->createView()];
+    }
+
+    /**
+     * @Route("/edit-usbhub/{id}", name="edit-usbhub")
+     * @Template()
+     * @param $id
+     *
+     * @Method({"GET", "POST"})
+     *
+     * @return array
+     */
+    public function editUsbHubAction(Request $request, $id)
+    {
+        $device = $this->getDoctrine()->getManager()->getRepository('AppBundle:UsbHub')->find($id);
+
+        $form = $this->createForm(UsbHubType::class, $device);
         $form->handleRequest($request);
 
         if($request->getMethod() == Request::METHOD_POST) {

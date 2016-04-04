@@ -45,9 +45,15 @@ class Monitor
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
     protected $status;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="monitors")
+     */
+    private $employee;
+
 
 
     /**
@@ -157,10 +163,27 @@ class Monitor
     }
 
     /**
+     * @return Employee
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
+
+    /**
+     * @param Employee $employee
+     */
+    public function setEmployee($employee)
+    {
+        $this->employee = $employee;
+    }
+    
+    
+    
+    /**
      * @return string
      */
     public function __toString() {
         return (string) $this->getName();
     }
 }
-

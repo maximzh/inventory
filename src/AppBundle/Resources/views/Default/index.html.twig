@@ -16,20 +16,40 @@
 
 
                 {# total items count #}
-                <div class="well">
-                    <span class="text-success">Всего сотрудников:</span> {{ employees.getTotalItemCount }}
+                <div class="panel panel-info">
+                    <div class="panel-heading"></div>
+                    <div class="panel-body">
+                        Всего сотрудников: {{ employees.getTotalItemCount }}
+                    </div>
+
                 </div>
-                <table class="table table-bordered table-hover main-employees-list">
+
+                <table class="table table-hover main-employees-list">
                     <thead>
                     <tr class="bg-info">
-                        <th class="text-primary">
-                            ФИО сотрудника
+                        <th>
+                            ФИО
                         </th>
-                        <th class="text-primary">
-                            Дата приема на работу
+                        <th>
+                            Принят на работу
                         </th>
-                        <th class="text-primary">
+                        <th>
                             Позиция
+                        </th>
+                        <th>
+                            Мониторы
+                        </th>
+                        <th>
+                            RAM Mac Mini
+                        </th>
+                        <th>
+                            SSD
+                        </th>
+                        <th >
+                            Кресло
+                        </th>
+                        <th>
+                            USB HUB
                         </th>
                     </tr>
                     </thead>
@@ -37,17 +57,41 @@
                     <tr class="bg-warning">
                         {# sorting of properties based on query components #}
                         <td>
-                            <span class="glyphicon glyphicon-sort"></span>
+                            <span class="glyphicon glyphicon-sort"></span><br>
                             {{ knp_pagination_sortable(employees, 'Сортировать', 'e.lastName') }}
                         </td>
                         <td>
-                            <span class="glyphicon glyphicon-sort"></span>
+                            <span class="glyphicon glyphicon-sort"></span><br>
                             {{ knp_pagination_sortable(employees, 'Сортировать', 'e.employeeSince') }}
                         </td>
                         <td>
                             <span class="glyphicon glyphicon-sort"></span>
                             {{ knp_pagination_sortable(employees, 'Сортировать', 'e.position') }}
                         </td>
+                        <td>
+                            {#
+                            <span class="glyphicon glyphicon-sort"></span>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.wardrobecount') }}
+                            #}
+
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span><br>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'm.ram') }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span><br>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'm.ssd') }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span><br>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'a.name') }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span><br>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'u.name') }}
+                        </td>
+
                     </tr>
 
                     {% for employee in employees %}
@@ -63,6 +107,41 @@
                             </td>
                             <td>
                                 {{ employee.position }}
+                            </td>
+                            <td>
+                                {% if employee.monitors|length != 0 and employee.monitors != null %}
+                                    {{ employee.monitors|length }}
+                                {% else %}
+                                    {{ employee.monitors|length }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if employee.mac.ram is defined%}
+                                    {{ employee.mac.ram }}
+                                {% else %}
+                                    {{ 0 }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if employee.mac.ssd is defined and employee.mac.ssd > 0 %}
+                                    {{ 1 }}
+                                {% else %}
+                                    {{ 0 }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if employee.armchair is defined  and employee.armchair != null %}
+                                {{ employee.armchair|length }}
+                                {% else %}
+                                    {{ employee.armchair|length }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if employee.usbHub is defined  and employee.usbHub != null %}
+                                    {{ employee.usbHub|length }}
+                                {% else %}
+                                    {{ employee.usbHub|length }}
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

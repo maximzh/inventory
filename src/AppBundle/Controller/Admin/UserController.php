@@ -36,13 +36,17 @@ class UserController extends Controller
             throw $this->createNotFoundException('Пользователи не найдены');
         }
 
+        $superAdmins = array();
         foreach ($allUsers as $key => $user) {
             if ($user->hasRole('ROLE_SUPER_ADMIN')) {
+
+                $superAdmins[] = $user;
                 unset($allUsers[$key]);
             }
         }
 
         return [
+            'superAdmins' => $superAdmins,
             'users' => $allUsers,
         ];
     }

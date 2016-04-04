@@ -27,6 +27,7 @@ class DeviceController extends Controller
         $macs = $this->getDoctrine()->getRepository('AppBundle:Mac')->findAll();
         $armchairs = $this->getDoctrine()->getRepository('AppBundle:Armchair')->findAll();
         $headphones = $this->getDoctrine()->getRepository('AppBundle:Headphones')->findAll();
+        $usbHubs = $this->getDoctrine()->getRepository('AppBundle:UsbHub')->findAll();
         return [
             'mouses' => $mouses,
             'monitors' => $monitors,
@@ -34,6 +35,48 @@ class DeviceController extends Controller
             'macs' => $macs,
             'armchairs' => $armchairs,
             'headphones' => $headphones,
+            'usbhubs' => $usbHubs,
+        ];
+    }
+
+
+    /**
+     * @Route("/devices/available", name="available_devices")
+     *
+     * @Template()
+     */
+    public function showAvailableDeviceAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $freeMacs = $em->getRepository('AppBundle:Mac')
+            ->findFreeMacs();
+
+        $freeMonitors = $em->getRepository('AppBundle:Monitor')
+            ->findFreeMonitors();
+
+        $freeArmchairs = $em->getRepository('AppBundle:Armchair')
+            ->findFreeArmchairs();
+
+        $freeKeyboards = $em->getRepository('AppBundle:Keyboard')
+            ->findFreeKeyboards();
+
+        $freeMouses = $em->getRepository('AppBundle:Mouse')
+            ->findFreeMouses();
+
+        $freeHeadphones = $em->getRepository('AppBundle:Headphones')
+            ->findFreeHeadphones();
+
+        $freeUsbHubs = $em->getRepository('AppBundle:UsbHub')
+            ->findFreeUsbHubs();
+
+        return [
+            'freeMacs' => $freeMacs,
+            'freeMonitors' => $freeMonitors,
+            'freeArmchairs' => $freeArmchairs,
+            'freeKeyboards' => $freeKeyboards,
+            'freeMouses' => $freeMouses,
+            'freeHeadphones' => $freeHeadphones,
+            'freeUsbHubs' => $freeUsbHubs,
         ];
     }
 }

@@ -3,100 +3,267 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                    <tr class="bg-info">
-                        <th class="text-primary">
-                            Название устройства
-                        </th>
-                        <th class="text-primary">
-                            Тип устройства
-                        </th>
-                        <th class="text-primary">
-                            Статус устройства
-                        </th>
-                    </tr>
-                    </thead>
-                    {% for mac in macs %}
-                        <tr>
-                            <td>
-                                {{ mac.name }}
-                            </td>
-                            <td>
-                                {{ mac.type }}
-                            </td>
-                            <td>
-                                {{ mac.status }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    {% for keyboard in keyboards %}
-                        <tr>
-                            <td>
-                                {{ keyboard.name }}
-                            </td>
-                            <td>
-                                {{ keyboard.type }}
-                            </td>
-                            <td>
-                                {{ keyboard.status }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    {% for headphone in headphones %}
-                        <tr>
-                            <td>
-                                {{ headphone.name }}
-                            </td>
-                            <td>
-                                {{ headphone.type }}
-                            </td>
-                            <td>
-                                {{ headphone.status }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    {% for armchair in armchairs %}
-                        <tr>
-                            <td>
-                                {{ armchair.name }}
-                            </td>
-                            <td>
-                                {{ armchair.type }}
-                            </td>
-                            <td>
-                                {{ armchair.status }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    {% for monitor in monitors %}
-                        <tr>
-                            <td>
-                                {{ monitor.name }}
-                            </td>
-                            <td>
-                                {{ monitor.type }}
-                            </td>
-                            <td>
-                                {{ monitor.status }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    {% for mouse in mouses %}
-                        <tr>
-                            <td>
-                                {{ mouse.name }}
-                            </td>
-                            <td>
-                                {{ mouse.type }}
-                            </td>
-                            <td>
-                                {{ mouse.status }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
+            <div class="col-md-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                            <th>Mac Mini</th>
+                            <th>Клавиатуры</th>
+                            <th>Наушники</th>
+                            <th>Кресла</th>
+                            <th>Мониторы</th>
+                            <th>Мыши</th>
+                            <th>Usb Hub's</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    Всего: {{ macs|length }}<br>
+                                    Своб :  {{ countFreeDevices(macs) }}
+                                </td>
+                                <td>
+                                    Всего: {{ keyboards|length }}<br>
+                                    Своб :  {{ countFreeDevices(keyboards) }}
+                                </td>
+                                <td>
+                                    Всего: {{ headphones|length }}<br>
+                                    Своб :  {{ countFreeDevices(headphones) }}
+                                </td>
+                                <td>
+                                    Всего: {{ armchairs|length }}<br>
+                                    Своб :  {{ countFreeDevices(armchairs) }}
+                                </td>
+                                <td>
+                                    Всего: {{ monitors|length }}<br>
+                                    Своб :  {{ countFreeDevices(monitors) }}
+                                </td>
+                                <td>
+                                    Всего: {{ mouses|length }}<br>
+                                    Своб :  {{ countFreeDevices(mouses) }}
+                                </td>
+                                <td>
+                                    Всего: {{ usbhubs|length }}<br>
+                                    Своб :  {{ countFreeDevices(usbhubs) }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Все устройства
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Название устройства
+                                </th>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <th></th>
+                                {% endif %}
+                                <th>
+                                    Тип устройства
+                                </th>
+                                <th>
+                                    В пользовании у сотрудника
+                                </th>
+                            </tr>
+                            </thead>
+                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            {% for mac in macs %}
+                                <tr>
+                                    <td>
+                                        {{ mac.name }}
+                                    </td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <td>
+                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-mac', {'id': mac.id}) }}"></a>
+                                        </td>
+                                    {% endif %}
+                                    <td>
+                                        {{ mac.type }}
+                                    </td>
+                                    <td>
+                                        {% if mac.employee is not null %}
+                                            <a href="{{ path('show_employee', {'id': mac.employee.id}) }}">
+                                                {{ mac.employee.lastName }} {{ mac.employee.firstName }}
+                                            </a>
+
+                                        {% else %}
+                                            Нет
+                                        {% endif %}
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            {% for keyboard in keyboards %}
+                                <tr>
+                                    <td>
+                                        {{ keyboard.name }}
+                                    </td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <td>
+                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-keyboard', {'id': keyboard.id}) }}"></a>
+                                        </td>
+                                    {% endif %}
+                                    <td>
+                                        {{ keyboard.type }}
+                                    </td>
+                                    <td>
+                                        {% if keyboard.employee is not null %}
+                                            <a href="{{ path('show_employee', {'id': keyboard.employee.id}) }}">
+                                                {{ keyboard.employee.lastName }} {{ keyboard.employee.firstName }}
+                                            </a>
+
+                                        {% else %}
+                                            Нет
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            {% for headphone in headphones %}
+                                <tr>
+                                    <td>
+                                        {{ headphone.name }}
+                                    </td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <td>
+                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-headphones', {'id': headphone.id}) }}"></a>
+                                        </td>
+                                    {% endif %}
+                                    <td>
+                                        {{ headphone.type }}
+                                    </td>
+                                    <td>
+                                        {% if headphone.employee is not null %}
+                                            <a href="{{ path('show_employee', {'id':  headphone.employee.id}) }}">
+                                                {{ headphone.employee.lastName }} {{ headphone.employee.firstName }}
+                                            </a>
+                                        {% else %}
+                                            Нет
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            {% for armchair in armchairs %}
+                                <tr>
+                                    <td>
+                                        {{ armchair.name }}
+                                    </td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <td>
+                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-armchair', {'id': armchair.id}) }}"></a>
+                                        </td>
+                                    {% endif %}
+                                    <td>
+                                        {{ armchair.type }}
+                                    </td>
+                                    <td>
+                                        {% if armchair.employee is not null %}
+                                            <a href="{{ path('show_employee', {'id': armchair.employee.id}) }}">
+                                                {{ armchair.employee.lastName }} {{ armchair.employee.firstName }}
+                                            </a>
+                                        {% else %}
+                                            Нет
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            {% for monitor in monitors %}
+                                <tr>
+                                    <td>
+                                        {{ monitor.name }} ({{ monitor.diagonal }}'')
+                                    </td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <td>
+                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-monitor', {'id': monitor.id}) }}"></a>
+                                        </td>
+                                    {% endif %}
+                                    <td>
+                                        {{ monitor.type }}
+                                    </td>
+                                    <td>
+                                        {% if monitor.employee is not null %}
+                                            <a href="{{ path('show_employee', {'id': monitor.employee.id}) }}">
+                                                {{ monitor.employee.lastName }} {{ monitor.employee.firstName }}
+
+                                            </a>
+                                        {% else %}
+                                            Нет
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            {% for mouse in mouses %}
+                                <tr>
+                                    <td>
+                                        {{ mouse.name }}
+                                    </td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <td>
+                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-mouse', {'id': mouse.id}) }}"></a>
+                                        </td>
+                                    {% endif %}
+                                    <td>
+                                        {{ mouse.type }}
+                                    </td>
+                                    <td>
+                                        {% if mouse.employee is not null %}
+                                            <a href="{{ path('show_employee', {'id': mouse.employee.id}) }}">
+                                                {{ mouse.employee.lastName }} {{ mouse.employee.firstName }}
+                                            </a>
+                                        {% else %}
+                                            Нет
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            {% for usbhub in usbhubs %}
+                                <tr>
+                                    <td>
+                                        {{ usbhub.name }}
+                                    </td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <td>
+                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-usbhub', {'id': usbhub.id}) }}"></a>
+                                        </td>
+                                    {% endif %}
+                                    <td>
+                                        {{ usbhub.type }}
+                                    </td>
+                                    <td>
+                                        {% if usbhub.employee is not null %}
+                                            <a href="{{ path('show_employee', {'id': usbhub.employee.id}) }}">
+                                                {{ usbhub.employee.lastName }} {{ usbhub.employee.firstName }}
+
+                                            </a>
+                                        {% else %}
+                                            Нет
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>

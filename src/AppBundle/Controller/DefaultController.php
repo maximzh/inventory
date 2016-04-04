@@ -30,7 +30,7 @@ class DefaultController extends Controller
             ->findAllEmployeesQuery();
 
         $pagination = $this->get('knp_paginator')
-            ->paginate($query, $request->query->getInt('page', 1), 100);
+            ->paginate($query, $request->query->getInt('page', 1), 500);
 
         return [
             'employees' => $pagination,

@@ -13,22 +13,22 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
-class MouseType extends AbstractType
+class UsbHubType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name', TextType::class, array(
-                'label' => 'Название мыши',
+                'label' => 'Название USB HUB',
                 'required' => true,
                 )
             )
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
-                $mouse = $event->getData();
+                $hub = $event->getData();
                 $form = $event->getForm();
 
-                if (null == $mouse->getEmployee()) {
+                if (null == $hub->getEmployee()) {
                     $form->add('employee', EntityType::class,[
                         'class' => 'AppBundle\Entity\Employee',
                         'query_builder' => function (EntityRepository $er) {
@@ -41,7 +41,7 @@ class MouseType extends AbstractType
                                 ->leftJoin('e.mouse', 'ms')
                                 ->leftJoin('e.headphones', 'h')
                                 ->leftJoin('e.monitors', 'mo')
-                                ->where('ms.employee IS NULL');
+                                ->where('h.employee IS NULL');
                         },
                         'required' => false,
                         'label' => 'Сотрудник'
@@ -68,7 +68,7 @@ class MouseType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'AppBundle\Entity\Mouse',
+                'data_class' => 'AppBundle\Entity\UsbHub',
                 'em' => null,
             )
         );

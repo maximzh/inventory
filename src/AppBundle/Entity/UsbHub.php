@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Headphones
+ * UsbHub
  *
- * @ORM\Table(name="headphones")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\HeadphonesRepository")
+ * @ORM\Table(name="usb_hub")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UsbHubRepository")
  */
-class Headphones
+class UsbHub
 {
     /**
      * @var int
@@ -43,7 +43,7 @@ class Headphones
     protected $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="Employee", inversedBy="headphones")
+     * @ORM\OneToOne(targetEntity="Employee", inversedBy="usbHub")
      */
     private $employee;
 

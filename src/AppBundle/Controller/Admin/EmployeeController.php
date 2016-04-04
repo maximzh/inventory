@@ -9,12 +9,16 @@
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Employee;
+use AppBundle\Entity\Monitor;
 use AppBundle\Form\EmployeeType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -116,12 +120,14 @@ class EmployeeController extends Controller
      */
     public function removeAction(Request $request, Employee $employee)
     {
+        $spreadsheetManager = $this->get('app.spreadsheet_manager');
         $em = $this->getDoctrine()->getManager();
         $form = $this->get('app.form_generator')
             ->createEmployeeDeleteForm($employee);
 
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $spreadsheetManager->deleteOneRow($employee);
             $em->remove($employee);
             $em->flush();
         }
@@ -129,6 +135,278 @@ class EmployeeController extends Controller
         $this->addFlash(
             'notice',
             'Сотрудник был успешно удален.'
+        );
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{id}/free_mac", name="free_employee_mac")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeMacAction(Employee $employee)
+    {
+        $mac = $employee->getMac();
+        if ($mac) {
+            $em = $this->getDoctrine()->getManager();
+            $mac->setEmployee(null);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{id}/free_armchair", name="free_employee_armchair")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeArmchairAction(Employee $employee)
+    {
+        $armchair = $employee->getArmchair();
+        if ($armchair) {
+            $em = $this->getDoctrine()->getManager();
+            $armchair->setEmployee(null);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{id}/free_usbhub", name="free_employee_usbhub")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeUsbHubAction(Employee $employee)
+    {
+        $hub = $employee->getUsbHub();
+        if ($hub) {
+            $em = $this->getDoctrine()->getManager();
+            $hub->setEmployee(null);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{id}/free_headphones", name="free_employee_headphones")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeHeadphonesAction(Employee $employee)
+    {
+        $headphones = $employee->getHeadphones();
+        if ($headphones) {
+            $em = $this->getDoctrine()->getManager();
+            $headphones->setEmployee(null);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{id}/free_keyboard", name="free_employee_keyboard")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeKeyboardAction(Employee $employee)
+    {
+        $keyboard = $employee->getKeyboard();
+        if ($keyboard) {
+            $em = $this->getDoctrine()->getManager();
+            $keyboard->setEmployee(null);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{id}/free_mouse", name="free_employee_mouse")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeMouseAction(Employee $employee)
+    {
+        $mouse = $employee->getMouse();
+        if ($mouse) {
+            $em = $this->getDoctrine()->getManager();
+            $mouse->setEmployee(null);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{employee_id}/free_monitor/{monitor_id}", name="free_employee_monitor")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee", options={"mapping": {"employee_id": "id"}})
+     * @ParamConverter("monitor", class="AppBundle:Monitor", options={"mapping": {"monitor_id": "id"}})
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeMonitorAction(Employee $employee, Monitor $monitor)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $monitors = array();
+        foreach ($employee->getMonitors() as $mon) {
+            $monitors[] = $mon;
+        }
+        if (in_array($monitor, $monitors)) {
+            $employee->removeMonitor($monitor);
+            $em->flush();
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+
+
+    /**
+     * @return array
+     *
+     * @Route("/show_new_worksheet_data", name="show_new_entries")
+     *
+     * @Template()
+     */
+    public function showNewGoogleTableDataAction()
+    {
+        $spreadsheetManager = $this->get('app.spreadsheet_manager');
+        $data = $spreadsheetManager->getNewDataFromGoogleTable();
+
+        return [
+            'new' => $data
+        ];
+    }
+
+    /**
+     * @Route("/import", name="import_from_google_table")
+     *
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     *
+     */
+    public function importAction()
+    {
+        $spreadSheetManager = $this->get('app.spreadsheet_manager');
+        $preparedData = $spreadSheetManager->prepareDataToImport();
+        $validator = $this->get('validator');
+        $em = $this->getDoctrine()->getManager();
+
+        foreach ($preparedData as $item) {
+            $errors = $validator->validate($item);
+            $fail = 0;
+            $success = 0;
+            if (0 == count($errors)) {
+                $em->persist($item);
+                $success++;
+            } else {
+                $fail++;
+            }
+        }
+        $em->flush();
+
+        $this->addFlash(
+            'notice',
+            "$success imported, $fail failed"
+            );
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     *
+     * @Route("/export", name="export_all")
+     */
+    public function exportAllAction()
+    {
+        $spreadsheetManager = $this->get('app.spreadsheet_manager');
+        $spreadsheetManager->exportAllEmployees();
+
+        $this->addFlash(
+            'notice',
+            'Сотрудники экспотрированы в Google таблицу'
+        );
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/export/{id}", name="export_one", requirements={"id": "\d+"})
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function exportOneAction(Employee $employee)
+    {
+        $spreadsheetManager = $this->get('app.spreadsheet_manager');
+        $spreadsheetManager->exportOne($employee);
+
+        $this->addFlash(
+            'notice',
+            'Сотрудник экспотрирован в Google таблицу'
         );
 
         return $this->redirectToRoute('homepage');
