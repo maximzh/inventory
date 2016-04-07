@@ -43,7 +43,7 @@ class UsbHub
     protected $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="Employee", inversedBy="usbHub")
+     * @ORM\OneToOne(targetEntity="Employee", mappedBy="usbHub")
      */
     private $employee;
 
@@ -140,7 +140,7 @@ class UsbHub
     /**
      * @param Employee $employee
      */
-    public function setEmployee($employee)
+    public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
     }

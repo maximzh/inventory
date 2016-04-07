@@ -112,7 +112,7 @@ class Employee
     private $headphones;
 
     /**
-     * @ORM\OneToOne(targetEntity="UsbHub", mappedBy="employee")
+     * @ORM\OneToOne(targetEntity="UsbHub", inversedBy="employee")
      */
     private $usbHub;
 

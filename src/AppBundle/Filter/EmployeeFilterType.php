@@ -85,6 +85,10 @@ class EmployeeFilterType extends AbstractType
                 'label' => 'Mac Mini',
                 'class' => 'AppBundle\Entity\Mac'
             ))
+            ->add('usbHub', Filters\EntityFilterType::class, array(
+                'label' => 'Usb Hub',
+                'class' => 'AppBundle\Entity\UsbHub'
+            ))
             /*
             ->add('armchair', Filters\CollectionAdapterFilterType::class, array(
                 'label' => 'Кресло',

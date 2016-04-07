@@ -207,6 +207,7 @@ class EmployeeController extends Controller
         if ($hub) {
             $em = $this->getDoctrine()->getManager();
             $hub->setEmployee(null);
+            $employee->setUsbHub(null);
             $em->flush();
 
             $this->addFlash(

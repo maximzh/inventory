@@ -88,6 +88,19 @@ class EmployeeType extends AbstractType
                         'label' => 'Mac Mini'
                     ]);
                 }
+                if (null == $employee->getUsbHub()) {
+                    $form->add('usbHub', EntityType::class,[
+                        'class' => 'AppBundle\Entity\UsbHub',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('u')
+                                ->select('u, e')
+                                ->leftJoin('u.employee', 'e')
+                                ->where('e.usbHub IS NULL');
+                        },
+                        'required' => false,
+                        'label' => 'Usb Hub'
+                    ]);
+                }
             })
 
 
