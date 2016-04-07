@@ -78,7 +78,7 @@ class EmployeeFilterType extends AbstractType
 
             ))
             ->add('armchair', Filters\EntityFilterType::class, array(
-                'label' => 'Kreslo',
+                'label' => 'Кресло',
                 'class' => 'AppBundle\Entity\Armchair'
             ))
             /*

@@ -43,7 +43,7 @@ class Armchair
     protected $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="Employee", inversedBy="armchair")
+     * @ORM\OneToOne(targetEntity="Employee", mappedBy="armchair")
      */
     private $employee;
 
@@ -139,10 +139,13 @@ class Armchair
 
     /**
      * @param Employee $employee
+     * @return Armchair
      */
-    public function setEmployee($employee)
+    public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
+
+        return $this;
     }
     
     /**

@@ -8,6 +8,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Armchair;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -99,7 +100,7 @@ class Employee
     private $mouse;
 
     /**
-     * @ORM\OneToOne(targetEntity="Armchair", mappedBy="employee")
+     * @ORM\OneToOne(targetEntity="Armchair", inversedBy="employee")
      */
     private $armchair;
 
@@ -382,11 +383,11 @@ class Employee
     /**
      * Set armchair
      *
-     * @param \AppBundle\Entity\Armchair $armchair
+     * @param Armchair $armchair
      *
      * @return Employee
      */
-    public function setArmchair(\AppBundle\Entity\Armchair $armchair = null)
+    public function setArmchair(Armchair $armchair = null)
     {
         $this->armchair = $armchair;
 
@@ -396,7 +397,7 @@ class Employee
     /**
      * Get armchair
      *
-     * @return \AppBundle\Entity\Armchair
+     * @return Armchair
      */
     public function getArmchair()
     {

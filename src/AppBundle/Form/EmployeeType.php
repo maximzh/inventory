@@ -14,6 +14,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
@@ -49,6 +51,28 @@ class EmployeeType extends AbstractType
                 'required' => false,
                 )
             )
+
+            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+                $employee = $event->getData();
+                $form = $event->getForm();
+
+                if (null == $employee->getArmchair()) {
+                    $form->add('armchair', EntityType::class,[
+                        'class' => 'AppBundle\Entity\Armchair',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('a')
+                                ->select('a, e')
+                                ->leftJoin('a.employee', 'e')
+                                ->where('e.armchair IS NULL');
+                        },
+                        'required' => false,
+                        'label' => 'Кресло'
+                    ]);
+                }
+            })
+
+
+
             /*
             ->add('mac', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Mac',
