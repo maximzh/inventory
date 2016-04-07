@@ -233,6 +233,7 @@ class EmployeeController extends Controller
         if ($headphones) {
             $em = $this->getDoctrine()->getManager();
             $headphones->setEmployee(null);
+            $employee->setHeadphones(null);
             $em->flush();
 
             $this->addFlash(

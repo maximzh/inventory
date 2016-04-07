@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Armchair;
+use AppBundle\Entity\Headphones;
 use AppBundle\Entity\Mac;
 use AppBundle\Entity\Monitor;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -107,7 +108,7 @@ class Employee
     private $armchair;
 
     /**
-     * @ORM\OneToOne(targetEntity="Headphones", mappedBy="employee")
+     * @ORM\OneToOne(targetEntity="Headphones", inversedBy="employee")
      */
     private $headphones;
 
@@ -409,11 +410,11 @@ class Employee
     /**
      * Set headphones
      *
-     * @param \AppBundle\Entity\Headphones $headphones
+     * @param Headphones $headphones
      *
      * @return Employee
      */
-    public function setHeadphones(\AppBundle\Entity\Headphones $headphones = null)
+    public function setHeadphones(Headphones $headphones = null)
     {
         $this->headphones = $headphones;
 
@@ -423,7 +424,7 @@ class Employee
     /**
      * Get headphones
      *
-     * @return \AppBundle\Entity\Headphones
+     * @return Headphones
      */
     public function getHeadphones()
     {

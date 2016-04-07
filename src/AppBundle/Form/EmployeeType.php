@@ -8,6 +8,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Employee;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -99,6 +100,20 @@ class EmployeeType extends AbstractType
                         },
                         'required' => false,
                         'label' => 'Usb Hub'
+                    ]);
+                }
+                /** @var Employee $employee */
+                if (null == $employee->getHeadphones()) {
+                    $form->add('headphones', EntityType::class,[
+                        'class' => 'AppBundle\Entity\Headphones',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('h')
+                                ->select('h, e')
+                                ->leftJoin('h.employee', 'e')
+                                ->where('e.headphones IS NULL');
+                        },
+                        'required' => false,
+                        'label' => 'Наушники'
                     ]);
                 }
             })

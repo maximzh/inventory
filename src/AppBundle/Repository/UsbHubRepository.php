@@ -15,8 +15,9 @@ class UsbHubRepository extends EntityRepository
     public function findFreeUsbHubs()
     {
         return $this->createQueryBuilder('u')
-            ->select('u')
-            ->where('u.employee IS NULL')
+            ->select('u, e')
+            ->leftJoin('u.employee', 'e')
+            ->where('e.usbHub IS NULL')
             ->getQuery()
             ->getResult();
     }
