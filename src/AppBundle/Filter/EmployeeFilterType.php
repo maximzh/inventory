@@ -64,7 +64,7 @@ class EmployeeFilterType extends AbstractType
                 'label' => 'Кол-во мониторов'
             ))
             ->add('monitors', Filters\CollectionAdapterFilterType::class, array(
-                'label' => 'Мониторы',
+                'label' => ' ',
                 'entry_type' => new MonitorFilterType(),
                 'add_shared' => function (FilterBuilderExecuterInterface $qbe)  {
                     $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
@@ -77,6 +77,26 @@ class EmployeeFilterType extends AbstractType
                 },
 
             ))
+            ->add('armchair', Filters\EntityFilterType::class, array(
+                'label' => 'Kreslo',
+                'class' => 'AppBundle\Entity\Armchair'
+            ))
+            /*
+            ->add('armchair', Filters\CollectionAdapterFilterType::class, array(
+                'label' => 'Кресло',
+                'entry_type' => new ArmchairFilterType(),
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe)  {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        // add the join clause to the doctrine query builder
+                        // the where clause for the label and color fields will be added automatically with the right alias later by the Lexik\Filter\QueryBuilderUpdater
+                        $filterBuilder->leftJoin($alias . '.armchair', $joinAlias);
+                    };
+                    // then use the query builder executor to define the join and its alias.
+                    $qbe->addOnce($qbe->getAlias().'.armchair', 'a', $closure);
+                },
+
+            ))
+            */
         ;
     }
 
