@@ -155,6 +155,7 @@ class EmployeeController extends Controller
         if ($mac) {
             $em = $this->getDoctrine()->getManager();
             $mac->setEmployee(null);
+            $employee->setMac(null);
             $em->flush();
 
             $this->addFlash(
@@ -180,6 +181,7 @@ class EmployeeController extends Controller
         if ($armchair) {
             $em = $this->getDoctrine()->getManager();
             $armchair->setEmployee(null);
+            $employee->setArmchair(null);
             $em->flush();
 
             $this->addFlash(

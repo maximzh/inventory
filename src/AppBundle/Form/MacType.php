@@ -40,6 +40,7 @@ class MacType extends AbstractType
                     'required' => false,
                 )
             )
+            /*
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $mac = $event->getData();
                 $form = $event->getForm();
@@ -64,6 +65,7 @@ class MacType extends AbstractType
                     ]);
                 }
             })
+            */
 
             /*
             ->add('status', ChoiceType::class, array(

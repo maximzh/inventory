@@ -56,6 +56,12 @@ class EmployeeType extends AbstractType
                 $employee = $event->getData();
                 $form = $event->getForm();
 
+               /*
+                if (!$employee || null === $employee->getId()) {
+                    $form->add('name', TextType::class);
+                }
+               */
+
                 if (null == $employee->getArmchair()) {
                     $form->add('armchair', EntityType::class,[
                         'class' => 'AppBundle\Entity\Armchair',
@@ -67,6 +73,19 @@ class EmployeeType extends AbstractType
                         },
                         'required' => false,
                         'label' => 'Кресло'
+                    ]);
+                }
+                if (null == $employee->getMac()) {
+                    $form->add('mac', EntityType::class,[
+                        'class' => 'AppBundle\Entity\Mac',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('m')
+                                ->select('m, e')
+                                ->leftJoin('m.employee', 'e')
+                                ->where('e.mac IS NULL');
+                        },
+                        'required' => false,
+                        'label' => 'Mac Mini'
                     ]);
                 }
             })

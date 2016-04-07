@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="text-center">
+                            <img src="{{ asset('images/monitor64.png') }}">
+                            Свободные мониторы
+                        </h2>
+
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Марка</th>
+                                <th>Диагональ</th>
+                                <th>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for monitor in freeMonitors %}
+                                <tr>
+                                    <td>{{ monitor.name }}</td>
+                                    <td>
+                                        {{ monitor.diagonal }}''
+                                    </td>
+                                    <td>
+                                        {% if is_granted('ROLE_ADMIN') %}
+
+                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-monitor', {'id': monitor.id}) }}"></a>
+
+                                        {% endif %}
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+

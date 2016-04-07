@@ -9,6 +9,8 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Armchair;
+use AppBundle\Entity\Mac;
+use AppBundle\Entity\Monitor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -75,7 +77,7 @@ class Employee
     private $position;
 
     /**
-     * @ORM\OneToOne(targetEntity="Mac", mappedBy="employee")
+     * @ORM\OneToOne(targetEntity="Mac", inversedBy="employee")
      */
     private $mac;
 
@@ -269,11 +271,11 @@ class Employee
     /**
      * Set mac
      *
-     * @param \AppBundle\Entity\Mac $mac
+     * @param Mac $mac
      *
      * @return Employee
      */
-    public function setMac(\AppBundle\Entity\Mac $mac = null)
+    public function setMac(Mac $mac = null)
     {
         $this->mac = $mac;
 
@@ -283,7 +285,7 @@ class Employee
     /**
      * Get mac
      *
-     * @return \AppBundle\Entity\Mac
+     * @return Mac
      */
     public function getMac()
     {
@@ -293,11 +295,11 @@ class Employee
     /**
      * Add monitor
      *
-     * @param \AppBundle\Entity\Monitor $monitor
+     * @param Monitor $monitor
      *
      * @return Employee
      */
-    public function addMonitor(\AppBundle\Entity\Monitor $monitor)
+    public function addMonitor(Monitor $monitor)
     {
         $this->monitors[] = $monitor;
 
@@ -313,9 +315,9 @@ class Employee
     /**
      * Remove monitor
      *
-     * @param \AppBundle\Entity\Monitor $monitor
+     * @param Monitor $monitor
      */
-    public function removeMonitor(\AppBundle\Entity\Monitor $monitor)
+    public function removeMonitor(Monitor $monitor)
     {
         $this->monitors->removeElement($monitor);
         $this->setMonitorsNumber($this->getMonitorsNumber() - 1);

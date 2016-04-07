@@ -88,12 +88,9 @@
                                             {% else %}
                                                 <br>
                                                 <div class="text-right">
-                                                    <a href="{{ path('available_devices') }}">
                                                         <strong class="text-danger text-large">
-                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                            <i class="glyphicon glyphicon-ban-circle"></i>
                                                         </strong>
-                                                    </a>
-
                                                 </div>
                                             {% endif %}
                                         </td>
@@ -124,11 +121,9 @@
                                             {% else %}
                                                 <br>
                                                 <div class="text-right">
-                                                    <a href="{{ path('available_devices') }}">
-                                                        <strong class="text-danger text-large">
-                                                            <i class="glyphicon glyphicon-plus"></i>
-                                                        </strong>
-                                                    </a>
+                                                    <strong class="text-danger text-large">
+                                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                                    </strong>
                                                 </div>
                                             {% endif %}
                                         </td>
@@ -158,11 +153,10 @@
                                             {% else %}
                                                 <br>
                                                 <div class="text-right">
-                                                    <a href="{{ path('available_devices') }}">
-                                                        <strong class="text-danger text-large">
-                                                            <i class="glyphicon glyphicon-plus"></i>
-                                                        </strong>
-                                                    </a>                                                </div>
+                                                    <strong class="text-danger text-large">
+                                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                                    </strong>
+                                                </div>
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -189,11 +183,9 @@
                                             {% else %}
                                                 <br>
                                                 <div class="text-right">
-                                                    <a href="{{ path('available_devices') }}">
-                                                        <strong class="text-danger text-large">
-                                                            <i class="glyphicon glyphicon-plus"></i>
-                                                        </strong>
-                                                    </a>
+                                                    <strong class="text-danger text-large">
+                                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                                    </strong>
                                                 </div>
                                             {% endif %}
                                         </td>
@@ -222,11 +214,9 @@
                                             {% else %}
                                                 <br>
                                                 <div class="text-right">
-                                                    <a href="{{ path('available_devices') }}">
-                                                        <strong class="text-danger text-large">
-                                                            <i class="glyphicon glyphicon-plus"></i>
-                                                        </strong>
-                                                    </a>
+                                                    <strong class="text-danger text-large">
+                                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                                    </strong>
                                                 </div>
                                             {% endif %}
                                         </td>
@@ -252,11 +242,9 @@
                                                         {% else %}
                                                             <br>
                                                             <div class="text-right">
-                                                                <a href="{{ path('available_devices') }}">
-                                                                    <strong class="text-danger text-large">
-                                                                        <i class="glyphicon glyphicon-plus"></i>
-                                                                    </strong>
-                                                                </a>
+                                                                <strong class="text-danger text-large">
+                                                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                                                </strong>
                                                             </div>
                                                         {% endif %}
                                                     </div>
@@ -287,16 +275,14 @@
                                                         </div>
                                                     </div>
                                                 {% endfor %}
-                                            {% else %}
-                                                <br>
-                                                <div class="text-right">
-                                                    <a href="{{ path('available_devices') }}">
-                                                        <strong class="text-danger text-large">
-                                                            <i class="glyphicon glyphicon-plus"></i>
-                                                        </strong>
-                                                    </a>
-                                                </div>
                                             {% endif %}
+                                            <div>
+                                                <a href="{{ path('available_monitors') }}">
+                                                    <strong class="text-danger text-large">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </strong>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                     </tbody>

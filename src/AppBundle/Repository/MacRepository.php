@@ -15,8 +15,9 @@ class MacRepository extends EntityRepository
     public function findFreeMacs()
     {
         return $this->createQueryBuilder('m')
-            ->select('m')
-            ->where('m.employee IS NULL')
+            ->select('m, e')
+            ->leftJoin('m.employee', 'e')
+            ->where('e.mac IS NULL')
             ->getQuery()
             ->getResult();
     }

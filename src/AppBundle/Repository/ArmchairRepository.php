@@ -15,8 +15,9 @@ class ArmchairRepository extends EntityRepository
     public function findFreeArmchairs()
     {
         return $this->createQueryBuilder('a')
-            ->select('a')
-            ->where('a.employee IS NULL')
+            ->select('a, e')
+            ->leftJoin('a.employee', 'e')
+            ->where('e.armchair IS NULL')
             ->getQuery()
             ->getResult();
     }
