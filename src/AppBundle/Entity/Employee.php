@@ -84,6 +84,11 @@ class Employee
     private $monitors;
 
     /**
+     * @ORM\Column(name="monitors_number", type="integer", nullable=true)
+     */
+    private $monitorsNumber;
+
+    /**
      * @ORM\OneToOne(targetEntity="Keyboard", mappedBy="employee")
      */
     private $keyboard;
@@ -125,6 +130,9 @@ class Employee
     public function __construct()
     {
         $this->monitors = new \Doctrine\Common\Collections\ArrayCollection();
+        if (!$this->getMonitorsNumber()) {
+            $this->setMonitorsNumber(0);
+        }
     }
 
     /**
@@ -292,6 +300,12 @@ class Employee
     {
         $this->monitors[] = $monitor;
 
+        if (null == $count = $this->getMonitorsNumber()) {
+            $this->setMonitorsNumber(1);
+        } else {
+            $this->setMonitorsNumber($this->getMonitorsNumber() + 1);
+        }
+
         return $this;
     }
 
@@ -303,6 +317,7 @@ class Employee
     public function removeMonitor(\AppBundle\Entity\Monitor $monitor)
     {
         $this->monitors->removeElement($monitor);
+        $this->setMonitorsNumber($this->getMonitorsNumber() - 1);
         $monitor->setEmployee(null);
     }
 
@@ -434,5 +449,29 @@ class Employee
     public function getUsbHub()
     {
         return $this->usbHub;
+    }
+
+    /**
+     * Set monitorsNumber
+     *
+     * @param integer $monitorsNumber
+     *
+     * @return Employee
+     */
+    public function setMonitorsNumber($monitorsNumber)
+    {
+        $this->monitorsNumber = $monitorsNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get monitorsNumber
+     *
+     * @return integer
+     */
+    public function getMonitorsNumber()
+    {
+        return $this->monitorsNumber;
     }
 }

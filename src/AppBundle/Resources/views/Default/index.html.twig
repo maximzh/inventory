@@ -16,17 +16,20 @@
 
 
                 {# total items count #}
-                <div class="panel panel-info">
-                    <div class="panel-heading"></div>
-                    <div class="panel-body">
-                        Всего сотрудников: {{ employees.getTotalItemCount }}
+                <div class="panel panel-warning">
+                    <div class="panel-heading text-large">
+                    </div>
+                    <div class="panel-body bg">
+                        <img  src="{{ asset('images/users48.png') }}">
+
+                        <span class="text-large"> Всего сотрудников: {{ employees.getTotalItemCount }}</span>
                     </div>
 
                 </div>
 
                 <table class="table table-hover main-employees-list">
                     <thead>
-                    <tr class="bg-info">
+                    <tr class="bg-warning">
                         <th>
                             ФИО
                         </th>
@@ -69,19 +72,19 @@
                             {{ knp_pagination_sortable(employees, 'Сортировать', 'e.position') }}
                         </td>
                         <td>
-                            {#
+
                             <span class="glyphicon glyphicon-sort"></span>
-                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.wardrobecount') }}
-                            #}
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.monitorsNumber') }}
+
 
                         </td>
                         <td>
                             <span class="glyphicon glyphicon-sort"></span><br>
-                            {{ knp_pagination_sortable(employees, 'Сортировать', 'm.ram') }}
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'mc.ram') }}
                         </td>
                         <td>
                             <span class="glyphicon glyphicon-sort"></span><br>
-                            {{ knp_pagination_sortable(employees, 'Сортировать', 'm.ssd') }}
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'mc.ssd') }}
                         </td>
                         <td>
                             <span class="glyphicon glyphicon-sort"></span><br>

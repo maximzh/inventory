@@ -8,8 +8,13 @@
 
 namespace AppBundle\Filter;
 
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\QueryBuilder;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderExecuterInterface;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterOperands;
 use Lexik\Bundle\FormFilterBundle\Filter\Form\Type\DateRangeFilterType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,6 +27,7 @@ class EmployeeFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            /*
             ->add('firstName', Filters\TextFilterType::class, array(
                 'condition_pattern' => FilterOperands::STRING_CONTAINS,
                 'label' => 'Имя'
@@ -38,6 +44,7 @@ class EmployeeFilterType extends AbstractType
                 'condition_pattern' => FilterOperands::STRING_CONTAINS,
                 'label' => 'Позиция'
                 ))
+            */
             ->add('employeeSince', DateRangeFilterType::class, array(
                 'label' => 'Принят на работу (в период):',
                 'left_date_options' => array(
@@ -50,6 +57,25 @@ class EmployeeFilterType extends AbstractType
                     'years' => range(2001, 2021),
                     'data' => new \DateTime('2021-01-01')
                 )
+
+            ))
+            ->add('monitorsNumber', Filters\NumberFilterType::class, array(
+                //'condition_pattern' => FilterOperands::OPERATOR_EQUAL,
+                'label' => 'Кол-во мониторов'
+            ))
+            ->add('monitors', Filters\CollectionAdapterFilterType::class, array(
+                'label' => 'Мониторы',
+                'entry_type' => new MonitorFilterType(),
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe)  {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        // add the join clause to the doctrine query builder
+                        // the where clause for the label and color fields will be added automatically with the right alias later by the Lexik\Filter\QueryBuilderUpdater
+                        $filterBuilder->leftJoin($alias . '.monitors', $joinAlias);
+                    };
+                    // then use the query builder executor to define the join and its alias.
+                    $qbe->addOnce($qbe->getAlias().'.monitors', 'mon', $closure);
+                },
+
             ))
         ;
     }

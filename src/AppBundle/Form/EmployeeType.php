@@ -41,7 +41,7 @@ class EmployeeType extends AbstractType
             )
             ->add('employeeSince', DateType::class, array(
                 'label' => 'Дата приема на работу',
-                'years' => range(2000, 2021)
+                'years' => range(2001, 2021)
             )
             )
             ->add('position', TextType::class, array(

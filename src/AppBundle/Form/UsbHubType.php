@@ -41,7 +41,7 @@ class UsbHubType extends AbstractType
                                 ->leftJoin('e.mouse', 'ms')
                                 ->leftJoin('e.headphones', 'h')
                                 ->leftJoin('e.monitors', 'mo')
-                                ->where('h.employee IS NULL');
+                                ->where('u.employee IS NULL');
                         },
                         'required' => false,
                         'label' => 'Сотрудник'

@@ -54,3 +54,9 @@ body {
 
     font-size: 1.3em;
 }
+
+.logo {
+    position: fixed;
+    top: 20px;
+    left: 30px;
+}
