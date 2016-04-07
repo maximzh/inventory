@@ -10,6 +10,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Armchair;
 use AppBundle\Entity\Headphones;
+use AppBundle\Entity\Keyboard;
 use AppBundle\Entity\Mac;
 use AppBundle\Entity\Monitor;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -93,7 +94,7 @@ class Employee
     private $monitorsNumber;
 
     /**
-     * @ORM\OneToOne(targetEntity="Keyboard", mappedBy="employee")
+     * @ORM\OneToOne(targetEntity="Keyboard", inversedBy="employee")
      */
     private $keyboard;
 
@@ -338,11 +339,11 @@ class Employee
     /**
      * Set keyboard
      *
-     * @param \AppBundle\Entity\Keyboard $keyboard
+     * @param Keyboard $keyboard
      *
      * @return Employee
      */
-    public function setKeyboard(\AppBundle\Entity\Keyboard $keyboard = null)
+    public function setKeyboard(Keyboard $keyboard = null)
     {
         $this->keyboard = $keyboard;
 
@@ -352,7 +353,7 @@ class Employee
     /**
      * Get keyboard
      *
-     * @return \AppBundle\Entity\Keyboard
+     * @return Keyboard
      */
     public function getKeyboard()
     {

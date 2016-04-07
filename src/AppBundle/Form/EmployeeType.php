@@ -116,6 +116,20 @@ class EmployeeType extends AbstractType
                         'label' => 'Наушники'
                     ]);
                 }
+                /** @var Employee $employee */
+                if (null == $employee->getKeyboard()) {
+                    $form->add('keyboard', EntityType::class,[
+                        'class' => 'AppBundle\Entity\Keyboard',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('k')
+                                ->select('k, e')
+                                ->leftJoin('k.employee', 'e')
+                                ->where('e.keyboard IS NULL');
+                        },
+                        'required' => false,
+                        'label' => 'Клавиатура'
+                    ]);
+                }
             })
 
 

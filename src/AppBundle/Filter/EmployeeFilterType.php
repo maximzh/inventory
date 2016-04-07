@@ -89,6 +89,14 @@ class EmployeeFilterType extends AbstractType
                 'label' => 'Usb Hub',
                 'class' => 'AppBundle\Entity\UsbHub'
             ))
+            ->add('headphones', Filters\EntityFilterType::class, array(
+                'label' => 'Наушники',
+                'class' => 'AppBundle\Entity\Headphones'
+            ))
+            ->add('keyboard', Filters\EntityFilterType::class, array(
+                'label' => 'Клавиатура',
+                'class' => 'AppBundle\Entity\Keyboard'
+            ))
             /*
             ->add('armchair', Filters\CollectionAdapterFilterType::class, array(
                 'label' => 'Кресло',

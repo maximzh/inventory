@@ -259,6 +259,7 @@ class EmployeeController extends Controller
         if ($keyboard) {
             $em = $this->getDoctrine()->getManager();
             $keyboard->setEmployee(null);
+            $employee->setKeyboard(null);
             $em->flush();
 
             $this->addFlash(

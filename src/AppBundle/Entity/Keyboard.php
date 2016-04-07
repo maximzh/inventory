@@ -43,7 +43,7 @@ class Keyboard
     protected $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="Employee", inversedBy="keyboard")
+     * @ORM\OneToOne(targetEntity="Employee", mappedBy="keyboard")
      */
     private $employee;
 
@@ -140,10 +140,13 @@ class Keyboard
 
     /**
      * @param Employee $employee
+     * @return Keyboard
      */
-    public function setEmployee($employee)
+    public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
+        
+        return $this;
     }
     
     /**
