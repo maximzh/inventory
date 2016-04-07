@@ -285,6 +285,7 @@ class EmployeeController extends Controller
         if ($mouse) {
             $em = $this->getDoctrine()->getManager();
             $mouse->setEmployee(null);
+            $employee->setMouse(null);
             $em->flush();
 
             $this->addFlash(

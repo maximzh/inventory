@@ -24,6 +24,7 @@ class MouseType extends AbstractType
                 'required' => true,
                 )
             )
+            /*
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $mouse = $event->getData();
                 $form = $event->getForm();
@@ -48,6 +49,7 @@ class MouseType extends AbstractType
                     ]);
                 }
             })
+            */
             //->add('employee', EntityType::class,[
             //    'class' => 'AppBundle\Entity\Employee'
             //])

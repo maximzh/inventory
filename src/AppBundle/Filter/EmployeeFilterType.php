@@ -97,6 +97,10 @@ class EmployeeFilterType extends AbstractType
                 'label' => 'Клавиатура',
                 'class' => 'AppBundle\Entity\Keyboard'
             ))
+            ->add('mouse', Filters\EntityFilterType::class, array(
+                'label' => 'Мышь',
+                'class' => 'AppBundle\Entity\Mouse'
+            ))
             /*
             ->add('armchair', Filters\CollectionAdapterFilterType::class, array(
                 'label' => 'Кресло',

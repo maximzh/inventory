@@ -13,6 +13,7 @@ use AppBundle\Entity\Headphones;
 use AppBundle\Entity\Keyboard;
 use AppBundle\Entity\Mac;
 use AppBundle\Entity\Monitor;
+use AppBundle\Entity\Mouse;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -99,7 +100,7 @@ class Employee
     private $keyboard;
 
     /**
-     * @ORM\OneToOne(targetEntity="Mouse", mappedBy="employee")
+     * @ORM\OneToOne(targetEntity="Mouse", inversedBy="employee")
      */
     private $mouse;
 
@@ -363,11 +364,11 @@ class Employee
     /**
      * Set mouse
      *
-     * @param \AppBundle\Entity\Mouse $mouse
+     * @param Mouse $mouse
      *
      * @return Employee
      */
-    public function setMouse(\AppBundle\Entity\Mouse $mouse = null)
+    public function setMouse(Mouse $mouse = null)
     {
         $this->mouse = $mouse;
 
@@ -377,7 +378,7 @@ class Employee
     /**
      * Get mouse
      *
-     * @return \AppBundle\Entity\Mouse
+     * @return Mouse
      */
     public function getMouse()
     {

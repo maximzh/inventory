@@ -130,6 +130,20 @@ class EmployeeType extends AbstractType
                         'label' => 'Клавиатура'
                     ]);
                 }
+                /** @var Employee $employee */
+                if (null == $employee->getMouse()) {
+                    $form->add('mouse', EntityType::class,[
+                        'class' => 'AppBundle\Entity\Mouse',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('m')
+                                ->select('m, e')
+                                ->leftJoin('m.employee', 'e')
+                                ->where('e.mouse IS NULL');
+                        },
+                        'required' => false,
+                        'label' => 'Мышь'
+                    ]);
+                }
             })
 
 

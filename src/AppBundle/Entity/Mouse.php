@@ -43,7 +43,7 @@ class Mouse
     protected $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="Employee", inversedBy="mouse")
+     * @ORM\OneToOne(targetEntity="Employee", mappedBy="mouse")
      */
     private $employee;
     
@@ -139,10 +139,13 @@ class Mouse
 
     /**
      * @param Employee $employee
+     * @return $this
      */
-    public function setEmployee($employee)
+    public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
+        
+        return $this;
     }
 
     /**
