@@ -1,24 +1,92 @@
 AppBundle\Entity\Employee:
-    employee{1..39}:
+    employee{1..20}:
         lastName: <lastName()>
         firstName: <firstNameMale()>
-        fatherName: <firstNameMale()>
         employeeSince: <dateTimeBetween('-2 years', 'now')>
         position: <randomElement(['engineer', 'designer', 'junior php developer', 'project manager', 'middle php developer', 'senior php developer', 'java developer'])>
 
 AppBundle\Entity\Mac:
-    mac{1..15}:
+    mac{1..5}:
         name: 'Apple Mac Mini 2014'
         ram: 4
         hdd: 500
         type: 'Mac'
-    mac{16..25}:
+    mac{6..15}:
         name: 'Apple Mac Mini 2015'
         ram: 8
         hdd: 1000
         type: 'Mac'
-    mac{26..30}:
+    mac{16..20}:
         name: 'Apple Mac Mini 2016'
         ram: 16
         ssd: 1000
         type: 'Mac'
+
+AppBundle\Entity\Armchair:
+    armchair{1..5}:
+        name: 'old chair'
+        type: 'armchair'
+    armchair{6..15}:
+        name: 'soft armchair'
+        type: 'armchair'
+    armchair{16..30}:
+        name: 'premium soft'
+        type: 'armchair'
+
+AppBundle\Entity\Monitor:
+    monitor{1..10}:
+        name: 'Dell'
+        diagonal: 23
+        type: 'Monitor'
+    monitor{11..20}:
+        name: 'LG'
+        diagonal: 22
+        type: 'Monitor'
+    monitor{21..25}:
+        name: 'Sony'
+        diagonal: 27
+        type: 'Monitor'
+
+AppBundle\Entity\Keyboard:
+    keyboard{1..15}:
+        name: 'Rapoo wireless'
+        type: 'keyboard'
+    keyboard{16..20}:
+        name: 'Logitech'
+        type: 'keyboard'
+    keyboard{21..35}:
+        name: 'A4Tech'
+        type: 'keyboard'
+
+AppBundle\Entity\Headphones:
+    headphones{1..15}:
+        name: 'Kingston HyperX Cloud'
+        type: 'headphones'
+    headphones{16..20}:
+        name: 'Koss'
+        type: 'headphones'
+    headphones{21..30}:
+        name: 'Sven'
+        type: 'headphones'
+
+AppBundle\Entity\Mouse:
+    mouse{1..15}:
+        name: 'Logitech Wireless'
+        type: 'mouse'
+    headphone{16..30}:
+        name: 'Roccat Kone XTD'
+        type: 'mouse'
+    headphone{31..40}:
+        name: 'Razer Krait'
+        type: 'mouse'
+
+AppBundle\Entity\UsbHub:
+    usbhub{1..10}:
+        name: 'SPEEDLINK Nobile Active'
+        type: 'usb hub'
+    usbhub{11..16}:
+        name: 'PowerPlant 4 Ports'
+        type: 'usb hub'
+    usbhub{17..20}:
+        name: 'D-Link DUB-H7'
+        type: 'usb hub'
