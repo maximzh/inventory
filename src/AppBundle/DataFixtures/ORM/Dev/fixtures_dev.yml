@@ -1,7 +1,24 @@
 AppBundle\Entity\Employee:
-    employee{1..50}:
+    employee{1..39}:
         lastName: <lastName()>
         firstName: <firstNameMale()>
         fatherName: <firstNameMale()>
         employeeSince: <dateTimeBetween('-2 years', 'now')>
         position: <randomElement(['engineer', 'designer', 'junior php developer', 'project manager', 'middle php developer', 'senior php developer', 'java developer'])>
+
+AppBundle\Entity\Mac:
+    mac{1..15}:
+        name: 'Apple Mac Mini 2014'
+        ram: 4
+        hdd: 500
+        type: 'Mac'
+    mac{16..25}:
+        name: 'Apple Mac Mini 2015'
+        ram: 8
+        hdd: 1000
+        type: 'Mac'
+    mac{26..30}:
+        name: 'Apple Mac Mini 2016'
+        ram: 16
+        ssd: 1000
+        type: 'Mac'
