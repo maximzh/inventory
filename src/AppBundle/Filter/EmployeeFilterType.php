@@ -8,6 +8,7 @@
 
 namespace AppBundle\Filter;
 
+use AppBundle\Entity\Mac;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
@@ -83,7 +84,11 @@ class EmployeeFilterType extends AbstractType
             ))
             ->add('mac', Filters\EntityFilterType::class, array(
                 'label' => 'Mac Mini',
-                'class' => 'AppBundle\Entity\Mac'
+                'class' => 'AppBundle\Entity\Mac',
+                'choice_label' => function($mac) {
+                    /** @var Mac $mac */
+                    return $mac->getName().' RAM '.$mac->getRam().' SSD '.$mac->getSsd().' HDD '.$mac->getHdd();
+                }
             ))
             ->add('usbHub', Filters\EntityFilterType::class, array(
                 'label' => 'Usb Hub',
