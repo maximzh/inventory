@@ -10,35 +10,41 @@
                         <a href="{{ path('homepage') }}">Вернуться на главную</a>
                     </div>
                 {% else %}
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                        <tr class="bg-info">
-                            <th class="text-primary">
-                                ФИО сотрудника
-                            </th>
-                            <th class="text-primary">
-                                Дата приема на работу
-                            </th>
-                            <th class="text-primary">
-                                Позиция
-                            </th>
-                        </tr>
-                        </thead>
-                        {% for employee in employees %}
-                            <tr>
-                                <td>
-                                    <a href="{{ path('show_employee', {'id': employee.id}) }}">
-                                        {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
-                                    </a>                                </td>
-                                <td>
-                                    {{ employee.employeeSince|date('d.m.Y') }}
-                                </td>
-                                <td>
-                                    {{ employee.position }}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </table>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="background-color: #B19BD9"></div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="text-primary">
+                                        ФИО сотрудника
+                                    </th>
+                                    <th class="text-primary">
+                                        Дата приема на работу
+                                    </th>
+                                    <th class="text-primary">
+                                        Позиция
+                                    </th>
+                                </tr>
+                                </thead>
+                                {% for employee in employees %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ path('show_employee', {'id': employee.id}) }}">
+                                                {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
+                                            </a>                                </td>
+                                        <td>
+                                            {{ employee.employeeSince|date('d.m.Y') }}
+                                        </td>
+                                        <td>
+                                            {{ employee.position }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+
                 {% endif %}
             </div>
         </div>

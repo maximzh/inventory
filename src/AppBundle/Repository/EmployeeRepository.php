@@ -23,8 +23,11 @@ class EmployeeRepository extends EntityRepository
             ->leftJoin('e.usbHub', 'u')
             ->leftJoin('e.armchair', 'a')
             ->leftJoin('e.monitors', 'mo')
+            //->addSelect('e.monitorsNumber', 'mn')
 //            ->addSelect('COUNT(mo.id)')
-            ->getQuery();
+            ->getQuery()
+            //->getResult()
+            ;
     }
 
     public function searchEmployees($text)

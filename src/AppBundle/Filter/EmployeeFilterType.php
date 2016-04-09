@@ -46,6 +46,91 @@ class EmployeeFilterType extends AbstractType
                 'label' => 'Позиция'
                 ))
             */
+
+            ->add('monitorsNumber', Filters\NumberFilterType::class, array(
+                //'condition_pattern' => FilterOperands::OPERATOR_EQUAL,
+                'label' => 'Кол-во мониторов'
+            ))
+            ->add('monitors', Filters\CollectionAdapterFilterType::class, array(
+                'label' => 'Характеристики монитора',
+                'entry_type' => new MonitorFilterType(),
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe)  {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        // add the join clause to the doctrine query builder
+                        // the where clause for the label and color fields will be added automatically with the right alias later by the Lexik\Filter\QueryBuilderUpdater
+                        $filterBuilder->leftJoin($alias . '.monitors', $joinAlias);
+                    };
+                    // then use the query builder executor to define the join and its alias.
+                    $qbe->addOnce($qbe->getAlias().'.monitors', 'mon', $closure);
+                },
+
+            ))
+            /*
+            ->add('armchair', Filters\EntityFilterType::class, array(
+                'label' => 'Кресло',
+                'class' => 'AppBundle\Entity\Armchair'
+            ))
+            */
+             ->add('armchair', new ArmchairFilterType(), array(
+                'label' => 'Кресло',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.armchair', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.armchair', 'arm', $closure);
+                }
+            ))
+            ->add('mac', new MacFilterType(), array(
+                'label' => ' ',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.mac', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.mac', 'mc', $closure);
+                }
+            ))
+            ->add('usbHub', new UsbHubFilterType(), array(
+                'label' => 'Usb Hub',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.usbHub', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.usbHub', 'uh', $closure);
+                }
+            ))
+            ->add('headphones', new HeadPhonesFilterType(), array(
+                'label' => 'Наушники',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.headphones', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.headphones', 'hp', $closure);
+                }
+            ))
+            ->add('keyboard', new KeyboardFilterType(), array(
+                'label' => 'Клавиатура',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.keyboard', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.keyboard', 'kb', $closure);
+                }
+            ))
+            ->add('mouse', new MouseFilterType(), array(
+                'label' => 'Мышь',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.mouse', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.mouse', 'ms', $closure);
+                }
+            ))
             ->add('employeeSince', DateRangeFilterType::class, array(
                 'label' => 'Принят на работу (в период):',
                 'left_date_options' => array(
@@ -60,68 +145,6 @@ class EmployeeFilterType extends AbstractType
                 )
 
             ))
-            ->add('monitorsNumber', Filters\NumberFilterType::class, array(
-                //'condition_pattern' => FilterOperands::OPERATOR_EQUAL,
-                'label' => 'Кол-во мониторов'
-            ))
-            ->add('monitors', Filters\CollectionAdapterFilterType::class, array(
-                'label' => ' ',
-                'entry_type' => new MonitorFilterType(),
-                'add_shared' => function (FilterBuilderExecuterInterface $qbe)  {
-                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
-                        // add the join clause to the doctrine query builder
-                        // the where clause for the label and color fields will be added automatically with the right alias later by the Lexik\Filter\QueryBuilderUpdater
-                        $filterBuilder->leftJoin($alias . '.monitors', $joinAlias);
-                    };
-                    // then use the query builder executor to define the join and its alias.
-                    $qbe->addOnce($qbe->getAlias().'.monitors', 'mon', $closure);
-                },
-
-            ))
-            ->add('armchair', Filters\EntityFilterType::class, array(
-                'label' => 'Кресло',
-                'class' => 'AppBundle\Entity\Armchair'
-            ))
-            ->add('mac', Filters\EntityFilterType::class, array(
-                'label' => 'Mac Mini',
-                'class' => 'AppBundle\Entity\Mac',
-                'choice_label' => function($mac) {
-                    /** @var Mac $mac */
-                    return $mac->getName().' RAM '.$mac->getRam().' SSD '.$mac->getSsd().' HDD '.$mac->getHdd();
-                }
-            ))
-            ->add('usbHub', Filters\EntityFilterType::class, array(
-                'label' => 'Usb Hub',
-                'class' => 'AppBundle\Entity\UsbHub'
-            ))
-            ->add('headphones', Filters\EntityFilterType::class, array(
-                'label' => 'Наушники',
-                'class' => 'AppBundle\Entity\Headphones'
-            ))
-            ->add('keyboard', Filters\EntityFilterType::class, array(
-                'label' => 'Клавиатура',
-                'class' => 'AppBundle\Entity\Keyboard'
-            ))
-            ->add('mouse', Filters\EntityFilterType::class, array(
-                'label' => 'Мышь',
-                'class' => 'AppBundle\Entity\Mouse'
-            ))
-            /*
-            ->add('armchair', Filters\CollectionAdapterFilterType::class, array(
-                'label' => 'Кресло',
-                'entry_type' => new ArmchairFilterType(),
-                'add_shared' => function (FilterBuilderExecuterInterface $qbe)  {
-                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
-                        // add the join clause to the doctrine query builder
-                        // the where clause for the label and color fields will be added automatically with the right alias later by the Lexik\Filter\QueryBuilderUpdater
-                        $filterBuilder->leftJoin($alias . '.armchair', $joinAlias);
-                    };
-                    // then use the query builder executor to define the join and its alias.
-                    $qbe->addOnce($qbe->getAlias().'.armchair', 'a', $closure);
-                },
-
-            ))
-            */
         ;
     }
 

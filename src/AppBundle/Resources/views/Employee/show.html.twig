@@ -7,7 +7,7 @@
             <div class="col-md-8 col-md-offset-2">
                 {% include '@App/Common/flash_message.html.twig' %}
                 <div class="panel panel-default">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color: #B19BD9">
                         <span class="glyphicon glyphicon-user"></span>
                         <strong class="panel-title text-center">{{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}</strong>
                     </div>
@@ -58,9 +58,7 @@
                                     #}
                                     <tr>
                                         <td>
-                                            <br>
                                             <img src="{{ asset('images/macmini32.png') }}">
-
                                             Mac Mini
                                         </td>
                                         <td>
@@ -68,8 +66,9 @@
                                                 <div class="panel panel-warning">
 
                                                     <div class="panel-body bg-warning">
-                                                        <strong class="text-info">Model: </strong>{{ employee.mac.name }}<br>
-                                                        <strong class="text-info">RAM: </strong>{{ employee.mac.ram }}<br>
+                                                        <a class="glyphicon glyphicon-edit" href="{{ path('edit-mac', {'id': employee.mac.id}) }}"></a>
+                                                        <strong class="text-info">Model: {{ employee.mac.name }}</strong>
+                                                        <strong class="text-info">RAM: </strong>{{ employee.mac.ram }}
                                                         {% if employee.mac.ssd is not null %}
                                                             <strong class="text-info">SSD: </strong>{{ employee.mac.ssd }}
                                                         {% endif %}
@@ -88,7 +87,6 @@
 
 
                                             {% else %}
-                                                <br>
                                                 <div class="text-right">
                                                         <strong class="text-danger text-large">
                                                             <i class="glyphicon glyphicon-ban-circle"></i>
@@ -100,7 +98,6 @@
 
                                     <tr>
                                         <td>
-                                            <br>
                                             <img src="{{ asset('images/office_chair.png') }}">
 
                                             Кресло
@@ -108,7 +105,10 @@
                                         <td>
                                             {% if employee.armchair is not null %}
                                                 <div class="panel panel-warning">
+
                                                     <div class="panel-body bg-warning">
+                                                        <a class="glyphicon glyphicon-edit" href="{{ path('edit-armchair', {'id': employee.armchair.id}) }}"></a>
+
                                                         <span class="text-primary">{{ employee.armchair.name }}</span>
                                                         {% if is_granted('ROLE_ADMIN') %}
                                                             <a href="{{ path('free_employee_armchair', {'id': employee.id}) }}"
@@ -133,7 +133,7 @@
 
                                     <tr>
                                         <td>
-                                            <br>
+
                                             <img src="{{ asset('images/usbhub32.png') }}">
 
                                             Usb Hub
@@ -153,7 +153,7 @@
                                                 </div>
 
                                             {% else %}
-                                                <br>
+
                                                 <div class="text-right">
                                                     <strong class="text-danger text-large">
                                                         <i class="glyphicon glyphicon-ban-circle"></i>
@@ -164,7 +164,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <br>
+
                                             <img src="{{ asset('images/keyboard32.png') }}">
                                             Клавиатура
                                         </td>
@@ -183,7 +183,7 @@
                                                 </div>
 
                                             {% else %}
-                                                <br>
+
                                                 <div class="text-right">
                                                     <strong class="text-danger text-large">
                                                         <i class="glyphicon glyphicon-ban-circle"></i>
@@ -194,7 +194,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <br>
+
                                             <img src="{{ asset('images/mouse32.png') }}">
 
                                             Мышь
@@ -214,7 +214,7 @@
                                                 </div>
 
                                             {% else %}
-                                                <br>
+
                                                 <div class="text-right">
                                                     <strong class="text-danger text-large">
                                                         <i class="glyphicon glyphicon-ban-circle"></i>
@@ -225,7 +225,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <br>
+
                                             <img src="{{ asset('images/headphone.png') }}">
 
                                             Наушники
@@ -256,7 +256,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <br>
+
                                             <img src="{{ asset('images/monitor32.png') }}">
 
                                             Мониторы
