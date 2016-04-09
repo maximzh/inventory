@@ -25,7 +25,8 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $form = $this->get('form.factory')->create(new EmployeeFilterType());
+        $form = $this->createForm(EmployeeFilterType::class);
+        //$form = $this->get('form.factory')->create(new EmployeeFilterType());
         $query = $this->getDoctrine()->getRepository('AppBundle:Employee')
             ->findAllEmployeesQuery();
 

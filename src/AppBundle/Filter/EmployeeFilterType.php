@@ -14,7 +14,9 @@ use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderExecuterInterface;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterOperands;
+use Lexik\Bundle\FormFilterBundle\Filter\Form\Type\CollectionAdapterFilterType;
 use Lexik\Bundle\FormFilterBundle\Filter\Form\Type\DateRangeFilterType;
+use Lexik\Bundle\FormFilterBundle\Filter\Form\Type\NumberFilterType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -47,13 +49,13 @@ class EmployeeFilterType extends AbstractType
                 ))
             */
 
-            ->add('monitorsNumber', Filters\NumberFilterType::class, array(
+            ->add('monitorsNumber', NumberFilterType::class, array(
                 //'condition_pattern' => FilterOperands::OPERATOR_EQUAL,
                 'label' => 'Кол-во мониторов'
             ))
-            ->add('monitors', Filters\CollectionAdapterFilterType::class, array(
+            ->add('monitors', CollectionAdapterFilterType::class, array(
                 'label' => ' ',
-                'entry_type' => new MonitorFilterType(),
+                'entry_type' => MonitorFilterType::class,
                 'add_shared' => function (FilterBuilderExecuterInterface $qbe)  {
                     $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
                         // add the join clause to the doctrine query builder
@@ -71,7 +73,7 @@ class EmployeeFilterType extends AbstractType
                 'class' => 'AppBundle\Entity\Armchair'
             ))
             */
-            ->add('mac', new MacFilterType(), array(
+            ->add('mac', MacFilterType::class, array(
                 'label' => ' ',
                 'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
                     $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
@@ -81,7 +83,7 @@ class EmployeeFilterType extends AbstractType
                     $qbe->addOnce($qbe->getAlias().'.mac', 'mc', $closure);
                 }
             ))
-            ->add('armchair', new ArmchairFilterType(), array(
+            ->add('armchair', ArmchairFilterType::class, array(
                 'label' => 'Кресло',
                 'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
                     $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
@@ -91,7 +93,7 @@ class EmployeeFilterType extends AbstractType
                     $qbe->addOnce($qbe->getAlias().'.armchair', 'arm', $closure);
                 }
             ))
-            ->add('usbHub', new UsbHubFilterType(), array(
+            ->add('usbHub', UsbHubFilterType::class, array(
                 'label' => 'Usb Hub',
                 'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
                     $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
@@ -101,7 +103,7 @@ class EmployeeFilterType extends AbstractType
                     $qbe->addOnce($qbe->getAlias().'.usbHub', 'uh', $closure);
                 }
             ))
-            ->add('headphones', new HeadPhonesFilterType(), array(
+            ->add('headphones', HeadPhonesFilterType::class, array(
                 'label' => 'Наушники',
                 'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
                     $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
@@ -111,7 +113,7 @@ class EmployeeFilterType extends AbstractType
                     $qbe->addOnce($qbe->getAlias().'.headphones', 'hp', $closure);
                 }
             ))
-            ->add('keyboard', new KeyboardFilterType(), array(
+            ->add('keyboard', KeyboardFilterType::class, array(
                 'label' => 'Клавиатура',
                 'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
                     $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
@@ -121,7 +123,7 @@ class EmployeeFilterType extends AbstractType
                     $qbe->addOnce($qbe->getAlias().'.keyboard', 'kb', $closure);
                 }
             ))
-            ->add('mouse', new MouseFilterType(), array(
+            ->add('mouse', MouseFilterType::class, array(
                 'label' => 'Мышь',
                 'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
                     $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {

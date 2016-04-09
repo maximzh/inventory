@@ -10,9 +10,11 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Employee;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class AnotherDevice
+ * AnotherDevice
+ * 
  * @ORM\Table(name="another_device")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AnotherDeviceRepository")
  */
@@ -31,6 +33,8 @@ class AnotherDevice
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Укажите название устройства")
      */
     protected $name;
 
@@ -38,13 +42,15 @@ class AnotherDevice
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Укажите тип устройства")
      */
     protected $type;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="condition", type="string", length=255, nullable=true)
+     * @ORM\Column(name="state", type="string", length=255, nullable=true)
      */
     protected $condition;
 
@@ -149,7 +155,7 @@ class AnotherDevice
      *
      * @return AnotherDevice
      */
-    public function setEmployee(\AppBundle\Entity\Employee $employee = null)
+    public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
 

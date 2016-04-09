@@ -27,13 +27,13 @@ class EmployeeType extends AbstractType
     {
         $builder
             ->add('lastName', TextType::class, array(
-                'label' => 'Фамилия',
+                'label' => 'Фамилия*',
                 'required' => false,
                 )
             )
             ->add('firstName', TextType::class,
                 array(
-                    'label' => 'Имя',
+                    'label' => 'Имя*',
                     'required' => false,
                     )
             )
@@ -43,12 +43,12 @@ class EmployeeType extends AbstractType
                 )
             )
             ->add('employeeSince', DateType::class, array(
-                'label' => 'Дата приема на работу',
+                'label' => 'Дата приема на работу*',
                 'years' => range(2001, 2021)
             )
             )
             ->add('position', TextType::class, array(
-                'label' => 'Должность',
+                'label' => 'Должность*',
                 'required' => false,
                 )
             )

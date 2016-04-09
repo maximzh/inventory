@@ -60,3 +60,11 @@ body {
     top: 10px;
     right: 10px;
 }
+
+.bg-purple {
+    background-color: #B19BD9;
+}
+
+.bg-light-grey {
+    background-color: #F8F8F8;
+}

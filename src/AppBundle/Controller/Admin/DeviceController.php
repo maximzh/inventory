@@ -77,6 +77,7 @@ class DeviceController extends Controller
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
                 return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                //return $this->redirectToRoute('devices');
             }
         }
 

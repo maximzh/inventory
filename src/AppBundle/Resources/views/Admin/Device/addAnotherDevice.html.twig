@@ -3,16 +3,22 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <div class="well">
-                    <h2 class="text-primary text-center">Добавление нового устройства</h2>
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel">
+                    <div class="panel-heading bg-purple">
+                        <h3>Новое устройство</h3>
+                    </div>
+                    <div class="panel-body bg-light-grey">
+                        {{ form_start(form_device) }}
+                        {{ form_widget(form_device) }}
+
+                        <input type="submit" value="Сохранить" class="btn btn-primary btn-lg btn-block"/>
+                        {{ form_end(form_device) }}
+                    </div>
                 </div>
 
-                {{ form_start(form_device) }}
-                {{ form_widget(form_device) }}
 
-                <input type="submit" value="Сохранить" class="btn btn-primary btn-lg btn-block"/>
-                {{ form_end(form_device) }}
+
             </div>
         </div>
     </div>

@@ -287,6 +287,46 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            <img src="{{ asset('images/unknown.png') }}">
+                                            Другие устройства
+                                        </td>
+                                        <td>
+                                            {% if employee.anotherDevices is not empty %}
+                                                <p>Количество: {{ employee.anotherDevices|length }}</p>
+                                                {% for device in employee.anotherDevices %}
+                                                    <div class="panel panel-warning">
+                                                        <div class="panel-body bg-warning">
+                                                            {{ device.name }}
+                                                            {% if device.description is not null %}
+                                                            ({{ device.description }})
+                                                            {% endif %}
+
+                                                            {% if is_granted('ROLE_ADMIN') %}
+                                                                <a href="{{ path('free_employee_device', {'employee_id': employee.id, 'device_id': device.id}) }}"
+                                                                   class="btn btn-sm btn-danger pull-right">
+                                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                                </a>
+                                                            {% endif %}
+
+
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                            {#
+                                            <div>
+                                                <a href="{{ path('available_monitors') }}">
+                                                    <strong class="text-danger text-large">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </strong>
+                                                </a>
+                                            </div>
+                                            #}
+
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 {% if is_granted('ROLE_ADMIN') %}

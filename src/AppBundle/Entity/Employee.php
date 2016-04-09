@@ -8,12 +8,14 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\AnotherDevice;
 use AppBundle\Entity\Armchair;
 use AppBundle\Entity\Headphones;
 use AppBundle\Entity\Keyboard;
 use AppBundle\Entity\Mac;
 use AppBundle\Entity\Monitor;
 use AppBundle\Entity\Mouse;
+use AppBundle\Entity\UsbHub;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -125,14 +127,13 @@ class Employee
     private $anotherDevices;
 
 
-
-
     /**
      * @return string
      */
-    public function __toString() {
-        $name = $this->getFirstName().' '.$this->getLastName().' '.$this->getFatherName();
-        return (string) $name;
+    public function __toString()
+    {
+        $name = $this->getFirstName() . ' ' . $this->getLastName() . ' ' . $this->getFatherName();
+        return (string)$name;
     }
 
     /**
@@ -140,7 +141,7 @@ class Employee
      */
     public function __construct()
     {
-        $this->monitors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->monitors = new ArrayCollection();
         if (!$this->getMonitorsNumber()) {
             $this->setMonitorsNumber(0);
         }
@@ -441,11 +442,11 @@ class Employee
     /**
      * Set usbHub
      *
-     * @param \AppBundle\Entity\UsbHub $usbHub
+     * @param UsbHub $usbHub
      *
      * @return Employee
      */
-    public function setUsbHub(\AppBundle\Entity\UsbHub $usbHub = null)
+    public function setUsbHub(UsbHub $usbHub = null)
     {
         $this->usbHub = $usbHub;
 
@@ -455,7 +456,7 @@ class Employee
     /**
      * Get usbHub
      *
-     * @return \AppBundle\Entity\UsbHub
+     * @return UsbHub
      */
     public function getUsbHub()
     {
@@ -489,11 +490,11 @@ class Employee
     /**
      * Add anotherDevice
      *
-     * @param \AppBundle\Entity\AnotherDevice $anotherDevice
+     * @param AnotherDevice $anotherDevice
      *
      * @return Employee
      */
-    public function addAnotherDevice(\AppBundle\Entity\AnotherDevice $anotherDevice)
+    public function addAnotherDevice(AnotherDevice $anotherDevice)
     {
         $this->anotherDevices[] = $anotherDevice;
 
@@ -503,11 +504,14 @@ class Employee
     /**
      * Remove anotherDevice
      *
-     * @param \AppBundle\Entity\AnotherDevice $anotherDevice
+     * @param AnotherDevice $anotherDevice
      */
-    public function removeAnotherDevice(\AppBundle\Entity\AnotherDevice $anotherDevice)
+    public function removeAnotherDevice(AnotherDevice $anotherDevice)
     {
         $this->anotherDevices->removeElement($anotherDevice);
+
+        $anotherDevice->setEmployee(null);
+
     }
 
     /**
