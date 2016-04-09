@@ -43,7 +43,7 @@ class Headphones
     protected $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="Employee", inversedBy="headphones")
+     * @ORM\OneToOne(targetEntity="Employee", mappedBy="headphones")
      */
     private $employee;
 

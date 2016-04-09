@@ -39,6 +39,23 @@ class DeviceController extends Controller
         ];
     }
 
+    /**
+     * @Route("/devices/available_monitors", name="available_monitors")
+     *
+     * @Template()
+     */
+    public function showFreeMonitorsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $freeMonitors = $em->getRepository('AppBundle:Monitor')
+            ->findFreeMonitors();
+
+        return [
+            'freeMonitors' => $freeMonitors,
+        ];
+    }
+
 
     /**
      * @Route("/devices/available", name="available_devices")

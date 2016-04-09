@@ -8,6 +8,12 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Armchair;
+use AppBundle\Entity\Headphones;
+use AppBundle\Entity\Keyboard;
+use AppBundle\Entity\Mac;
+use AppBundle\Entity\Monitor;
+use AppBundle\Entity\Mouse;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -74,7 +80,7 @@ class Employee
     private $position;
 
     /**
-     * @ORM\OneToOne(targetEntity="Mac", mappedBy="employee")
+     * @ORM\OneToOne(targetEntity="Mac", inversedBy="employee")
      */
     private $mac;
 
@@ -84,27 +90,32 @@ class Employee
     private $monitors;
 
     /**
-     * @ORM\OneToOne(targetEntity="Keyboard", mappedBy="employee")
+     * @ORM\Column(name="monitors_number", type="integer", nullable=true)
+     */
+    private $monitorsNumber;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Keyboard", inversedBy="employee")
      */
     private $keyboard;
 
     /**
-     * @ORM\OneToOne(targetEntity="Mouse", mappedBy="employee")
+     * @ORM\OneToOne(targetEntity="Mouse", inversedBy="employee")
      */
     private $mouse;
 
     /**
-     * @ORM\OneToOne(targetEntity="Armchair", mappedBy="employee")
+     * @ORM\OneToOne(targetEntity="Armchair", inversedBy="employee")
      */
     private $armchair;
 
     /**
-     * @ORM\OneToOne(targetEntity="Headphones", mappedBy="employee")
+     * @ORM\OneToOne(targetEntity="Headphones", inversedBy="employee")
      */
     private $headphones;
 
     /**
-     * @ORM\OneToOne(targetEntity="UsbHub", mappedBy="employee")
+     * @ORM\OneToOne(targetEntity="UsbHub", inversedBy="employee")
      */
     private $usbHub;
 
@@ -125,6 +136,9 @@ class Employee
     public function __construct()
     {
         $this->monitors = new \Doctrine\Common\Collections\ArrayCollection();
+        if (!$this->getMonitorsNumber()) {
+            $this->setMonitorsNumber(0);
+        }
     }
 
     /**
@@ -260,11 +274,11 @@ class Employee
     /**
      * Set mac
      *
-     * @param \AppBundle\Entity\Mac $mac
+     * @param Mac $mac
      *
      * @return Employee
      */
-    public function setMac(\AppBundle\Entity\Mac $mac = null)
+    public function setMac(Mac $mac = null)
     {
         $this->mac = $mac;
 
@@ -274,7 +288,7 @@ class Employee
     /**
      * Get mac
      *
-     * @return \AppBundle\Entity\Mac
+     * @return Mac
      */
     public function getMac()
     {
@@ -284,13 +298,19 @@ class Employee
     /**
      * Add monitor
      *
-     * @param \AppBundle\Entity\Monitor $monitor
+     * @param Monitor $monitor
      *
      * @return Employee
      */
-    public function addMonitor(\AppBundle\Entity\Monitor $monitor)
+    public function addMonitor(Monitor $monitor)
     {
         $this->monitors[] = $monitor;
+
+        if (null == $count = $this->getMonitorsNumber()) {
+            $this->setMonitorsNumber(1);
+        } else {
+            $this->setMonitorsNumber($this->getMonitorsNumber() + 1);
+        }
 
         return $this;
     }
@@ -298,11 +318,12 @@ class Employee
     /**
      * Remove monitor
      *
-     * @param \AppBundle\Entity\Monitor $monitor
+     * @param Monitor $monitor
      */
-    public function removeMonitor(\AppBundle\Entity\Monitor $monitor)
+    public function removeMonitor(Monitor $monitor)
     {
         $this->monitors->removeElement($monitor);
+        $this->setMonitorsNumber($this->getMonitorsNumber() - 1);
         $monitor->setEmployee(null);
     }
 
@@ -319,11 +340,11 @@ class Employee
     /**
      * Set keyboard
      *
-     * @param \AppBundle\Entity\Keyboard $keyboard
+     * @param Keyboard $keyboard
      *
      * @return Employee
      */
-    public function setKeyboard(\AppBundle\Entity\Keyboard $keyboard = null)
+    public function setKeyboard(Keyboard $keyboard = null)
     {
         $this->keyboard = $keyboard;
 
@@ -333,7 +354,7 @@ class Employee
     /**
      * Get keyboard
      *
-     * @return \AppBundle\Entity\Keyboard
+     * @return Keyboard
      */
     public function getKeyboard()
     {
@@ -343,11 +364,11 @@ class Employee
     /**
      * Set mouse
      *
-     * @param \AppBundle\Entity\Mouse $mouse
+     * @param Mouse $mouse
      *
      * @return Employee
      */
-    public function setMouse(\AppBundle\Entity\Mouse $mouse = null)
+    public function setMouse(Mouse $mouse = null)
     {
         $this->mouse = $mouse;
 
@@ -357,7 +378,7 @@ class Employee
     /**
      * Get mouse
      *
-     * @return \AppBundle\Entity\Mouse
+     * @return Mouse
      */
     public function getMouse()
     {
@@ -367,11 +388,11 @@ class Employee
     /**
      * Set armchair
      *
-     * @param \AppBundle\Entity\Armchair $armchair
+     * @param Armchair $armchair
      *
      * @return Employee
      */
-    public function setArmchair(\AppBundle\Entity\Armchair $armchair = null)
+    public function setArmchair(Armchair $armchair = null)
     {
         $this->armchair = $armchair;
 
@@ -381,7 +402,7 @@ class Employee
     /**
      * Get armchair
      *
-     * @return \AppBundle\Entity\Armchair
+     * @return Armchair
      */
     public function getArmchair()
     {
@@ -391,11 +412,11 @@ class Employee
     /**
      * Set headphones
      *
-     * @param \AppBundle\Entity\Headphones $headphones
+     * @param Headphones $headphones
      *
      * @return Employee
      */
-    public function setHeadphones(\AppBundle\Entity\Headphones $headphones = null)
+    public function setHeadphones(Headphones $headphones = null)
     {
         $this->headphones = $headphones;
 
@@ -405,7 +426,7 @@ class Employee
     /**
      * Get headphones
      *
-     * @return \AppBundle\Entity\Headphones
+     * @return Headphones
      */
     public function getHeadphones()
     {
@@ -434,5 +455,29 @@ class Employee
     public function getUsbHub()
     {
         return $this->usbHub;
+    }
+
+    /**
+     * Set monitorsNumber
+     *
+     * @param integer $monitorsNumber
+     *
+     * @return Employee
+     */
+    public function setMonitorsNumber($monitorsNumber)
+    {
+        $this->monitorsNumber = $monitorsNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get monitorsNumber
+     *
+     * @return integer
+     */
+    public function getMonitorsNumber()
+    {
+        return $this->monitorsNumber;
     }
 }

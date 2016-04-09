@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Employee;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -65,7 +66,7 @@ class Mac
     private $hdd;
 
     /**
-     * @ORM\OneToOne(targetEntity="Employee", inversedBy="mac")
+     * @ORM\OneToOne(targetEntity="Employee", mappedBy="mac")
      */
     private $employee;
     
@@ -236,12 +237,13 @@ class Mac
     /**
      * Set employee
      *
-     * @param \AppBundle\Entity\Employee $employee
+     * @param Employee $employee
      *
      * @return Mac
      */
-    public function setEmployee(\AppBundle\Entity\Employee $employee = null)
+    public function setEmployee(Employee $employee = null)
     {
+
         $this->employee = $employee;
 
         return $this;
@@ -250,7 +252,7 @@ class Mac
     /**
      * Get employee
      *
-     * @return \AppBundle\Entity\Employee
+     * @return Employee
      */
     public function getEmployee()
     {

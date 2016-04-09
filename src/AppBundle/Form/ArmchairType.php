@@ -23,6 +23,7 @@ class ArmchairType extends AbstractType
                 'required' => true,
                 )
             )
+            /*
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $armchair = $event->getData();
                 $form = $event->getForm();
@@ -47,6 +48,7 @@ class ArmchairType extends AbstractType
                     ]);
                 }
             })
+            */
             //->add('employee', EntityType::class,[
             //    'class' => 'AppBundle\Entity\Employee',
             //    'label' => 'Сотрудник',

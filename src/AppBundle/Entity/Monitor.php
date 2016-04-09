@@ -176,6 +176,9 @@ class Monitor
     public function setEmployee($employee)
     {
         $this->employee = $employee;
+        if (null != $employee) {
+            $employee->addMonitor($this);
+        }
     }
     
     

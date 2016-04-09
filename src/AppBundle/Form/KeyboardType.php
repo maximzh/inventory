@@ -25,6 +25,7 @@ class KeyboardType extends AbstractType
                 'required' => true,
                 )
             )
+            /*
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $keyboard = $event->getData();
                 $form = $event->getForm();
@@ -49,6 +50,7 @@ class KeyboardType extends AbstractType
                     ]);
                 }
             })
+            */
             //->add('employee', EntityType::class,[
             //    'class' => 'AppBundle\Entity\Employee'
             //])

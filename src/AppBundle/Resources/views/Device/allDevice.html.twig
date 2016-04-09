@@ -4,19 +4,40 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color: #B19BD9">
                     </div>
                     <div class="panel-body">
                         <table class="table">
                             <thead>
-                            <th>Mac Mini</th>
-                            <th>Клавиатуры</th>
-                            <th>Наушники</th>
-                            <th>Кресла</th>
-                            <th>Мониторы</th>
-                            <th>Мыши</th>
-                            <th>Usb Hub's</th>
+                            <th>
+                                <img src="{{ asset('images/macmini32.png') }}"><br>
+                                Mac Mini
+                            </th>
+                            <th>
+                                <img src="{{ asset('images/keyboard32.png') }}"><br>
+                                Клавиатуры
+                            </th>
+                            <th>
+                                <img src="{{ asset('images/headphone.png') }}"><br>
+                                Наушники
+                            </th>
+                            <th>
+                                <img src="{{ asset('images/office_chair.png') }}"><br>
+                                Кресла
+                            </th>
+                            <th>
+                                <img src="{{ asset('images/monitor32.png') }}"><br>
+                                Мониторы
+                            </th>
+                            <th>
+                                <img src="{{ asset('images/mouse32.png') }}"><br>
+                                Мыши
+                            </th>
+                            <th>
+                                <img src="{{ asset('images/usbhub32.png') }}"><br>
+                                Usb Hub's
+                            </th>
                             </thead>
                             <tbody>
                             <tr>
@@ -57,8 +78,8 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color: #B19BD9">
                         Все устройства
                     </div>
                     <div class="panel-body">
@@ -79,7 +100,10 @@
                                 </th>
                             </tr>
                             </thead>
-                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            <tr>
+                                <td></td>
+                                <td></td><td><img src="{{ asset('images/macmini32.png') }}"></td>
+                            </tr>
                             {% for mac in macs %}
                                 <tr>
                                     <td>
@@ -106,7 +130,9 @@
                                     </td>
                                 </tr>
                             {% endfor %}
-                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            <tr>
+                                <td></td>
+                                <td></td><td><img src="{{ asset('images/keyboard32.png') }}"></td></tr>
                             {% for keyboard in keyboards %}
                                 <tr>
                                     <td>
@@ -132,7 +158,10 @@
                                     </td>
                                 </tr>
                             {% endfor %}
-                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            <tr>
+                                <td></td>
+                                <td></td><td><img src="{{ asset('images/headphone.png') }}"></td>
+                            </tr>
                             {% for headphone in headphones %}
                                 <tr>
                                     <td>
@@ -157,7 +186,10 @@
                                     </td>
                                 </tr>
                             {% endfor %}
-                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            <tr>
+                                <td></td>
+                                <td></td><td><img src="{{ asset('images/office_chair.png') }}"></td>
+                            </tr>
                             {% for armchair in armchairs %}
                                 <tr>
                                     <td>
@@ -182,7 +214,10 @@
                                     </td>
                                 </tr>
                             {% endfor %}
-                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            <tr>
+                                <td></td>
+                                <td></td><td><img src="{{ asset('images/monitor32.png') }}"></td>
+                            </tr>
                             {% for monitor in monitors %}
                                 <tr>
                                     <td>
@@ -208,7 +243,10 @@
                                     </td>
                                 </tr>
                             {% endfor %}
-                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            <tr>
+                                <td></td>
+                                <td></td><td><img src="{{ asset('images/mouse32.png') }}"></td>
+                            </tr>
                             {% for mouse in mouses %}
                                 <tr>
                                     <td>
@@ -233,7 +271,10 @@
                                     </td>
                                 </tr>
                             {% endfor %}
-                            <tr class="bg-info"><td></td><td></td><td><td></td></tr>
+                            <tr>
+                                <td></td>
+                                <td></td><td><img src="{{ asset('images/usbhub32.png') }}"></td>
+                            </tr>
                             {% for usbhub in usbhubs %}
                                 <tr>
                                     <td>

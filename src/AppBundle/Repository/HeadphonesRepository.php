@@ -15,8 +15,9 @@ class HeadphonesRepository extends EntityRepository
     public function findFreeHeadphones()
     {
         return $this->createQueryBuilder('h')
-            ->select('h')
-            ->where('h.employee IS NULL')
+            ->select('h, e')
+            ->leftJoin('h.employee', 'e')
+            ->where('e.headphones IS NULL')
             ->getQuery()
             ->getResult();
     }

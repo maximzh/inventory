@@ -155,6 +155,7 @@ class EmployeeController extends Controller
         if ($mac) {
             $em = $this->getDoctrine()->getManager();
             $mac->setEmployee(null);
+            $employee->setMac(null);
             $em->flush();
 
             $this->addFlash(
@@ -180,6 +181,7 @@ class EmployeeController extends Controller
         if ($armchair) {
             $em = $this->getDoctrine()->getManager();
             $armchair->setEmployee(null);
+            $employee->setArmchair(null);
             $em->flush();
 
             $this->addFlash(
@@ -205,6 +207,7 @@ class EmployeeController extends Controller
         if ($hub) {
             $em = $this->getDoctrine()->getManager();
             $hub->setEmployee(null);
+            $employee->setUsbHub(null);
             $em->flush();
 
             $this->addFlash(
@@ -230,6 +233,7 @@ class EmployeeController extends Controller
         if ($headphones) {
             $em = $this->getDoctrine()->getManager();
             $headphones->setEmployee(null);
+            $employee->setHeadphones(null);
             $em->flush();
 
             $this->addFlash(
@@ -255,6 +259,7 @@ class EmployeeController extends Controller
         if ($keyboard) {
             $em = $this->getDoctrine()->getManager();
             $keyboard->setEmployee(null);
+            $employee->setKeyboard(null);
             $em->flush();
 
             $this->addFlash(
@@ -280,6 +285,7 @@ class EmployeeController extends Controller
         if ($mouse) {
             $em = $this->getDoctrine()->getManager();
             $mouse->setEmployee(null);
+            $employee->setMouse(null);
             $em->flush();
 
             $this->addFlash(

@@ -15,8 +15,9 @@ class MouseRepository extends EntityRepository
     public function findFreeMouses()
     {
         return $this->createQueryBuilder('m')
-            ->select('m')
-            ->where('m.employee IS NULL')
+            ->select('m, e')
+            ->leftJoin('m.employee', 'e')
+            ->where('e.mouse IS NULL')
             ->getQuery()
             ->getResult();
     }

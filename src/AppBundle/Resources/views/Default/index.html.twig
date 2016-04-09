@@ -3,35 +3,23 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-sm-3 filter-div">
+            <div class="col-md-3 filter-div">
                 {% include '@App/Form/filterEmployees.html.twig' %}
             </div>
-            <div class="col-md-9 col-sm-9">
+            <div class="col-md-9">
 
                 {% include '@App/Common/flash_message.html.twig' %}
-
-                {#
-                {{ render(controller( 'AppBundle:Employee:employeeFilter')) }}
-                #}
-
-
-                {# total items count #}
-                <div class="panel panel-info">
-                    <div class="panel-heading"></div>
-                    <div class="panel-body">
-                        Всего сотрудников: {{ employees.getTotalItemCount }}
-                    </div>
-
-                </div>
+                <img  src="{{ asset('images/users48.png') }}">
+                <span class="text-large"> Всего сотрудников: {{ employees.getTotalItemCount }}</span>
 
                 <table class="table table-hover main-employees-list">
                     <thead>
-                    <tr class="bg-info">
+                    <tr style="background-color: #B19BD9">
                         <th>
                             ФИО
                         </th>
                         <th>
-                            Принят на работу
+                            Дата п.н.р.
                         </th>
                         <th>
                             Позиция
@@ -40,10 +28,10 @@
                             Мониторы
                         </th>
                         <th>
-                            RAM Mac Mini
+                            RAM MacMini
                         </th>
                         <th>
-                            SSD
+                            SSD MacMini
                         </th>
                         <th >
                             Кресло
@@ -54,7 +42,7 @@
                     </tr>
                     </thead>
 
-                    <tr class="bg-warning">
+                    <tr class="text-danger">
                         {# sorting of properties based on query components #}
                         <td>
                             <span class="glyphicon glyphicon-sort"></span><br>
@@ -69,19 +57,19 @@
                             {{ knp_pagination_sortable(employees, 'Сортировать', 'e.position') }}
                         </td>
                         <td>
-                            {#
+
                             <span class="glyphicon glyphicon-sort"></span>
-                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.wardrobecount') }}
-                            #}
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.monitorsNumber') }}
+
 
                         </td>
                         <td>
                             <span class="glyphicon glyphicon-sort"></span><br>
-                            {{ knp_pagination_sortable(employees, 'Сортировать', 'm.ram') }}
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'mc.ram') }}
                         </td>
                         <td>
                             <span class="glyphicon glyphicon-sort"></span><br>
-                            {{ knp_pagination_sortable(employees, 'Сортировать', 'm.ssd') }}
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'mc.ssd') }}
                         </td>
                         <td>
                             <span class="glyphicon glyphicon-sort"></span><br>

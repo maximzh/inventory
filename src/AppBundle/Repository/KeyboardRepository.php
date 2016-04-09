@@ -15,8 +15,9 @@ class KeyboardRepository extends EntityRepository
     public function findFreeKeyboards()
     {
         return $this->createQueryBuilder('k')
-            ->select('k')
-            ->where('k.employee IS NULL')
+            ->select('k, e')
+            ->leftJoin('k.employee', 'e')
+            ->where('e.keyboard IS NULL')
             ->getQuery()
             ->getResult();
     }

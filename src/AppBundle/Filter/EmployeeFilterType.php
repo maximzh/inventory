@@ -8,8 +8,14 @@
 
 namespace AppBundle\Filter;
 
+use AppBundle\Entity\Mac;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\QueryBuilder;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderExecuterInterface;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterOperands;
 use Lexik\Bundle\FormFilterBundle\Filter\Form\Type\DateRangeFilterType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,6 +28,7 @@ class EmployeeFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            /*
             ->add('firstName', Filters\TextFilterType::class, array(
                 'condition_pattern' => FilterOperands::STRING_CONTAINS,
                 'label' => 'Имя'
@@ -38,6 +45,92 @@ class EmployeeFilterType extends AbstractType
                 'condition_pattern' => FilterOperands::STRING_CONTAINS,
                 'label' => 'Позиция'
                 ))
+            */
+
+            ->add('monitorsNumber', Filters\NumberFilterType::class, array(
+                //'condition_pattern' => FilterOperands::OPERATOR_EQUAL,
+                'label' => 'Кол-во мониторов'
+            ))
+            ->add('monitors', Filters\CollectionAdapterFilterType::class, array(
+                'label' => ' ',
+                'entry_type' => new MonitorFilterType(),
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe)  {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        // add the join clause to the doctrine query builder
+                        // the where clause for the label and color fields will be added automatically with the right alias later by the Lexik\Filter\QueryBuilderUpdater
+                        $filterBuilder->leftJoin($alias . '.monitors', $joinAlias);
+                    };
+                    // then use the query builder executor to define the join and its alias.
+                    $qbe->addOnce($qbe->getAlias().'.monitors', 'mon', $closure);
+                },
+
+            ))
+            /*
+            ->add('armchair', Filters\EntityFilterType::class, array(
+                'label' => 'Кресло',
+                'class' => 'AppBundle\Entity\Armchair'
+            ))
+            */
+            ->add('mac', new MacFilterType(), array(
+                'label' => ' ',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.mac', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.mac', 'mc', $closure);
+                }
+            ))
+            ->add('armchair', new ArmchairFilterType(), array(
+                'label' => 'Кресло',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.armchair', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.armchair', 'arm', $closure);
+                }
+            ))
+            ->add('usbHub', new UsbHubFilterType(), array(
+                'label' => 'Usb Hub',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.usbHub', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.usbHub', 'uh', $closure);
+                }
+            ))
+            ->add('headphones', new HeadPhonesFilterType(), array(
+                'label' => 'Наушники',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.headphones', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.headphones', 'hp', $closure);
+                }
+            ))
+            ->add('keyboard', new KeyboardFilterType(), array(
+                'label' => 'Клавиатура',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.keyboard', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.keyboard', 'kb', $closure);
+                }
+            ))
+            ->add('mouse', new MouseFilterType(), array(
+                'label' => 'Мышь',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.mouse', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.mouse', 'ms', $closure);
+                }
+            ))
             ->add('employeeSince', DateRangeFilterType::class, array(
                 'label' => 'Принят на работу (в период):',
                 'left_date_options' => array(
@@ -50,6 +143,7 @@ class EmployeeFilterType extends AbstractType
                     'years' => range(2001, 2021),
                     'data' => new \DateTime('2021-01-01')
                 )
+
             ))
         ;
     }
