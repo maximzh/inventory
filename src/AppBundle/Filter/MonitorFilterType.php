@@ -25,11 +25,11 @@ class MonitorFilterType extends AbstractType
         $builder
             ->add('name', Filters\TextFilterType::class, array(
                 'condition_pattern' => FilterOperands::STRING_CONTAINS,
-                'label' => 'Марка'
+                'label' => 'Марка монитора'
             ))
             ->add('diagonal', Filters\NumberFilterType::class, array(
                 //'condition_pattern' => FilterOperands::OPERATOR_EQUAL,
-                'label' => 'Диагональ'
+                'label' => 'Диагональ монитора'
             ));
     }
 
@@ -41,7 +41,6 @@ class MonitorFilterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            //'data_class' => 'AppBundle\Entity\Employee',
             'error_bubbling'    => true,
             'csrf_protection'   => false,
             'validation_groups' => array('filtering'),// avoid NotBlank() constraint-related message

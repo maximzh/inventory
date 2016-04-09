@@ -52,7 +52,7 @@ class EmployeeFilterType extends AbstractType
                 'label' => 'Кол-во мониторов'
             ))
             ->add('monitors', Filters\CollectionAdapterFilterType::class, array(
-                'label' => 'Характеристики монитора',
+                'label' => ' ',
                 'entry_type' => new MonitorFilterType(),
                 'add_shared' => function (FilterBuilderExecuterInterface $qbe)  {
                     $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
@@ -71,16 +71,6 @@ class EmployeeFilterType extends AbstractType
                 'class' => 'AppBundle\Entity\Armchair'
             ))
             */
-             ->add('armchair', new ArmchairFilterType(), array(
-                'label' => 'Кресло',
-                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
-                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
-                        $filterBuilder->leftJoin($alias . '.armchair', $joinAlias);
-                    };
-
-                    $qbe->addOnce($qbe->getAlias().'.armchair', 'arm', $closure);
-                }
-            ))
             ->add('mac', new MacFilterType(), array(
                 'label' => ' ',
                 'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
@@ -89,6 +79,16 @@ class EmployeeFilterType extends AbstractType
                     };
 
                     $qbe->addOnce($qbe->getAlias().'.mac', 'mc', $closure);
+                }
+            ))
+            ->add('armchair', new ArmchairFilterType(), array(
+                'label' => 'Кресло',
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe) {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        $filterBuilder->leftJoin($alias . '.armchair', $joinAlias);
+                    };
+
+                    $qbe->addOnce($qbe->getAlias().'.armchair', 'arm', $closure);
                 }
             ))
             ->add('usbHub', new UsbHubFilterType(), array(

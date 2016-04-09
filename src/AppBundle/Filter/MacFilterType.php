@@ -25,15 +25,15 @@ class MacFilterType extends AbstractType
             ))
             ->add('ram', Filters\NumberFilterType::class, array(
                 //'condition_pattern' => FilterOperands::OPERATOR_EQUAL,
-                'label' => 'RAM'
+                'label' => 'RAM Mac Mini'
             ))
             ->add('ssd', Filters\NumberFilterType::class, array(
                 //'condition_pattern' => FilterOperands::OPERATOR_EQUAL,
-                'label' => 'SSD'
+                'label' => 'SSD Mac Mini'
             ))
             ->add('hdd', Filters\NumberFilterType::class, array(
                 //'condition_pattern' => FilterOperands::OPERATOR_EQUAL,
-                'label' => 'HDD'
+                'label' => 'HDD Mac Mini'
             ))
         ;
     }
