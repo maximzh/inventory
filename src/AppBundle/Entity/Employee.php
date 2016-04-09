@@ -119,6 +119,11 @@ class Employee
      */
     private $usbHub;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AnotherDevice", mappedBy="employee")
+     */
+    private $anotherDevices;
+
 
 
 
@@ -479,5 +484,39 @@ class Employee
     public function getMonitorsNumber()
     {
         return $this->monitorsNumber;
+    }
+
+    /**
+     * Add anotherDevice
+     *
+     * @param \AppBundle\Entity\AnotherDevice $anotherDevice
+     *
+     * @return Employee
+     */
+    public function addAnotherDevice(\AppBundle\Entity\AnotherDevice $anotherDevice)
+    {
+        $this->anotherDevices[] = $anotherDevice;
+
+        return $this;
+    }
+
+    /**
+     * Remove anotherDevice
+     *
+     * @param \AppBundle\Entity\AnotherDevice $anotherDevice
+     */
+    public function removeAnotherDevice(\AppBundle\Entity\AnotherDevice $anotherDevice)
+    {
+        $this->anotherDevices->removeElement($anotherDevice);
+    }
+
+    /**
+     * Get anotherDevices
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAnotherDevices()
+    {
+        return $this->anotherDevices;
     }
 }

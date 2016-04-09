@@ -48,7 +48,7 @@ class EmployeeController extends Controller
                 'method' => 'POST',
             )
         );
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() == Request::METHOD_POST) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
@@ -58,7 +58,7 @@ class EmployeeController extends Controller
 
                 $this->addFlash(
                     'notice',
-                    'Новый сотрудник успешно добавлен.'
+                    'Новый сотрудник добавлен.'
                 );
 
                 return $this->redirectToRoute('homepage');

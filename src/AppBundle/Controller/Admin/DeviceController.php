@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\AnotherDevice;
 use AppBundle\Entity\Armchair;
 use AppBundle\Entity\Headphones;
 use AppBundle\Entity\Keyboard;
@@ -9,6 +10,7 @@ use AppBundle\Entity\Mac;
 use AppBundle\Entity\Monitor;
 use AppBundle\Entity\Mouse;
 use AppBundle\Entity\UsbHub;
+use AppBundle\Form\AnotherDeviceType;
 use AppBundle\Form\ArmchairType;
 use AppBundle\Form\HeadphonesType;
 use AppBundle\Form\KeyboardType;
@@ -30,6 +32,60 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeviceController extends Controller
 {
+    /**
+     * @Route("/add-device", name="add-device")
+     * @Template()
+     * @Method({"GET", "POST"})
+     *
+     */
+    public function addAnotherDeviceAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $device = new AnotherDevice();
+        //$device->setType('Monitor');
+
+        $form = $this->createForm(AnotherDeviceType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST){
+            if ($form->isValid()) {
+                $em->persist($device);
+                $em->flush();
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+            }
+        }
+        return ['form_device' => $form->createView()];
+    }
+
+    /**
+     * @Route("/edit-device/{id}", name="edit-device")
+     * @Template()
+     * @param $id
+     *
+     * @Method({"GET", "POST"})
+     *
+     * @return array
+     */
+    public function editAnotherDeviceAction(Request $request, $id)
+    {
+        $device = $this->getDoctrine()->getManager()->getRepository('AppBundle:AnotherDevice')->find($id);
+
+        $form = $this->createForm(AnotherDeviceType::class, $device);
+        $form->handleRequest($request);
+
+        if($request->getMethod() == Request::METHOD_POST) {
+            if ($form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+            }
+        }
+
+        return [
+            'device' => $device,
+            'form_device' => $form->createView()
+        ];
+    }
+    
     /**
      * @Route("/add-monitor", name="add-monitor")
      * @Template()
