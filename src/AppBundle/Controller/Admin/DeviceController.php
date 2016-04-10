@@ -192,6 +192,7 @@ class DeviceController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             if ($employee = $monitor->getEmployee()) {
+                $employee->removeMonitor($monitor);
                 $monitor->setEmployee(null);
             }
             $em->remove($monitor);

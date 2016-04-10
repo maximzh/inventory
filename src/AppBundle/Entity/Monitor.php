@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Monitor
@@ -25,6 +26,9 @@ class Monitor
      * @var int
      *
      * @ORM\Column(name="diagonal", type="integer")
+     *
+     * @Assert\NotBlank(message="Укажите диагональ монитора")
+     * @Assert\Type(type="integer")
      */
     private $diagonal;
 
@@ -32,6 +36,8 @@ class Monitor
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Укажите название монитора")
      */
     protected $name;
 

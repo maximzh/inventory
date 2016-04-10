@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -53,17 +54,20 @@ class ArmchairType extends AbstractType
             //    'class' => 'AppBundle\Entity\Employee',
             //    'label' => 'Сотрудник',
             //])
-            /*
+
             ->add('status', ChoiceType::class, array(
-                'label' => 'Статус',
+                'label' => 'Состояние',
                 'required' => false,
                     'choices'  => array(
-                        'free' => "Свободен",
-                        'busy' => "Занят",
+                        'Новое' => "new",
+                        'Старое' => "old",
+                        'Сломанное' => 'broken',
+                        'После ремонта' => 'fixed',
                     ),
+                    'choices_as_values' => true,
                 )
             )
-            */
+
             ;
     }
     public function configureOptions(OptionsResolver $resolver)

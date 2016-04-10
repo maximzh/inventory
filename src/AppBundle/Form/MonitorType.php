@@ -21,12 +21,12 @@ class MonitorType extends AbstractType
         $builder
             ->add('name', TextType::class, array(
                 'label' => 'Марка монитора',
-                'required' => true,
+                'required' => false,
                 )
             )
             ->add('diagonal', IntegerType::class, array(
                     'label' => 'Диагональ монитора',
-                    'required' => true,
+                    'required' => false,
                 )
             )
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {

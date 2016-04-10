@@ -68,7 +68,7 @@
             </div>
 
 
-            <div class="col-md-10">
+            <div class="col-md-10 col-sm-10">
                 {% include '@App/Common/flash_message.html.twig' %}
 
                 <div class="panel">
@@ -127,7 +127,7 @@
                             <th>
                                 <img src="{{ asset('images/unknown.png') }}"><br>
                                 <a href="#others">
-                                    Другие устройства
+                                    Другие
                                 </a>
 
                             </th>
@@ -350,7 +350,7 @@
                                         Кресло
                                     </th>
                                     <th>
-                                        Тип
+                                        Состояние
                                     </th>
                                     <th>
                                         Сотрудник
@@ -369,7 +369,16 @@
                                             </a>
                                         </td>
                                         <td>
-                                            {{ armchair.type }}
+                                            {% if armchair.status == 'new' %}
+                                                Новое
+                                            {% elseif armchair.status == 'old' %}
+                                                Старое
+                                            {% elseif armchair.status == 'broken' %}
+                                                Сломанное
+                                            {% else %}
+                                                -
+                                            {% endif %}
+
                                         </td>
                                         <td>
                                             {% if armchair.employee is not null %}

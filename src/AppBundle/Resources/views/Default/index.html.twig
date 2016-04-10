@@ -96,6 +96,8 @@
                                 {{ employee.position }}
                             </td>
                             <td>
+                                <img src="{{ asset('images/monitor_24.png') }}">
+
                                 {% if employee.monitors|length != 0 and employee.monitors != null %}
                                     {{ employee.monitors|length }}
                                 {% else %}
@@ -103,6 +105,8 @@
                                 {% endif %}
                             </td>
                             <td>
+                                <img src="{{ asset('images/ram.png') }}">
+
                                 {% if employee.mac.ram is defined%}
                                     {{ employee.mac.ram }}
                                 {% else %}
@@ -110,6 +114,7 @@
                                 {% endif %}
                             </td>
                             <td>
+                                <img src="{{ asset('images/ssd-icon24.png') }}">
                                 {% if employee.mac.ssd is defined and employee.mac.ssd > 0 %}
                                     {{ 1 }}
                                 {% else %}
@@ -117,6 +122,8 @@
                                 {% endif %}
                             </td>
                             <td>
+                                <img src="{{ asset('images/chair-24.png') }}">
+
                                 {% if employee.armchair is defined  and employee.armchair != null %}
                                 {{ employee.armchair|length }}
                                 {% else %}
@@ -124,6 +131,8 @@
                                 {% endif %}
                             </td>
                             <td>
+                                <img src="{{ asset('images/usb--icon24.png') }}">
+
                                 {% if employee.usbHub is defined  and employee.usbHub != null %}
                                     {{ employee.usbHub|length }}
                                 {% else %}
