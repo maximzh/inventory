@@ -3,11 +3,12 @@
 {% block body %}
     <div class="container">
         <div class="row">
+
             <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading" style="background-color: #B19BD9">
+                <div class="panel">
+                    <div class="panel-heading bg-purple">
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body bg-light-grey">
                         <table class="table">
                             <thead>
                             <th>
@@ -117,7 +118,7 @@
                             <img src="{{ asset('images/macmini32.png') }}">
                             <strong>Mac Mini</strong>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body bg-light-grey">
                             <table class="table">
                                 <thead>
                                 <tr>
@@ -213,7 +214,7 @@
                                 <img src="{{ asset('images/monitor32.png') }}">
                                 <strong>Мониторы</strong>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body bg-light-grey">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -287,7 +288,7 @@
                                 <img src="{{ asset('images/office_chair.png') }}">
                                 <strong>Кресла</strong>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body bg-light-grey">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -354,7 +355,7 @@
                                 <img src="{{ asset('images/usbhub32.png') }}">
                                 <strong>Usb Hubs</strong>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body bg-light-grey">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -421,7 +422,7 @@
                                 <img src="{{ asset('images/keyboard32.png') }}">
                                 <strong>Клавиатуры</strong>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body bg-light-grey">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -488,7 +489,7 @@
                                 <img src="{{ asset('images/headphone.png') }}">
                                 <strong>Наушники</strong>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body bg-light-grey">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -555,7 +556,7 @@
                                 <img src="{{ asset('images/mouse32.png') }}">
                                 <strong>Мыши</strong>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body bg-light-grey">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -625,7 +626,7 @@
 
                                 <strong>Другие устройства</strong>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body bg-light-grey">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -687,237 +688,5 @@
 
                 </div>
             </div>
-                {#
-                <div class="panel panel-default">
-                    <div class="panel-heading" style="background-color: #B19BD9">
-                        Все устройства
-                    </div>
-                    <div class="panel-body">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>
-                                    Название устройства
-                                </th>
-                                {% if is_granted('ROLE_ADMIN') %}
-                                <th></th>
-                                {% endif %}
-                                <th>
-                                    Тип устройства
-                                </th>
-                                <th>
-                                    В пользовании у сотрудника
-                                </th>
-                            </tr>
-                            </thead>
-                            <tr>
-                                <td></td>
-                                <td></td><td><img src="{{ asset('images/macmini32.png') }}"></td>
-                            </tr>
-                            {% for mac in macs %}
-                                <tr>
-                                    <td>
-                                        {{ mac.name }}
-                                    </td>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <td>
-                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-mac', {'id': mac.id}) }}"></a>
-                                        </td>
-                                    {% endif %}
-                                    <td>
-                                        {{ mac.type }}
-                                    </td>
-                                    <td>
-                                        {% if mac.employee is not null %}
-                                            <a href="{{ path('show_employee', {'id': mac.employee.id}) }}">
-                                                {{ mac.employee.lastName }} {{ mac.employee.firstName }}
-                                            </a>
-
-                                        {% else %}
-                                            Нет
-                                        {% endif %}
-
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            <tr>
-                                <td></td>
-                                <td></td><td><img src="{{ asset('images/keyboard32.png') }}"></td></tr>
-                            {% for keyboard in keyboards %}
-                                <tr>
-                                    <td>
-                                        {{ keyboard.name }}
-                                    </td>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <td>
-                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-keyboard', {'id': keyboard.id}) }}"></a>
-                                        </td>
-                                    {% endif %}
-                                    <td>
-                                        {{ keyboard.type }}
-                                    </td>
-                                    <td>
-                                        {% if keyboard.employee is not null %}
-                                            <a href="{{ path('show_employee', {'id': keyboard.employee.id}) }}">
-                                                {{ keyboard.employee.lastName }} {{ keyboard.employee.firstName }}
-                                            </a>
-
-                                        {% else %}
-                                            Нет
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            <tr>
-                                <td></td>
-                                <td></td><td><img src="{{ asset('images/headphone.png') }}"></td>
-                            </tr>
-                            {% for headphone in headphones %}
-                                <tr>
-                                    <td>
-                                        {{ headphone.name }}
-                                    </td>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <td>
-                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-headphones', {'id': headphone.id}) }}"></a>
-                                        </td>
-                                    {% endif %}
-                                    <td>
-                                        {{ headphone.type }}
-                                    </td>
-                                    <td>
-                                        {% if headphone.employee is not null %}
-                                            <a href="{{ path('show_employee', {'id':  headphone.employee.id}) }}">
-                                                {{ headphone.employee.lastName }} {{ headphone.employee.firstName }}
-                                            </a>
-                                        {% else %}
-                                            Нет
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            <tr>
-                                <td></td>
-                                <td></td><td><img src="{{ asset('images/office_chair.png') }}"></td>
-                            </tr>
-                            {% for armchair in armchairs %}
-                                <tr>
-                                    <td>
-                                        {{ armchair.name }}
-                                    </td>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <td>
-                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-armchair', {'id': armchair.id}) }}"></a>
-                                        </td>
-                                    {% endif %}
-                                    <td>
-                                        {{ armchair.type }}
-                                    </td>
-                                    <td>
-                                        {% if armchair.employee is not null %}
-                                            <a href="{{ path('show_employee', {'id': armchair.employee.id}) }}">
-                                                {{ armchair.employee.lastName }} {{ armchair.employee.firstName }}
-                                            </a>
-                                        {% else %}
-                                            Нет
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            <tr>
-                                <td></td>
-                                <td></td><td><img src="{{ asset('images/monitor32.png') }}"></td>
-                            </tr>
-                            {% for monitor in monitors %}
-                                <tr>
-                                    <td>
-                                        {{ monitor.name }} ({{ monitor.diagonal }}'')
-                                    </td>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <td>
-                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-monitor', {'id': monitor.id}) }}"></a>
-                                        </td>
-                                    {% endif %}
-                                    <td>
-                                        {{ monitor.type }}
-                                    </td>
-                                    <td>
-                                        {% if monitor.employee is not null %}
-                                            <a href="{{ path('show_employee', {'id': monitor.employee.id}) }}">
-                                                {{ monitor.employee.lastName }} {{ monitor.employee.firstName }}
-
-                                            </a>
-                                        {% else %}
-                                            Нет
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            <tr>
-                                <td></td>
-                                <td></td><td><img src="{{ asset('images/mouse32.png') }}"></td>
-                            </tr>
-                            {% for mouse in mouses %}
-                                <tr>
-                                    <td>
-                                        {{ mouse.name }}
-                                    </td>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <td>
-                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-mouse', {'id': mouse.id}) }}"></a>
-                                        </td>
-                                    {% endif %}
-                                    <td>
-                                        {{ mouse.type }}
-                                    </td>
-                                    <td>
-                                        {% if mouse.employee is not null %}
-                                            <a href="{{ path('show_employee', {'id': mouse.employee.id}) }}">
-                                                {{ mouse.employee.lastName }} {{ mouse.employee.firstName }}
-                                            </a>
-                                        {% else %}
-                                            Нет
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            <tr>
-                                <td></td>
-                                <td></td><td><img src="{{ asset('images/usbhub32.png') }}"></td>
-                            </tr>
-                            {% for usbhub in usbhubs %}
-                                <tr>
-                                    <td>
-                                        {{ usbhub.name }}
-                                    </td>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <td>
-                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-usbhub', {'id': usbhub.id}) }}"></a>
-                                        </td>
-                                    {% endif %}
-                                    <td>
-                                        {{ usbhub.type }}
-                                    </td>
-                                    <td>
-                                        {% if usbhub.employee is not null %}
-                                            <a href="{{ path('show_employee', {'id': usbhub.employee.id}) }}">
-                                                {{ usbhub.employee.lastName }} {{ usbhub.employee.firstName }}
-
-                                            </a>
-                                        {% else %}
-                                            Нет
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-                #}
-
-
-
-
-
     </div>
 {% endblock body %}

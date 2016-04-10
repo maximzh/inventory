@@ -39,7 +39,7 @@
                                 </form>
                             </div>
                             <h4>
-                                {{ 'Добро пожаловать' }}, <span class="text-primary">{{ app.user.realName }} ({{ app.user.email }})  </span>
+                                {{ 'Добро пожаловать' }}, <span class="text-purple">{{ app.user.realName }} ({{ app.user.email }})  </span>
                                 <a href="{{ path('logout') }}" class="btn btn-sm btn-primary {# logout-btn style="background-color: #020079; color: white" #}" >
                                     <i class="glyphicon glyphicon-user"></i>
                                     <i class="glyphicon glyphicon-log-out"></i>
@@ -56,8 +56,8 @@
                     <div class="row">
                         <ul class="nav nav-tabs">
                             <li class="dropdown">
-                                <a href="{{ path('homepage') }}" data-toggle="dropdown" class="dropdown-toggle">
-                                    <span class="glyphicon glyphicon-user"></span>  Сотрудники <b class="caret"></b>
+                                <a href="{{ path('homepage') }}" data-toggle="dropdown" class="dropdown-toggle text-purple">
+                                    <span class="glyphicon glyphicon-user"></span>  <span>Сотрудники</span> <b class="caret"></b>
                                 </a>
 
                                 <ul class="dropdown-menu">
@@ -78,7 +78,7 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="" data-toggle="dropdown" class="dropdown-toggle">
+                                <a href="" data-toggle="dropdown" class="dropdown-toggle text-purple">
                                     <span class="glyphicon glyphicon-hdd"></span>  Оборудование <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -204,7 +204,25 @@
 {% block body %}{% endblock %}
 {% block javascripts %}
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap-confirmation.js') }}"></script>
+
+    <script type="text/javascript">
+        // create the back to top button
+        $('body').prepend('<a href="#" class="back-to-top"><img src="{{ asset('images/arrow_up.png') }}"></a>');
+        var amountScrolled = 400;
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > amountScrolled) {
+                $('a.back-to-top').fadeIn('slow');
+            } else {
+                $('a.back-to-top').fadeOut('slow');
+            }
+        });
+        $('a.back-to-top, a.simple-back-to-top').click(function () {
+            $('html, body').animate({
+                scrollTop: 0
+            }, 100);
+            return false;
+        });
+    </script>
 {% endblock %}
 </body>
 </html>

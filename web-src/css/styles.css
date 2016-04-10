@@ -68,3 +68,21 @@ body {
 .bg-light-grey {
     background-color: #F8F8F8;
 }
+
+.text-purple {
+    color: #6E3990;
+}
+
+a.back-to-top {
+
+    display: none;
+    /*text-indent: -9999px;*/
+    position: fixed;
+    z-index: 9999;
+    right: 20px;
+    bottom: 100px;
+    -webkit-border-radius: 32px;
+    -moz-border-radius: 32px;
+    border-radius: 32px;
+
+}
