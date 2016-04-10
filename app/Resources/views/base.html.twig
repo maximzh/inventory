@@ -88,12 +88,6 @@
                                             Все устройства
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="{{ path('available_devices') }}">
-                                            <span class="glyphicon glyphicon-hdd"></span>
-                                            Свободные устройства
-                                        </a>
-                                    </li>
                                     {% if is_granted('ROLE_ADMIN') %}
                                         <li>
                                             <a href="{{ path('add-monitor') }}">

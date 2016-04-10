@@ -382,13 +382,12 @@
                                             {% endif %}
 
                                         </td>
-                                        {#
+
                                         {% if is_granted('ROLE_ADMIN') %}
                                             <td>
                                                 <a class="glyphicon glyphicon-pencil" href="{{ path('edit-armchair', {'id': armchair.id}) }}"></a>
                                             </td>
                                         {% endif %}
-                                        #}
 
                                     </tr>
 
