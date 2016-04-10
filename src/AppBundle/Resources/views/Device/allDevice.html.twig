@@ -69,6 +69,7 @@
 
 
             <div class="col-md-10">
+                {% include '@App/Common/flash_message.html.twig' %}
 
                 <div class="panel">
                     <div class="panel-heading bg-purple">
@@ -213,7 +214,9 @@
 
                                     <tr>
                                         <td>
-                                            {{ mac.name }}
+                                            <a href="{{ path('show_mac', {'id': mac.id}) }}">
+                                                {{ mac.name }}
+                                            </a>
                                         </td>
                                         <td>
                                             {{ mac.ram }}
@@ -295,7 +298,10 @@
 
                                     <tr>
                                         <td>
-                                            {{ monitor.name }}
+                                            <a href="{{ path('show_monitor', {'id': monitor.id}) }}">
+                                                {{ monitor.name }}
+                                            </a>
+
                                         </td>
                                         <td>
                                             <span class="text-danger"> {{ monitor.diagonal }} ''</span>
@@ -358,7 +364,9 @@
 
                                     <tr>
                                         <td>
-                                            {{ armchair.name }}
+                                            <a href="{{ path('show_armchair', {'id': armchair.id}) }}">
+                                                {{ armchair.name }}
+                                            </a>
                                         </td>
                                         <td>
                                             {{ armchair.type }}
@@ -374,11 +382,14 @@
                                             {% endif %}
 
                                         </td>
+                                        {#
                                         {% if is_granted('ROLE_ADMIN') %}
                                             <td>
                                                 <a class="glyphicon glyphicon-pencil" href="{{ path('edit-armchair', {'id': armchair.id}) }}"></a>
                                             </td>
                                         {% endif %}
+                                        #}
+
                                     </tr>
 
 
@@ -417,7 +428,9 @@
 
                                     <tr>
                                         <td>
-                                            {{ hub.name }}
+                                            <a href="{{ path('show_usbhub', {'id': hub.id}) }}">
+                                                {{ hub.name }}
+                                            </a>
                                         </td>
                                         <td>
                                             {{ hub.type }}
@@ -476,7 +489,9 @@
 
                                     <tr>
                                         <td>
-                                            {{ keyboard.name }}
+                                            <a href="{{ path('show_keyboard', {'id': keyboard.id}) }}">
+                                                {{ keyboard.name }}
+                                            </a>
                                         </td>
                                         <td>
                                             {{ keyboard.type }}
@@ -535,7 +550,9 @@
 
                                     <tr>
                                         <td>
-                                            {{ headphone.name }}
+                                            <a href="{{ path('show_headphones', {'id': headphone.id}) }}">
+                                                {{ headphone.name }}
+                                            </a>
                                         </td>
                                         <td>
                                             {{ headphone.type }}
@@ -594,7 +611,9 @@
 
                                     <tr>
                                         <td>
-                                            {{ mouse.name }}
+                                            <a href="{{ path('show_mouse', {'id': mouse.id}) }}">
+                                                {{ mouse.name }}
+                                            </a>
                                         </td>
                                         <td>
                                             {{ mouse.type }}
@@ -659,7 +678,9 @@
 
                                     <tr>
                                         <td>
-                                            {{ device.name }}
+                                            <a href="{{ path('show_device', {'id': device.id}) }}">
+                                                {{ device.name }}
+                                            </a>
                                         </td>
                                         <td>
                                             {{ device.type }}

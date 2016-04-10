@@ -86,6 +86,38 @@ class DeviceController extends Controller
             'form_device' => $form->createView()
         ];
     }
+
+    /**
+     * @param Request $request
+     *
+     * @Route("/remove-device/{id}", name="remove_device", requirements={"id": "\d+"})
+     *
+     * @Method("DELETE")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeAnotherDeviceAction(Request $request, AnotherDevice $device)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('app.form_generator')
+            ->createAnotherDeviceDeleteForm($device);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            if ($employee = $device->getEmployee()) {
+                $device->setEmployee(null);
+            }
+            $em->remove($device);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Устройство удалено.'
+            );
+        }
+        return $this->redirectToRoute('devices');
+
+    }
     
     /**
      * @Route("/add-monitor", name="add-monitor")
@@ -140,6 +172,38 @@ class DeviceController extends Controller
             'device' => $device,
             'form_device' => $form->createView()
         ];
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Route("/remove-monitor/{id}", name="remove_monitor", requirements={"id": "\d+"})
+     *
+     * @Method("DELETE")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeMonitorAction(Request $request, Monitor $monitor)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('app.form_generator')
+            ->createMonitorDeleteForm($monitor);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            if ($employee = $monitor->getEmployee()) {
+                $monitor->setEmployee(null);
+            }
+            $em->remove($monitor);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Монитор удален.'
+            );
+        }
+        return $this->redirectToRoute('devices');
+
     }
 
     /**
@@ -198,6 +262,41 @@ class DeviceController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @param Mac $mac
+     *
+     * @Route("/remove-mac/{id}", name="remove_mac", requirements={"id": "\d+"})
+     *
+     * @Method("DELETE")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeMacAction(Request $request, Mac $mac)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('app.form_generator')
+            ->createMacDeleteForm($mac);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            if ($employee = $mac->getEmployee()) {
+                $employee->setMac(null);
+            }
+            $em->remove($mac);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Mac Mini удален.'
+            );
+        }
+        return $this->redirectToRoute('devices');
+
+    }
+
+
+
+    /**
      * @Route("/add-armchair", name="add-armchair")
      * @Template()
      *
@@ -250,6 +349,39 @@ class DeviceController extends Controller
             'device' => $device,
             'form_device' => $form->createView()
         ];
+    }
+
+    /**
+     * @param Request $request
+     * @param Armchair $armchair
+     *
+     * @Route("/remove-armchair/{id}", name="remove_armchair", requirements={"id": "\d+"})
+     *
+     * @Method("DELETE")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeArmchairAction(Request $request, Armchair $armchair)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('app.form_generator')
+            ->createArmchairDeleteForm($armchair);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            if ($employee = $armchair->getEmployee()) {
+                $employee->setArmchair(null);
+            }
+            $em->remove($armchair);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Кресло удалено.'
+            );
+        }
+        return $this->redirectToRoute('devices');
+
     }
 
     /**
@@ -308,6 +440,38 @@ class DeviceController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @Route("/remove-headphones/{id}", name="remove_headphones", requirements={"id": "\d+"})
+     *
+     * @Method("DELETE")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeHeadphonesAction(Request $request, Headphones $headphones)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('app.form_generator')
+            ->createHeadphonesDeleteForm($headphones);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            if ($employee = $headphones->getEmployee()) {
+                $employee->setHeadphones(null);
+            }
+            $em->remove($headphones);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Наушники удалены.'
+            );
+        }
+        return $this->redirectToRoute('devices');
+
+    }
+
+    /**
      * @Route("/add-keyboard", name="add-keyboard")
      * @Template()
      *
@@ -363,6 +527,38 @@ class DeviceController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @Route("/remove-keyboard/{id}", name="remove_keyboard", requirements={"id": "\d+"})
+     *
+     * @Method("DELETE")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeKeyboardAction(Request $request, Keyboard $keyboard)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('app.form_generator')
+            ->createKeyboardDeleteForm($keyboard);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            if ($employee = $keyboard->getEmployee()) {
+                $employee->setKeyboard(null);
+            }
+            $em->remove($keyboard);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Клавиатура удалена.'
+            );
+        }
+        return $this->redirectToRoute('devices');
+
+    }
+
+    /**
      * @Route("/add-mouse", name="add-mouse")
      * @Template()
      *
@@ -415,6 +611,38 @@ class DeviceController extends Controller
             'device' => $device,
             'form_device' => $form->createView()
         ];
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Route("/remove-mouse/{id}", name="remove_mouse", requirements={"id": "\d+"})
+     *
+     * @Method("DELETE")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeMouseAction(Request $request, Mouse $mouse)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('app.form_generator')
+            ->createMouseDeleteForm($mouse);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            if ($employee = $mouse->getEmployee()) {
+                $employee->setMouse(null);
+            }
+            $em->remove($mouse);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Мышь удалена.'
+            );
+        }
+        return $this->redirectToRoute('devices');
+
     }
 
     /**
@@ -475,5 +703,37 @@ class DeviceController extends Controller
             'device' => $device,
             'form_device' => $form->createView()
         ];
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Route("/remove-usbhub/{id}", name="remove_usbhub", requirements={"id": "\d+"})
+     *
+     * @Method("DELETE")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeUsbHubAction(Request $request, UsbHub $usbHub)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('app.form_generator')
+            ->createUsbHubDeleteForm($usbHub);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            if ($employee = $usbHub->getEmployee()) {
+                $employee->setUsbHub(null);
+            }
+            $em->remove($usbHub);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Usb Hub удален.'
+            );
+        }
+        return $this->redirectToRoute('devices');
+
     }
 }

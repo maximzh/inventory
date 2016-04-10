@@ -64,6 +64,7 @@
 
 
             <div class="col-md-10 col-sm-10">
+                {% include '@App/Common/flash_message.html.twig' %}
                 <h1 class="text-purple text-center">Свободные устройства</h1>
                 <div style="margin-bottom: 100px" id="macmini"></div>
                 <div class="panel">
@@ -78,16 +79,16 @@
                                 <th>RAM</th>
                                 <th>SSD</th>
                                 <th>HDD</th>
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <th>Edit</th>
-                                {% endif %}
                             </tr>
                             </thead>
                             <tbody>
                             {% for mac in freeMacs %}
                                 <tr>
                                     <td>
-                                        {{ mac.name }}
+                                        <a href="{{ path('show_mac', {'id': mac.id}) }}">
+                                            {{ mac.name }}
+                                        </a>
+
                                     </td>
                                     <td>
                                         {{ mac.ram }}
@@ -98,11 +99,6 @@
                                     <td>
                                         {{ mac.hdd }}
                                     </td>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <td>
-                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-mac', {'id': mac.id}) }}"></a>
-                                        </td>
-                                    {% endif %}
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -121,22 +117,24 @@
                     <div class="panel-body bg-light-grey">
                         <table class="table">
                             <thead>
+                            <tr>
+                                <th>Марка монитора</th>
+                                <th>Диагональ экрана</th>
+                            </tr>
 
                             </thead>
                             <tbody>
                             {% for monitor in freeMonitors %}
                                 <tr>
 
-                                    <td>{{ monitor.name }}</td>
+                                    <td>
+                                        <a href="{{ path('show_monitor', {'id': monitor.id}) }}">
+                                            {{ monitor.name }}
+                                        </a>
+                                    </td>
                                     <td>{{ monitor.diagonal }}''
 
 
-                                    </td>
-                                    <td>{% if is_granted('ROLE_ADMIN') %}
-
-                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-monitor', {'id': monitor.id}) }}"></a>
-
-                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -160,13 +158,11 @@
                             <tbody>
                             {% for armchair in freeArmchairs %}
                                 <tr>
-                                    <td>{{ armchair.name }}</td>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <td>
-                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-armchair', {'id': armchair.id}) }}"></a>
-                                        </td>
-                                    {% endif %}
-
+                                    <td>
+                                        <a href="{{ path('show_armchair', {'id': armchair.id}) }}">
+                                            {{ armchair.name }}
+                                        </a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -189,13 +185,11 @@
                             <tbody>
                             {% for hub in freeUsbHubs %}
                                 <tr>
-                                    <td>{{ hub.name }}</td>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <td>
-                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-usbhub', {'id': hub.id}) }}"></a>
-                                        </td>
-                                    {% endif %}
-
+                                    <td>
+                                        <a href="{{ path('show_usbhub', {'id': hub.id}) }}">
+                                            {{ hub.name }}
+                                        </a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>

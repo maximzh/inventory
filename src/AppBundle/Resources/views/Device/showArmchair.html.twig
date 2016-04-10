@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+
+                <div class="panel">
+                    <div class="panel-heading bg-purple">
+                        кресло
+                    </div>
+                    <div class="panel-body bg-light-grey">
+                        <table class="table">
+                            <tr>
+                                <td>Название</td><td>{{ armchair.name }}</td>
+                            </tr>
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <tr>
+                                    <td>
+                                        <a class="glyphicon glyphicon-pencil" href="{{ path('edit-armchair', {'id': armchair.id}) }}"></a>
+
+                                    </td>
+                                    <td class="text-right">
+                                        {% if deleteForm is not null %}
+                                            {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить кресло?");' }}) }}
+                                            {{ form_widget(deleteForm.submit) }}
+                                            {{ form_end(deleteForm) }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </table>
+
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
+

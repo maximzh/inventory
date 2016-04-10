@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="panel">
+                <div class="panel-heading bg-purple">
+                    mac mini
+                </div>
+                <div class="panel-body bg-light-grey">
+                    <table class="table">
+                        <tr>
+                           <td>Model</td><td>{{ mac.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>RAM</td><td>{{ mac.ram }}</td>
+                        </tr>
+                        <tr>
+                            <td>SSD</td><td>{{ mac.ssd }}</td>
+                        </tr>
+                        <tr>
+                            <td>HDD</td><td>{{ mac.hdd }}</td>
+                        </tr>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <tr>
+                                <td>
+                                    <a class="glyphicon glyphicon-pencil" href="{{ path('edit-mac', {'id': mac.id}) }}"></a>
+
+                                </td>
+                                <td class="text-right">
+                                    {% if deleteForm is not null %}
+                                        {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить Mac Mini?");' }}) }}
+                                        {{ form_widget(deleteForm.submit) }}
+                                        {{ form_end(deleteForm) }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </table>
+
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+

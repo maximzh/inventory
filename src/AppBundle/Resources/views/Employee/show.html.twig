@@ -333,7 +333,7 @@
                                     <a href="{{ path('edit_employee', {'id': employee.id}) }}" class="btn btn-primary">Edit</a>
                                     <a href="{{ path('export_one', {'id': employee.id}) }}" class="btn btn-primary">Export</a>
                                     <br><br>
-                                    {% if employee.keyboard is null and employee.armchair is null and employee.keyboard is null and employee.headphones is null and employee.mac is null and employee.monitors is empty %}
+                                    {% if employee.keyboard is null and employee.armchair is null and employee.keyboard is null and employee.headphones is null and employee.mac is null and employee.monitors is empty and employee.anotherDevices is empty %}
                                         {% if deleteForm is not null %}
                                             {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить сотрудника?");' }}) }}
                                             {{ form_widget(deleteForm.submit) }}
