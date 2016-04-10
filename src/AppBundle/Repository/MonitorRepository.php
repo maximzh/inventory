@@ -21,5 +21,15 @@ class MonitorRepository extends EntityRepository
             ->getResult();
     }
 
+    public function  findAllOrdered()
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m, e')
+            ->leftJoin('m.employee', 'e')
+            ->orderBy('e.lastName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 
 }

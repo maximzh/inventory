@@ -21,14 +21,14 @@ class DeviceController extends Controller
      */
     public function allDeviceAction(Request $request)
     {
-        $mouses = $this->getDoctrine()->getRepository('AppBundle:Mouse')->findAll();
-        $monitors = $this->getDoctrine()->getRepository('AppBundle:Monitor')->findAll();
-        $keyboards = $this->getDoctrine()->getRepository('AppBundle:Keyboard')->findAll();
-        $macs = $this->getDoctrine()->getRepository('AppBundle:Mac')->findAll();
-        $armchairs = $this->getDoctrine()->getRepository('AppBundle:Armchair')->findAll();
-        $headphones = $this->getDoctrine()->getRepository('AppBundle:Headphones')->findAll();
-        $usbHubs = $this->getDoctrine()->getRepository('AppBundle:UsbHub')->findAll();
-        $otherDevices = $this->getDoctrine()->getRepository('AppBundle:AnotherDevice')->findAll();
+        $mouses = $this->getDoctrine()->getRepository('AppBundle:Mouse')->findAllOrdered();
+        $monitors = $this->getDoctrine()->getRepository('AppBundle:Monitor')->findAllOrdered();
+        $keyboards = $this->getDoctrine()->getRepository('AppBundle:Keyboard')->findAllOrdered();
+        $macs = $this->getDoctrine()->getRepository('AppBundle:Mac')->findAllOrdered();
+        $armchairs = $this->getDoctrine()->getRepository('AppBundle:Armchair')->findAllOrdered();
+        $headphones = $this->getDoctrine()->getRepository('AppBundle:Headphones')->findAllOrdered();
+        $usbHubs = $this->getDoctrine()->getRepository('AppBundle:UsbHub')->findAllOrdered();
+        $otherDevices = $this->getDoctrine()->getRepository('AppBundle:AnotherDevice')->findAllOrdered();
         return [
             'mouses' => $mouses,
             'monitors' => $monitors,
@@ -87,6 +87,9 @@ class DeviceController extends Controller
 
         $freeUsbHubs = $em->getRepository('AppBundle:UsbHub')
             ->findFreeUsbHubs();
+        
+        $freeAnotherDevices = $em->getRepository('AppBundle:AnotherDevice')
+            ->findFreeDevices();
 
         return [
             'freeMacs' => $freeMacs,
@@ -96,6 +99,7 @@ class DeviceController extends Controller
             'freeMouses' => $freeMouses,
             'freeHeadphones' => $freeHeadphones,
             'freeUsbHubs' => $freeUsbHubs,
+            'freeAnotherDevices' => $freeAnotherDevices,
         ];
     }
 }

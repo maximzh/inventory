@@ -49,6 +49,11 @@
                                     <img src="{{ asset('images/mouse32.png') }}"><br>
                                 </a>
                             </li>
+                            <li>
+                                <a href="#another-devices">
+                                    <img src="{{ asset('images/unknown.png') }}"><br>
+                                </a>
+                            </li>
 
                         </ul>
                     </div>
@@ -275,6 +280,38 @@
                                     {% if is_granted('ROLE_ADMIN') %}
                                         <td>
                                             <a class="glyphicon glyphicon-pencil" href="{{ path('edit-mouse', {'id': mouse.id}) }}"></a>
+                                        </td>
+                                    {% endif %}
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 120px" id="another-devices"></div>
+
+                <div class="panel">
+                    <div class="panel-heading bg-purple">
+                        <span>
+                            Другое оборудование
+                        </span>
+                    </div>
+                    <div class="panel-body bg-light-grey">
+                        <table class="table">
+                            <thead>
+
+                            </thead>
+                            <tbody>
+                            {% for device in freeAnotherDevices %}
+                                <tr>
+                                    <td>{{ device.name }}</td>
+                                    <td>{{ device.type }}</td>
+                                    <td>{{ device.condition }}</td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <td>
+                                            <a class="glyphicon glyphicon-pencil" href="{{ path('edit-device', {'id': device.id}) }}"></a>
                                         </td>
                                     {% endif %}
 

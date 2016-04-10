@@ -21,4 +21,14 @@ class KeyboardRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllOrdered()
+    {
+        return $this->createQueryBuilder('k')
+            ->select('k, e')
+            ->leftJoin('k.employee', 'e')
+            ->orderBy('e.lastName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

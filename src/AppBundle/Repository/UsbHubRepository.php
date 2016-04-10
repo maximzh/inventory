@@ -21,4 +21,14 @@ class UsbHubRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllOrdered()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u, e')
+            ->leftJoin('u.employee', 'e')
+            ->orderBy('e.lastName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

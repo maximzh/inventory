@@ -21,4 +21,14 @@ class MacRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllOrdered()
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m, e')
+            ->leftJoin('m.employee', 'e')
+            ->orderBy('e.lastName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
