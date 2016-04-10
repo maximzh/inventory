@@ -133,6 +133,20 @@ class EmployeeFilterType extends AbstractType
                     $qbe->addOnce($qbe->getAlias().'.mouse', 'ms', $closure);
                 }
             ))
+            ->add('anotherDevices', CollectionAdapterFilterType::class, array(
+                'label' => ' ',
+                'entry_type' => AnotherDeviceFilterType::class,
+                'add_shared' => function (FilterBuilderExecuterInterface $qbe)  {
+                    $closure = function (QueryBuilder $filterBuilder, $alias, $joinAlias, Expr $expr) {
+                        // add the join clause to the doctrine query builder
+                        // the where clause for the label and color fields will be added automatically with the right alias later by the Lexik\Filter\QueryBuilderUpdater
+                        $filterBuilder->leftJoin($alias . '.anotherDevices', $joinAlias);
+                    };
+                    // then use the query builder executor to define the join and its alias.
+                    $qbe->addOnce($qbe->getAlias().'.anotherDevices', 'dev', $closure);
+                },
+
+            ))
             ->add('employeeSince', DateRangeFilterType::class, array(
                 'label' => 'Принят на работу (в период):',
                 'left_date_options' => array(
