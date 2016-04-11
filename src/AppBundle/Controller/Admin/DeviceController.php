@@ -396,7 +396,7 @@ class DeviceController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $device = new Headphones();
-        $device->setType('Headphones');
+        //$device->setType('Headphones');
 
         $form = $this->createForm(HeadphonesType::class, $device);
         $form->handleRequest($request);
@@ -483,7 +483,7 @@ class DeviceController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $device = new Keyboard();
-        $device->setType('Keyboard');
+        //$device->setType('Keyboard');
 
         $form = $this->createForm(KeyboardType::class, $device);
         $form->handleRequest($request);
@@ -570,7 +570,7 @@ class DeviceController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $device = new Mouse();
-        $device->setType('Mouse');
+        //$device->setType('Mouse');
 
         $form = $this->createForm(MouseType::class, $device);
         $form->handleRequest($request);
@@ -657,7 +657,7 @@ class DeviceController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $device = new UsbHub();
-        $device->setType('Usb Hub');
+        //$device->setType('Usb Hub');
 
         $form = $this->createForm(UsbHubType::class, $device);
         $form->handleRequest($request);

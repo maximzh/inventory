@@ -21,8 +21,8 @@ class MacType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, array(
-                'label' => 'Марка Mac',
-                'required' => true,
+                    'label' => 'Марка Mac',
+                    'required' => true,
                 )
             )
             ->add('ssd', IntegerType::class, array(
@@ -38,6 +38,18 @@ class MacType extends AbstractType
             ->add('ram', IntegerType::class, array(
                     'label' => 'Размер RAM',
                     'required' => false,
+                )
+            )
+            ->add('status', ChoiceType::class, array(
+                    'label' => 'Состояние',
+                    'required' => false,
+                    'choices' => array(
+                        'Исправный' => "ok",
+                        //'Старое' => "old",
+                        'Сломанный' => 'broken',
+                        'После ремонта' => 'fixed',
+                    ),
+                    'choices_as_values' => true,
                 )
             )
             /*
@@ -78,8 +90,9 @@ class MacType extends AbstractType
                 )
             )
             */
-            ;
+        ;
     }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

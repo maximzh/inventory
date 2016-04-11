@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,6 +30,19 @@ class MonitorType extends AbstractType
                     'required' => false,
                 )
             )
+            ->add('status', ChoiceType::class, array(
+                    'label' => 'Состояние',
+                    'required' => false,
+                    'choices'  => array(
+                        'Исправный' => "ok",
+                        //'Старое' => "old",
+                        'Сломанный' => 'broken',
+                        'После ремонта' => 'fixed',
+                    ),
+                    'choices_as_values' => true,
+                )
+            )
+
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $monitor = $event->getData();
                 $form = $event->getForm();

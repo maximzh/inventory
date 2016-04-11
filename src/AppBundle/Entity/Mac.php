@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Employee;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Mac
@@ -26,6 +27,8 @@ class Mac
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * 
+     * @Assert\NotBlank(message="Укажите модель Mac")
      */
     protected $name;
 
@@ -47,6 +50,9 @@ class Mac
      * @var int
      *
      * @ORM\Column(name="ram", type="integer")
+     *
+     * @Assert\NotBlank(message="Укажите объем RAM")
+     * @Assert\GreaterThan(value = 0, message="Это значение должно быть положительным")
      */
     
     private $ram;
@@ -55,6 +61,8 @@ class Mac
      * @var int
      *
      * @ORM\Column(name="ssd", type="integer", nullable=true)
+     *
+     * @Assert\GreaterThan(value = 0, message="Это значение должно быть положительным")
      */
     private $ssd;
 
@@ -62,6 +70,8 @@ class Mac
      * @var int
      *
      * @ORM\Column(name="hdd", type="integer", nullable=true)
+     *
+     * @Assert\GreaterThan(value = 0, message="Это значение должно быть положительным")
      */
     private $hdd;
 

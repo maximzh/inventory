@@ -22,7 +22,27 @@ class KeyboardType extends AbstractType
         $builder
             ->add('name', TextType::class, array(
                 'label' => 'Название клавиатуры',
-                'required' => true,
+                'required' => false,
+                )
+            )
+            ->add('type', ChoiceType::class, array(
+                    'label' => 'Тип',
+                    'required' => false,
+                    'choices' => array(
+                        'Проводная' => "wired",
+                        'Беcпроводная' => 'wireless',
+                    ),
+                    'choices_as_values' => true,
+                )
+            )
+            ->add('status', ChoiceType::class, array(
+                    'label' => 'Состояние',
+                    'required' => false,
+                    'choices' => array(
+                        'Исправная' => "ok",
+                        'Сломанная' => 'broken',
+                    ),
+                    'choices_as_values' => true,
                 )
             )
             /*

@@ -50,9 +50,9 @@ class AnotherDevice
     /**
      * @var string
      *
-     * @ORM\Column(name="state", type="string", length=255, nullable=true)
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
-    protected $condition;
+    protected $status;
 
     /**
      * @var string
@@ -123,30 +123,7 @@ class AnotherDevice
     {
         return $this->type;
     }
-
-    /**
-     * Set condition
-     *
-     * @param string $condition
-     *
-     * @return AnotherDevice
-     */
-    public function setCondition($condition)
-    {
-        $this->condition = $condition;
-
-        return $this;
-    }
-
-    /**
-     * Get condition
-     *
-     * @return string
-     */
-    public function getCondition()
-    {
-        return $this->condition;
-    }
+    
 
     /**
      * Set employee
@@ -194,5 +171,29 @@ class AnotherDevice
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return AnotherDevice
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

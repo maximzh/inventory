@@ -25,6 +25,28 @@ class HeadphonesType extends AbstractType
                 'required' => true,
                 )
             )
+            ->add('type', ChoiceType::class, array(
+                    'label' => 'Тип',
+                    'required' => false,
+                    'choices' => array(
+                        'Проводные' => "wired",
+                        'Беcпроводные' => 'wireless',
+                    ),
+                    'choices_as_values' => true,
+                )
+            )
+            ->add('status', ChoiceType::class, array(
+                    'label' => 'Состояние',
+                    'required' => false,
+                    'choices' => array(
+                        'Исправные' => "ok",
+                        //'Старое' => "old",
+                        'Сломанные' => 'broken',
+                        //'После ремонта' => 'fixed',
+                    ),
+                    'choices_as_values' => true,
+                )
+            )
             /*
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $headphones = $event->getData();

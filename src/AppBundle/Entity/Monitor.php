@@ -29,6 +29,7 @@ class Monitor
      *
      * @Assert\NotBlank(message="Укажите диагональ монитора")
      * @Assert\Type(type="integer")
+     * @Assert\GreaterThan(value = 0, message="Это значение должно быть положительным")
      */
     private $diagonal;
 

@@ -24,6 +24,26 @@ class MouseType extends AbstractType
                 'required' => true,
                 )
             )
+            ->add('type', ChoiceType::class, array(
+                    'label' => 'Тип',
+                    'required' => false,
+                    'choices' => array(
+                        'Проводная' => "wired",
+                        'Беcпроводная' => 'wireless',
+                    ),
+                    'choices_as_values' => true,
+                )
+            )
+            ->add('status', ChoiceType::class, array(
+                    'label' => 'Состояние',
+                    'required' => false,
+                    'choices' => array(
+                        'Исправная' => "ok",
+                        'Сломанная' => 'broken',
+                    ),
+                    'choices_as_values' => true,
+                )
+            )
             /*
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $mouse = $event->getData();

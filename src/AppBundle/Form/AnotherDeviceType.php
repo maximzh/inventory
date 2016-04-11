@@ -42,12 +42,13 @@ class AnotherDeviceType extends AbstractType
                     'required' => false,
                 )
             )
-            ->add('condition', ChoiceType::class,
+            ->add('status', ChoiceType::class,
                 array(
                     'choices' => array(
                         'Новое' => 'new',
                         'Старое' => 'old',
                         'После ремонта' => 'fixed',
+                        'Исправное' => 'ok',
                         'Сломаное' => 'broken',
                     ),
                     'choices_as_values' => true,

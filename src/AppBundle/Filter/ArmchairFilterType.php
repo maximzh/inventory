@@ -20,9 +20,10 @@ class ArmchairFilterType extends AbstractType
     {
         $builder
             ->add('name', Filters\TextFilterType::class, array(
-            'condition_pattern' => FilterOperands::STRING_CONTAINS,
-            'label' => ' '
-        ))
+                    'condition_pattern' => FilterOperands::STRING_CONTAINS,
+                    'label' => ' '
+                )
+            )
             ->add('status', Filters\ChoiceFilterType::class, array(
                 'label' => 'состояние кресла',
                 'choices' => array(
@@ -34,8 +35,7 @@ class ArmchairFilterType extends AbstractType
                 'choices_as_values' => true,
                 //'condition_pattern' => FilterOperands::STRING_EQUALS,
 
-            ))
-        ;
+            ));
     }
 
     public function getParent()

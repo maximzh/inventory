@@ -3,10 +3,10 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-3 filter-div">
+            <div class="col-md-2 filter-div">
                 {% include '@App/Form/filterEmployees.html.twig' %}
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
 
                 {% include '@App/Common/flash_message.html.twig' %}
                 <span class="text-large"> Всего сотрудников: {{ employees.getTotalItemCount }}</span>
@@ -52,12 +52,12 @@
                             {{ knp_pagination_sortable(employees, 'Сортировать', 'e.employeeSince') }}
                         </td>
                         <td>
-                            <span class="glyphicon glyphicon-sort"></span>
+                            <span class="glyphicon glyphicon-sort"></span><br>
                             {{ knp_pagination_sortable(employees, 'Сортировать', 'e.position') }}
                         </td>
                         <td>
 
-                            <span class="glyphicon glyphicon-sort"></span>
+                            <span class="glyphicon glyphicon-sort"></span><br>
                             {{ knp_pagination_sortable(employees, 'Сортировать', 'e.monitorsNumber') }}
 
 
