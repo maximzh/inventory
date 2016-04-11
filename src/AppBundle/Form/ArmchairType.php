@@ -24,6 +24,19 @@ class ArmchairType extends AbstractType
                 'required' => true,
                 )
             )
+            ->add('material', ChoiceType::class,
+                array(
+                    'choices' => array(
+                        'Кожа' => 'lether',
+                        'Экологическая кожа' => 'ecolether',
+                        'Ткань' => 'textile',
+                        'Другое' => 'other',
+                    ),
+                    'choices_as_values' => true,
+                    'label' => 'Обивка',
+                    'required' => false,
+                )
+            )
             /*
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $armchair = $event->getData();

@@ -25,17 +25,28 @@ class ArmchairFilterType extends AbstractType
                 )
             )
             ->add('status', Filters\ChoiceFilterType::class, array(
-                'label' => 'состояние кресла',
-                'choices' => array(
-                    'Новое' => 'new',
-                    'Старое' => 'old',
-                    'Сломанное' => 'broken',
-                    'После ремонта' => 'fixed',
-                ),
-                'choices_as_values' => true,
-                //'condition_pattern' => FilterOperands::STRING_EQUALS,
-
-            ));
+                    'label' => 'состояние кресла',
+                    'choices' => array(
+                        'Новое' => 'new',
+                        'Старое' => 'old',
+                        'Сломанное' => 'broken',
+                        'После ремонта' => 'fixed',
+                    ),
+                    'choices_as_values' => true,
+                )
+            )
+            ->add('material', Filters\ChoiceFilterType::class, array(
+                    'label' => 'обивка кресла',
+                    'choices' => array(
+                        'Кожа' => 'lether',
+                        'Эко кожа' => 'ecolether',
+                        'Ткань' => 'textile',
+                        'Другое' => 'other',
+                    ),
+                    'choices_as_values' => true,
+                )
+            )
+        ;
     }
 
     public function getParent()

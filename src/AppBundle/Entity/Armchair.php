@@ -37,6 +37,13 @@ class Armchair
 
     /**
      * @var string
+     * 
+     * @ORM\Column(name="material", type="string", length=255, nullable=true)
+     */
+    protected $material;
+
+    /**
+     * @var string
      *
      * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
@@ -153,5 +160,29 @@ class Armchair
      */
     public function __toString() {
         return (string) $this->getName();
+    }
+
+    /**
+     * Set material
+     *
+     * @param string $material
+     *
+     * @return Armchair
+     */
+    public function setMaterial($material)
+    {
+        $this->material = $material;
+
+        return $this;
+    }
+
+    /**
+     * Get material
+     *
+     * @return string
+     */
+    public function getMaterial()
+    {
+        return $this->material;
     }
 }

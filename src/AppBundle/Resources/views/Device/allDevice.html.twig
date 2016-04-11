@@ -356,6 +356,9 @@
                                         Кресло
                                     </th>
                                     <th>
+                                        Обивка
+                                    </th>
+                                    <th>
                                         Состояние
                                     </th>
                                     <th>
@@ -373,6 +376,19 @@
                                             <a href="{{ path('show_armchair', {'id': armchair.id}) }}">
                                                 {{ armchair.name }}
                                             </a>
+                                        </td>
+                                        <td>
+                                            {% if armchair.material == 'lether' %}
+                                                Кожа
+                                            {% elseif armchair.material == 'ecolether' %}
+                                                Эко кожа
+                                            {% elseif armchair.material == 'textile' %}
+                                                Ткань
+                                            {% elseif armchair.material == 'other' %}
+                                                Другое
+                                            {% else %}
+                                                -
+                                            {% endif %}
                                         </td>
                                         <td>
                                             {% if armchair.status == 'new' %}

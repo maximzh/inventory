@@ -7,12 +7,62 @@
 
                 <div class="panel">
                     <div class="panel-heading bg-purple">
+                        <img src="{{ asset('images/office_chair.png') }}">
+
                         кресло
                     </div>
                     <div class="panel-body bg-light-grey">
                         <table class="table">
                             <tr>
                                 <td>Название</td><td>{{ armchair.name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Обивка</td>
+                                <td>
+                                    {% if armchair.material == 'lether' %}
+                                        Кожа
+                                    {% elseif armchair.material == 'ecolether' %}
+                                        Эко кожа
+                                    {% elseif armchair.material == 'textile' %}
+                                        Ткань
+                                    {% elseif armchair.material == 'other' %}
+                                        Другое
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Состояние
+                                </td>
+                                <td>
+                                    {% if armchair.status == 'new' %}
+                                        Новое
+                                    {% elseif armchair.status == 'old' %}
+                                        Старое
+                                    {% elseif armchair.status == 'broken' %}
+                                        Сломанное
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Сотрудник
+                                </td>
+                                <td>
+                                    {% if armchair.employee is not null %}
+                                        <a href="{{ path('show_employee', {'id': armchair.employee.id}) }}">
+                                            {{ armchair.employee.lastName }} {{ armchair.employee.firstName }}
+                                        </a>
+
+                                    {% else %}
+                                        <strong class="text-danger">-</strong>
+
+                                    {% endif %}
+                                </td>
                             </tr>
 
                             {% if is_granted('ROLE_ADMIN') %}
