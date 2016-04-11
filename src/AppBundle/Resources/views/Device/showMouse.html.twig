@@ -14,6 +14,49 @@
                             <tr>
                                 <td>Название</td><td>{{ mouse.name }}</td>
                             </tr>
+                            <tr>
+                                <td>Тип</td>
+                                <td>
+
+                                    {% if mouse.type == 'wireless' %}
+                                        Беспроводная
+                                    {% elseif mouse.type == 'wired' %}
+                                        Проводная
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Состояние</td>
+                                <td>
+
+                                    {% if mouse.status == 'ok' %}
+                                        Исправная
+                                    {% elseif mouse.status == 'broken' %}
+                                        Сломанная
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="{{ asset('images/employ96.png') }}">
+
+                                </td>
+                                <td>
+                                    {% if mouse.employee is not null %}
+                                        <h3>
+                                            <a href="{{ path('show_employee', {'id': mouse.employee.id}) }}">
+                                                {{ mouse.employee.lastName }} {{ mouse.employee.firstName }}
+                                            </a>
+                                        </h3>
+
+
+                                    {% else %}
+                                        <h3 class="text-danger glyphicon glyphicon-ban-circle"></h3>
+
+                                    {% endif %}
+                                </td>
+                            </tr>
+
 
                             {% if is_granted('ROLE_ADMIN') %}
                                 <tr>

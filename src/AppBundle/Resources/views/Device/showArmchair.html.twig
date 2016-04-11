@@ -50,16 +50,20 @@
                             </tr>
                             <tr>
                                 <td>
-                                    Сотрудник
+                                    <img src="{{ asset('images/employ96.png') }}">
+
                                 </td>
                                 <td>
                                     {% if armchair.employee is not null %}
-                                        <a href="{{ path('show_employee', {'id': armchair.employee.id}) }}">
-                                            {{ armchair.employee.lastName }} {{ armchair.employee.firstName }}
-                                        </a>
+                                        <h3>
+                                            <a href="{{ path('show_employee', {'id': armchair.employee.id}) }}">
+                                                {{ armchair.employee.lastName }} {{ armchair.employee.firstName }}
+                                            </a>
+                                        </h3>
+
 
                                     {% else %}
-                                        <strong class="text-danger">-</strong>
+                                        <h3 class="text-danger glyphicon glyphicon-ban-circle"></h3>
 
                                     {% endif %}
                                 </td>
@@ -68,7 +72,9 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <tr>
                                     <td>
-                                        <a class="glyphicon glyphicon-pencil" href="{{ path('edit-armchair', {'id': armchair.id}) }}"></a>
+                                        <a href="{{ path('edit-armchair', {'id': armchair.id}) }}">
+                                            <h3 class="glyphicon glyphicon-pencil"></h3>
+                                        </a>
 
                                     </td>
                                     <td class="text-right">

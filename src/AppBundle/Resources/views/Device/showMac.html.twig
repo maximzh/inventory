@@ -7,29 +7,77 @@
 
             <div class="panel">
                 <div class="panel-heading bg-purple">
-                    mac mini
+                    <img src="{{ asset('images/macmini32.png') }}">
+                    Mac mini
                 </div>
                 <div class="panel-body bg-light-grey">
                     <table class="table">
                         <tr>
-                           <td>Model</td><td>{{ mac.name }}</td>
+                           <td>Модель</td><td>{{ mac.name }}</td>
                         </tr>
                         <tr>
-                            <td>RAM</td><td>{{ mac.ram }}</td>
+                            <td>
+                                <img src="{{ asset('images/ram96.png') }}">
+                                RAM
+                            </td>
+                            <td>
+                                <h3>
+                                    {{ mac.ram }}
+
+                                </h3>
+                            </td>
                         </tr>
                         <tr>
-                            <td>SSD</td><td>{{ mac.ssd }}</td>
+                            <td>
+                                <img src="{{ asset('images/ssd96.png') }}">
+
+                                SSD
+                                </td>
+                            <td>
+                                <h3>
+                                    {{ mac.ssd }}
+                                </h3>
+                            </td>
                         </tr>
                         <tr>
-                            <td>HDD</td><td>{{ mac.hdd }}</td>
+                            <td>
+                                <img src="{{ asset('images/hdd96.png') }}">
+                                HDD
+                            </td>
+                            <td>
+                                <h3>
+                                    {{ mac.hdd }}
+                                </h3>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="{{ asset('images/employ96.png') }}">
+                            </td>
+                            <td>
+                                {% if mac.employee is not null %}
+                                    <h3>
+                                        <a href="{{ path('show_employee', {'id': mac.employee.id}) }}">
+                                            {{ mac.employee.lastName }} {{ mac.employee.firstName }}
+                                        </a>
+                                    </h3>
+
+
+                                {% else %}
+                                    <strong class="text-danger">-</strong>
+
+                                {% endif %}
+                            </td>
                         </tr>
                         {% if is_granted('ROLE_ADMIN') %}
                             <tr>
                                 <td>
-                                    <a class="glyphicon glyphicon-pencil" href="{{ path('edit-mac', {'id': mac.id}) }}"></a>
+                                    <a href="{{ path('edit-mac', {'id': mac.id}) }}"><h3 class="glyphicon glyphicon-pencil"></h3></a>
 
                                 </td>
                                 <td class="text-right">
+                                    <br>
                                     {% if deleteForm is not null %}
                                         {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить Mac Mini?");' }}) }}
                                         {{ form_widget(deleteForm.submit) }}

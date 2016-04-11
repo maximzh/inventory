@@ -15,13 +15,57 @@
                                 <td>Название</td><td>{{ device.name }}</td>
                             </tr>
                             <tr>
-                                <td>Тип</td><td>{{ device.type }}</td>
+                                <td>Тип</td>
+                                <td>
+                                    {% if device.type == 'electronics' %}
+                                    Электронное устройство
+                                    {% elseif device.type == 'furniture' %}
+                                    Мебель
+                                    {% elseif device.type == 'technics' %}
+                                    Офисная техника
+                                    {% elseif device.type == 'another' %}
+                                    Другое
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <td>Описание</td><td>{{ device.description }}</td>
                             </tr>
                             <tr>
-                                <td>Состояние</td><td>{{ device.condition }}</td>
+                                <td>Состояние</td>
+                                <td>
+                                    {% if device.status == 'ok' %}
+                                        Исправное
+                                    {% elseif device.status == 'broken' %}
+                                        Сломанное
+                                    {% elseif device.status == 'new' %}
+                                        Новое
+                                    {% elseif device.status == 'old' %}
+                                        Старое
+                                    {% elseif device.status == 'fixed' %}
+                                        После ремонта
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="{{ asset('images/employ96.png') }}">
+
+                                </td>
+                                <td>
+                                    {% if device.employee is not null %}
+                                        <h3>
+                                            <a href="{{ path('show_employee', {'id': device.employee.id}) }}">
+                                                {{ device.employee.lastName }} {{ device.employee.firstName }}
+                                            </a>
+                                        </h3>
+
+
+                                    {% else %}
+                                        <h3 class="text-danger glyphicon glyphicon-ban-circle"></h3>
+
+                                    {% endif %}
+                                </td>
                             </tr>
 
                             {% if is_granted('ROLE_ADMIN') %}

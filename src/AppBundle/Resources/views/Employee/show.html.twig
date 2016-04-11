@@ -66,11 +66,8 @@
                                                 <div class="panel panel-warning">
 
                                                     <div class="panel-body bg-warning">
-                                                        {% if is_granted('ROLE_ADMIN') %}
-                                                            <a class="glyphicon glyphicon-edit" href="{{ path('edit-mac', {'id': employee.mac.id}) }}"></a>
-                                                        {% endif %}
-                                                        <strong class="text-info">Model: {{ employee.mac.name }}</strong>
-                                                        <strong class="text-info">RAM: </strong>{{ employee.mac.ram }}
+                                                        <strong>Model: <a href="{{ path('show_mac', {'id': employee.mac.id}) }}">{{ employee.mac.name }}</a></strong>
+                                                        <strong>RAM: </strong>{{ employee.mac.ram }}
                                                         {% if employee.mac.ssd is not null %}
                                                             <strong class="text-info">SSD: </strong>{{ employee.mac.ssd }}
                                                         {% endif %}
@@ -109,11 +106,13 @@
                                                 <div class="panel panel-warning">
 
                                                     <div class="panel-body bg-warning">
-                                                        {% if is_granted('ROLE_ADMIN') %}
-                                                            <a class="glyphicon glyphicon-edit" href="{{ path('edit-armchair', {'id': employee.armchair.id}) }}"></a>
-                                                        {% endif %}
 
-                                                        <span class="text-primary">{{ employee.armchair.name }}</span>
+                                                        <span class="text-primary">
+                                                            <a href="{{ path('show_armchair', {'id': employee.armchair.id}) }}">
+                                                                {{ employee.armchair.name }}
+
+                                                            </a>
+                                                        </span>
                                                         {% if is_granted('ROLE_ADMIN') %}
                                                             <a href="{{ path('free_employee_armchair', {'id': employee.id}) }}"
                                                                class="btn btn-sm btn-danger pull-right">
@@ -146,12 +145,11 @@
                                             {% if employee.usbHub is not null %}
                                                 <div class="panel panel-warning">
                                                     <div class="panel-body bg-warning">
-
-                                                        {% if is_granted('ROLE_ADMIN') %}
-                                                            <a class="glyphicon glyphicon-edit" href="{{ path('edit-usbhub', {'id': employee.usbHub.id}) }}"></a>
-                                                        {% endif %}
-
-                                                        <span class="text-primary">{{ employee.usbHub.name }}</span>
+                                                        <span class="text-primary">
+                                                            <a href="{{ path('show_usbhub', {'id': employee.usbHub.id}) }}">
+                                                                {{ employee.usbHub.name }}
+                                                            </a>
+                                                        </span>
                                                         {% if is_granted('ROLE_ADMIN') %}
                                                             <a href="{{ path('free_employee_usbhub', {'id': employee.id}) }}"
                                                                class="btn btn-sm btn-danger pull-right">
@@ -181,10 +179,10 @@
                                             {% if employee.keyboard is not null %}
                                                 <div class="panel panel-warning">
                                                     <div class="panel-body bg-warning">
-                                                        {% if is_granted('ROLE_ADMIN') %}
-                                                            <a class="glyphicon glyphicon-edit" href="{{ path('edit-keyboard', {'id': employee.keyboard.id}) }}"></a>
-                                                        {% endif %}
-                                                        <span class="text-primary">{{ employee.keyboard.name }}</span>
+                                                        <a href="{{ path('show_keyboard', {'id': employee.keyboard.id}) }}">
+                                                            <span class="text-primary">{{ employee.keyboard.name }}</span>
+
+                                                        </a>
                                                         {% if is_granted('ROLE_ADMIN') %}
                                                             <a href="{{ path('free_employee_keyboard', {'id': employee.id}) }}"
                                                                class="btn btn-sm btn-danger pull-right">
@@ -215,10 +213,9 @@
                                             {% if employee.mouse is not null %}
                                                 <div class="panel panel-warning">
                                                     <div class="panel-body bg-warning">
-                                                        {% if is_granted('ROLE_ADMIN') %}
-                                                            <a class="glyphicon glyphicon-edit" href="{{ path('edit-mouse', {'id': employee.mouse.id}) }}"></a>
-                                                        {% endif %}
-                                                        <span class="text-primary">{{ employee.mouse.name }}</span>
+                                                        <a href="{{ path('show_mouse', {'id': employee.mouse.id}) }}">
+                                                            <span class="text-primary">{{ employee.mouse.name }}</span>
+                                                        </a>
                                                         {% if is_granted('ROLE_ADMIN') %}
                                                             <a href="{{ path('free_employee_mouse', {'id': employee.id}) }}"
                                                                class="btn btn-sm btn-danger pull-right">
@@ -249,10 +246,9 @@
                                             {% if employee.headphones is not null %}
                                                 <div class="panel panel-warning">
                                                     <div class="panel-body bg-warning">
-                                                        {% if is_granted('ROLE_ADMIN') %}
-                                                            <a class="glyphicon glyphicon-edit" href="{{ path('edit-headphones', {'id': employee.headphones.id}) }}"></a>
-                                                        {% endif %}
-                                                        <span class="text-primary">{{ employee.headphones.name }}</span>
+                                                        <a href="{{ path('show_headphones', {'id': employee.headphones.id}) }}">
+                                                            <span class="text-primary">{{ employee.headphones.name }}</span>
+                                                        </a>
                                                         {% if is_granted('ROLE_ADMIN') %}
                                                             <a href="{{ path('free_employee_headphones', {'id': employee.id}) }}"
                                                                class="btn btn-sm btn-danger pull-right">
@@ -285,10 +281,9 @@
                                                 {% for monitor in employee.monitors %}
                                                     <div class="panel panel-warning">
                                                         <div class="panel-body bg-warning">
-                                                            {% if is_granted('ROLE_ADMIN') %}
-                                                                <a class="glyphicon glyphicon-edit" href="{{ path('edit-monitor', {'id': monitor.id}) }}"></a>
-                                                            {% endif %}
-                                                             {{ monitor.name }} {{ monitor.diagonal }}''
+                                                            <a href="{{ path('show_monitor', {'id': monitor.id}) }}">
+                                                                {{ monitor.name }} {{ monitor.diagonal }}''
+                                                            </a>
                                                             {% if is_granted('ROLE_ADMIN') %}
                                                                 <a href="{{ path('free_employee_monitor', {'employee_id': employee.id, 'monitor_id': monitor.id}) }}"
                                                                    class="btn btn-sm btn-danger pull-right">
@@ -319,10 +314,9 @@
                                                 {% for device in employee.anotherDevices %}
                                                     <div class="panel panel-warning">
                                                         <div class="panel-body bg-warning">
-                                                            {{ device.name }}
-                                                            {% if device.description is not null %}
-                                                            ({{ device.description }})
-                                                            {% endif %}
+                                                            <a href="{{ path('show_device', {'id': device.id}) }}">
+                                                                {{ device.name }}
+                                                            </a>
 
                                                             {% if is_granted('ROLE_ADMIN') %}
                                                                 <a href="{{ path('free_employee_device', {'employee_id': employee.id, 'device_id': device.id}) }}"
