@@ -412,8 +412,6 @@ class EmployeeController extends Controller
     }
 
     /**
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
-     *
      * @Route("/export", name="export_all")
      */
     public function exportAllAction()
