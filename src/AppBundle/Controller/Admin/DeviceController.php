@@ -51,7 +51,7 @@ class DeviceController extends Controller
             if ($form->isValid()) {
                 $em->persist($device);
                 $em->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_device', array('id' => $device->getId())));
             }
         }
         return ['form_device' => $form->createView()];
@@ -76,7 +76,7 @@ class DeviceController extends Controller
         if($request->getMethod() == Request::METHOD_POST) {
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_device', array('id' => $device->getId())));
                 //return $this->redirectToRoute('devices');
             }
         }
@@ -139,7 +139,7 @@ class DeviceController extends Controller
             if ($form->isValid()) {
                 $em->persist($device);
                 $em->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_monitor', array('id' => $device->getId())));
             }
         }
         return ['form_device' => $form->createView()];
@@ -164,7 +164,7 @@ class DeviceController extends Controller
         if($request->getMethod() == Request::METHOD_POST) {
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_monitor', array('id' => $device->getId())));
             }
         }
 
@@ -227,7 +227,7 @@ class DeviceController extends Controller
             if ($form->isValid()) {
                 $em->persist($device);
                 $em->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_mac', array('id' => $device->getId())));
             }
         }
         return ['form_device' => $form->createView()];
@@ -252,7 +252,7 @@ class DeviceController extends Controller
         if($request->getMethod() == Request::METHOD_POST) {
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_mac', array('id' => $device->getId())));
             }
         }
 
@@ -317,7 +317,7 @@ class DeviceController extends Controller
             if ($form->isValid()) {
                 $em->persist($device);
                 $em->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_armchair', array('id' => $device->getId())));
             }
         }
         return ['form_device' => $form->createView()];
@@ -342,7 +342,7 @@ class DeviceController extends Controller
         if($request->getMethod() == Request::METHOD_POST) {
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_armchair', array('id' => $device->getId())));
             }
         }
 
@@ -405,7 +405,7 @@ class DeviceController extends Controller
             if ($form->isValid()) {
                 $em->persist($device);
                 $em->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_headphones', array('id' => $device->getId())));
             }
         }
         return ['form_device' => $form->createView()];
@@ -430,7 +430,7 @@ class DeviceController extends Controller
         if($request->getMethod() == Request::METHOD_POST) {
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_headphones', array('id' => $device->getId())));
             }
         }
 
@@ -492,7 +492,7 @@ class DeviceController extends Controller
             if ($form->isValid()) {
                 $em->persist($device);
                 $em->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_keyboard', array('id' => $device->getId())));
             }
         }
         return ['form_device' => $form->createView()];
@@ -517,7 +517,7 @@ class DeviceController extends Controller
         if($request->getMethod() == Request::METHOD_POST) {
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_keyboard', array('id' => $device->getId())));
             }
         }
 
@@ -579,7 +579,7 @@ class DeviceController extends Controller
             if ($form->isValid()) {
                 $em->persist($device);
                 $em->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_mouse', array('id' => $device->getId())));
             }
         }
         return ['form_device' => $form->createView()];
@@ -604,7 +604,7 @@ class DeviceController extends Controller
         if($request->getMethod() == Request::METHOD_POST) {
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_mouse', array('id' => $device->getId())));
             }
         }
 
@@ -671,7 +671,7 @@ class DeviceController extends Controller
                 }
                 $em->persist($device);
                 $em->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_usbhub', array('id' => $device->getId())));
             }
         }
         return ['form_device' => $form->createView()];
@@ -696,7 +696,7 @@ class DeviceController extends Controller
         if($request->getMethod() == Request::METHOD_POST) {
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                return $this->redirect($this->generateUrl('devices', array('device' => $device)));
+                return $this->redirect($this->generateUrl('show_usbhub', array('id' => $device->getId())));
             }
         }
 

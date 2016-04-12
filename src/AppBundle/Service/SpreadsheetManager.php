@@ -32,7 +32,7 @@ class SpreadsheetManager
     const RAM_MACMINI_COLUMN = 'rammacmini';
     const SSD_MACMINI_COLUMN = 'ssd';
     const SOFT_CHAIR_COLUMN = 'softchair';
-    const USB_HUB_COLUMN = 'startdate';
+    const USB_HUB_COLUMN = 'usbhub';
 
 
     protected $doctrine;
@@ -46,7 +46,8 @@ class SpreadsheetManager
         RouterInterface $router,
         $googleServiceEmail,
         $privateKeyPath
-    ) {
+    )
+    {
         $this->doctrine = $doctrine;
         $this->router = $router;
         $this->googleServiceEmail = $googleServiceEmail;
@@ -70,7 +71,7 @@ class SpreadsheetManager
             //$position = $entry->getValues()['position'];
 
             foreach ($employees as $employee) {
-                $nameFromDB = strtolower($employee->getLastName().' '.$employee->getFirstName());
+                $nameFromDB = strtolower($employee->getLastName() . ' ' . $employee->getFirstName());
                 if ($fullNameFromTable == $nameFromDB) {
                     unset($entries[$key]);
                     break;
@@ -84,19 +85,22 @@ class SpreadsheetManager
         return $new;
     }
 
-    public function prepareDataToImport()
+    public function prepareDataToValidate()
     {
         $dataToImport = $this->getNewDataFromGoogleTable();
         $preparedData = array();
 
         foreach ($dataToImport as $item) {
+            $firstName = null;
+            $lastName = null;
+            //$fatherName = null;
+
             $fullName = $item[self::EMPLOYEE_NAME_COLUMN];
             $array = explode(' ', $fullName);
+
             if (2 == count($array)) {
                 $lastName = $array[0];
                 $firstName = $array[1];
-            } else {
-                throw new \Exception('Wrong name format');
             }
             $position = $item[self::EMPLOYEE_POSITION_COLUMN];
             $startDateString = $item[self::EMPLOYEE_STARTDATE_COLUMN];
@@ -105,6 +109,7 @@ class SpreadsheetManager
             $employee = new Employee();
             $employee->setLastName($lastName);
             $employee->setFirstName($firstName);
+            //$employee->setFatherName($fatherName);
             $employee->setPosition($position);
             $employee->setEmployeeSince($startDate);
 
@@ -115,18 +120,19 @@ class SpreadsheetManager
     }
 
 
-
     public function exportOne(Employee $employee)
     {
         $listFeed = $this->getListFeed();
         $entry = $this->findEmployeeInWorksheet($employee);
-        if ( !$entry) {
-            $row = $this->getEmployeeData($employee);
+        if (!$entry) {
+            $row = $this->getEmployeeDataToExport($employee);
             $listFeed->insert($row);
 
-            return true;
+            //return true;
+        } else {
+            $entry->update($this->getEmployeeDataToExport($employee));
+
         }
-        $entry->update($this->getEmployeeData($employee));
 
         return true;
     }
@@ -136,7 +142,9 @@ class SpreadsheetManager
         $entry = $this->findEmployeeInWorksheet($employee);
 
         if (!$entry) {
+
             return false;
+
         } else {
             $entry->delete();
 
@@ -163,12 +171,12 @@ class SpreadsheetManager
             $entryValues = $entry->getValues();
 
             foreach ($employees as $key => $employee) {
-                $employeeName = $employee->getLastName().' '.$employee->getFirstName();
+                $employeeName = $employee->getLastName() . ' ' . $employee->getFirstName();
                 $employeePosition = $employee->getPosition();
                 $startDate = $employee->getEmployeeSince()->format("d.m.Y");
 
                 if ($entryValues[self::EMPLOYEE_NAME_COLUMN] == $employeeName && $entryValues[self::EMPLOYEE_STARTDATE_COLUMN] == $startDate) {
-                    $entry->update($this->getEmployeeData($employee));
+                    $entry->update($this->getEmployeeDataToExport($employee));
                     unset($employees[$key]);
                 }
             }
@@ -176,16 +184,16 @@ class SpreadsheetManager
         // if employee not exists in google table, create a new row
         while (!empty($employees)) {
             $employee = array_shift($employees);
-            $row = $this->getEmployeeData($employee);
+            $row = $this->getEmployeeDataToExport($employee);
 
             $listFeed->insert($row);
         }
     }
 
-    private function getEmployeeData(Employee $employee)
+    private function getEmployeeDataToExport(Employee $employee)
     {
         $countMonitors = 0;
-        $name = $employee->getLastName().' '.$employee->getFirstName();
+        $name = $employee->getLastName() . ' ' . $employee->getFirstName();
         $position = $employee->getPosition();
         $startDate = $employee->getEmployeeSince()->format('d.m.Y');
         $ram = 0;
@@ -200,7 +208,7 @@ class SpreadsheetManager
         if ($mac = $employee->getMac()) {
             $ram = $mac->getRam();
             if ($mac->getSsd()) {
-                $ssd = $mac->getSsd();
+                $ssd = 1;
             }
         }
 
@@ -209,7 +217,7 @@ class SpreadsheetManager
         }
 
         if ($employee->getUsbHub()) {
-            $usbHub =1;
+            $usbHub = 1;
         }
 
         return [
@@ -238,7 +246,7 @@ class SpreadsheetManager
     {
         $listFeed = $this->getListFeed();
         $entries = $listFeed->getEntries();
-        $employeeFullName = $employee->getLastName().' '.$employee->getFirstName();
+        $employeeFullName = $employee->getLastName() . ' ' . $employee->getFirstName();
         $employeeStartDate = $employee->getEmployeeSince()->format("d.m.Y");
 
         foreach ($entries as $entry) {

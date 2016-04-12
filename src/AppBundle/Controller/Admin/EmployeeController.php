@@ -62,7 +62,7 @@ class EmployeeController extends Controller
                     'Новый сотрудник добавлен.'
                 );
 
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
             }
         }
 
@@ -385,7 +385,7 @@ class EmployeeController extends Controller
     public function importAction()
     {
         $spreadSheetManager = $this->get('app.spreadsheet_manager');
-        $preparedData = $spreadSheetManager->prepareDataToImport();
+        $preparedData = $spreadSheetManager->prepareDataToValidate();
         $validator = $this->get('validator');
         $em = $this->getDoctrine()->getManager();
 
@@ -405,7 +405,7 @@ class EmployeeController extends Controller
 
         $this->addFlash(
             'notice',
-            "$success imported, $fail failed"
+            "$success импортировано, $fail неудач(и)"
             );
 
         return $this->redirectToRoute('homepage');
@@ -447,7 +447,7 @@ class EmployeeController extends Controller
             'Сотрудник экспотрирован в Google таблицу'
         );
 
-        return $this->redirectToRoute('homepage');
+        return $this->redirectToRoute('show_employee', array('id' => $employee->getId()));
     }
 
 }

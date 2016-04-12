@@ -22,7 +22,7 @@ class MacType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, array(
-                    'label' => 'Марка Mac',
+                    'label' => 'Модель Mac Mini',
                     'required' => true,
                 )
             )
