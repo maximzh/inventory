@@ -41,7 +41,7 @@ class AnotherDeviceFilterType extends AbstractType
                 //'condition_pattern' => FilterOperands::STRING_EQUALS,
 
             ))
-            ->add('condition', Filters\ChoiceFilterType::class, array(
+            ->add('status', Filters\ChoiceFilterType::class, array(
                 'label' => 'состояние',
                 'choices' => array(
                     'Новое' => 'new',

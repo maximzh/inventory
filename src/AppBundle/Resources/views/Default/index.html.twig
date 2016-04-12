@@ -3,10 +3,10 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-2 filter-div">
+            <div class="col-md-3 filter-div">
                 {% include '@App/Form/filterEmployees.html.twig' %}
             </div>
-            <div class="col-md-10">
+            <div class="col-md-9">
 
                 {% include '@App/Common/flash_message.html.twig' %}
                 <span class="text-large"> Всего сотрудников: {{ employees.getTotalItemCount }}</span>
