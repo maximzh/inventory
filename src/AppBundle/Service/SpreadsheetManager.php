@@ -25,6 +25,16 @@ class SpreadsheetManager
     const SPREADSHEET_TITLE = 'Employees';
     const WORKSHEET_TITLE = 'sheet';
 
+    const EMPLOYEE_NAME_COLUMN = 'name';
+    const EMPLOYEE_STARTDATE_COLUMN = 'startdate';
+    const EMPLOYEE_POSITION_COLUMN = 'position';
+    const MONITORS_COLUMN = 'monitors';
+    const RAM_MACMINI_COLUMN = 'rammacmini';
+    const SSD_MACMINI_COLUMN = 'ssd';
+    const SOFT_CHAIR_COLUMN = 'softchair';
+    const USB_HUB_COLUMN = 'startdate';
+
+
     protected $doctrine;
     protected $router;
     protected $googleClientEmail;
@@ -55,7 +65,7 @@ class SpreadsheetManager
             ->findAll();
 
         foreach ($entries as $key => $entry) {
-            $fullNameFromTable = strtolower($entry->getValues()['name']);
+            $fullNameFromTable = strtolower($entry->getValues()[self::EMPLOYEE_NAME_COLUMN]);
             //$startDate = \DateTime::createFromFormat('d.m.Y', $entry->getValues()['startdate']);
             //$position = $entry->getValues()['position'];
 
@@ -80,7 +90,7 @@ class SpreadsheetManager
         $preparedData = array();
 
         foreach ($dataToImport as $item) {
-            $fullName = $item['name'];
+            $fullName = $item[self::EMPLOYEE_NAME_COLUMN];
             $array = explode(' ', $fullName);
             if (2 == count($array)) {
                 $lastName = $array[0];
@@ -88,8 +98,8 @@ class SpreadsheetManager
             } else {
                 throw new \Exception('Wrong name format');
             }
-            $position = $item['position'];
-            $startDateString = $item['startdate'];
+            $position = $item[self::EMPLOYEE_POSITION_COLUMN];
+            $startDateString = $item[self::EMPLOYEE_STARTDATE_COLUMN];
             $startDate = \DateTime::createFromFormat('d.m.Y', $startDateString);
 
             $employee = new Employee();
@@ -157,7 +167,7 @@ class SpreadsheetManager
                 $employeePosition = $employee->getPosition();
                 $startDate = $employee->getEmployeeSince()->format("d.m.Y");
 
-                if ($entryValues['name'] == $employeeName && $entryValues['startdate'] == $startDate) {
+                if ($entryValues[self::EMPLOYEE_NAME_COLUMN] == $employeeName && $entryValues[self::EMPLOYEE_STARTDATE_COLUMN] == $startDate) {
                     $entry->update($this->getEmployeeData($employee));
                     unset($employees[$key]);
                 }
@@ -203,14 +213,14 @@ class SpreadsheetManager
         }
 
         return [
-            'name' => $name,
-            'startdate' => $startDate,
-            'position' => $position,
-            'monitors' => $countMonitors,
-            'rammacmini' => $ram,
-            'ssd' => $ssd,
-            'softchair' => $softChair,
-            'usbhub' => $usbHub,
+            self::EMPLOYEE_NAME_COLUMN => $name,
+            self::EMPLOYEE_STARTDATE_COLUMN => $startDate,
+            self::EMPLOYEE_POSITION_COLUMN => $position,
+            self::MONITORS_COLUMN => $countMonitors,
+            self::RAM_MACMINI_COLUMN => $ram,
+            self::SSD_MACMINI_COLUMN => $ssd,
+            self::SOFT_CHAIR_COLUMN => $softChair,
+            self::USB_HUB_COLUMN => $usbHub,
         ];
 
     }
@@ -232,7 +242,7 @@ class SpreadsheetManager
         $employeeStartDate = $employee->getEmployeeSince()->format("d.m.Y");
 
         foreach ($entries as $entry) {
-            if ($employeeFullName == $entry->getValues()['name'] && $employeeStartDate == $entry->getValues()['startdate']) {
+            if ($employeeFullName == $entry->getValues()[self::EMPLOYEE_NAME_COLUMN] && $employeeStartDate == $entry->getValues()[self::EMPLOYEE_STARTDATE_COLUMN]) {
 
                 return $entry;
             }
