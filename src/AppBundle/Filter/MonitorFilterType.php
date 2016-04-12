@@ -8,10 +8,7 @@
 
 namespace AppBundle\Filter;
 
-use Doctrine\ORM\EntityRepository;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterOperands;
-use Lexik\Bundle\FormFilterBundle\Filter\Form\Type\DateRangeFilterType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,7 +25,6 @@ class MonitorFilterType extends AbstractType
                 'label' => 'Марка монитора'
             ))
             ->add('diagonal', Filters\NumberFilterType::class, array(
-                //'condition_pattern' => FilterOperands::OPERATOR_EQUAL,
                 'label' => 'Диагональ монитора'
             ));
     }

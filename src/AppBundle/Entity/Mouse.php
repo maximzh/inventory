@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Mouse
@@ -12,6 +14,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Mouse
 {
+    const TYPE_WIRED = 'wired';
+    const TYPE_WIRELESS = 'wireless';
+    
+    const STATUS_OK = 'ok';
+    const STATUS_BROKEN = 'broken';
+    
     /**
      * @var int
      *
@@ -25,13 +33,15 @@ class Mouse
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * 
+     * @Assert\NotBlank(message="Укажите название мыши")
      */
     protected $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
      */
     protected $type;
 
@@ -144,7 +154,10 @@ class Mouse
     public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
-        
+        if ($employee) {
+            $employee->setMouse($this);
+        }
+
         return $this;
     }
 

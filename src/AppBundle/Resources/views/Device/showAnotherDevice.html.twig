@@ -1,0 +1,93 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+
+                <div class="panel">
+                    <div class="panel-heading bg-purple">
+                        Устройство
+                    </div>
+                    <div class="panel-body bg-light-grey">
+                        <table class="table">
+                            <tr>
+                                <td>Название</td><td>{{ device.name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Тип</td>
+                                <td>
+                                    {% if device.type == 'electronics' %}
+                                    Электронное устройство
+                                    {% elseif device.type == 'furniture' %}
+                                    Мебель
+                                    {% elseif device.type == 'technics' %}
+                                    Офисная техника
+                                    {% elseif device.type == 'another' %}
+                                    Другое
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Описание</td><td>{{ device.description }}</td>
+                            </tr>
+                            <tr>
+                                <td>Состояние</td>
+                                <td>
+                                    {% if device.status == 'ok' %}
+                                        Исправное
+                                    {% elseif device.status == 'broken' %}
+                                        Сломанное
+                                    {% elseif device.status == 'new' %}
+                                        Новое
+                                    {% elseif device.status == 'old' %}
+                                        Старое
+                                    {% elseif device.status == 'fixed' %}
+                                        После ремонта
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="{{ asset('images/employ96.png') }}">
+
+                                </td>
+                                <td>
+                                    {% if device.employee is not null %}
+                                        <h3>
+                                            <a href="{{ path('show_employee', {'id': device.employee.id}) }}">
+                                                {{ device.employee.lastName }} {{ device.employee.firstName }}
+                                            </a>
+                                        </h3>
+
+
+                                    {% else %}
+                                        <h3 class="text-danger glyphicon glyphicon-ban-circle"></h3>
+
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <tr>
+                                    <td>
+                                        <a class="glyphicon glyphicon-pencil" href="{{ path('edit-device', {'id': device.id}) }}"></a>
+
+                                    </td>
+                                    <td class="text-right">
+                                        {% if deleteForm is not null %}
+                                            {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить устройство?");' }}) }}
+                                            {{ form_widget(deleteForm.submit) }}
+                                            {{ form_end(deleteForm) }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}

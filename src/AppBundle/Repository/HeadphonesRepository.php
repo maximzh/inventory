@@ -21,4 +21,14 @@ class HeadphonesRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllOrdered()
+    {
+        return $this->createQueryBuilder('h')
+            ->select('h, e')
+            ->leftJoin('h.employee', 'e')
+            ->orderBy('e.lastName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Keyboard
@@ -12,6 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Keyboard
 {
+    const TYPE_WIRED = 'wired';
+    const TYPE_WIRELESS = 'wireless';
+
+    const STATUS_OK = 'ok';
+    const STATUS_BROKEN = 'broken';
     /**
      * @var int
      *
@@ -25,13 +32,15 @@ class Keyboard
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * 
+     * @Assert\NotBlank(message="Укажите название клавиатуры")
      */
     protected $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
      */
     protected $type;
 
@@ -145,7 +154,10 @@ class Keyboard
     public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
-        
+        if ($employee) {
+            $employee->setKeyboard($this);
+        }
+
         return $this;
     }
     

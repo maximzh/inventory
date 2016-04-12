@@ -27,13 +27,13 @@ class EmployeeType extends AbstractType
     {
         $builder
             ->add('lastName', TextType::class, array(
-                'label' => 'Фамилия',
+                'label' => 'Фамилия*',
                 'required' => false,
                 )
             )
             ->add('firstName', TextType::class,
                 array(
-                    'label' => 'Имя',
+                    'label' => 'Имя*',
                     'required' => false,
                     )
             )
@@ -43,15 +43,34 @@ class EmployeeType extends AbstractType
                 )
             )
             ->add('employeeSince', DateType::class, array(
-                'label' => 'Дата приема на работу',
+                'label' => 'Дата приема на работу*',
                 'years' => range(2001, 2021)
             )
             )
             ->add('position', TextType::class, array(
-                'label' => 'Должность',
+                'label' => 'Должность*',
                 'required' => false,
                 )
             )
+            /*
+            ->add('monitors', EntityType::class,[
+                'class' => 'AppBundle\Entity\Monitor',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('m')
+                        ->select('m, e')
+                        ->leftJoin('m.employee', 'e')
+                        //->leftJoin('e.keyboard', 'k')
+                        //->leftJoin('e.usbHub', 'u')
+                        //->leftJoin('e.mac', 'mc')
+                        //->leftJoin('e.mouse', 'ms')
+                        //->leftJoin('e.headphones', 'h')
+                        //->leftJoin('e.monitors', 'mo')
+                        ->where('m.employee IS NULL');
+                },
+                'required' => false,
+                'label' => 'Монитор'
+            ])
+            */
 
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $employee = $event->getData();

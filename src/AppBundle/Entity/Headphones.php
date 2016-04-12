@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Headphones
@@ -12,6 +14,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Headphones
 {
+    const TYPE_WIRED = 'wired';
+    const TYPE_WIRELESS = 'wireless';
+    
+    const STATUS_OK = 'ok';
+    const STATUS_BROKEN = 'broken';
+    
     /**
      * @var int
      *
@@ -25,6 +33,8 @@ class Headphones
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * 
+     * @Assert\NotBlank(message="Укажите название наушников")
      */
     protected $name;
 
@@ -139,10 +149,16 @@ class Headphones
 
     /**
      * @param Employee $employee
+     * @return $this
      */
-    public function setEmployee($employee)
+    public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
+        if ($employee) {
+            $employee->setHeadphones($this);
+        }
+
+        return $this;
     }
 
     /**

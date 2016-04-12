@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Monitor
@@ -12,6 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Monitor
 {
+    const STATUS_FIXED = 'fixed';
+    const STATUS_BROKEN = 'broken';
+    const STATUS_OK = 'ok';
+    
     /**
      * @var int
      *
@@ -25,6 +30,10 @@ class Monitor
      * @var int
      *
      * @ORM\Column(name="diagonal", type="integer")
+     *
+     * @Assert\NotBlank(message="Укажите диагональ монитора")
+     * @Assert\Type(type="integer")
+     * @Assert\GreaterThan(value = 0, message="Это значение должно быть положительным")
      */
     private $diagonal;
 
@@ -32,6 +41,8 @@ class Monitor
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Укажите название монитора")
      */
     protected $name;
 

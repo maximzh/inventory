@@ -18,10 +18,17 @@ class UsbHubFilterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', Filters\TextFilterType::class, array(
-            'condition_pattern' => FilterOperands::STRING_CONTAINS,
-            'label' => ' '
-        ));
+        $builder
+            ->add('name', Filters\TextFilterType::class, array(
+                    'condition_pattern' => FilterOperands::STRING_CONTAINS,
+                    'label' => ' '
+                )
+            )
+            ->add('portsNumber', Filters\NumberFilterType::class, array(
+                //'condition_pattern' => FilterOperands::OPERATOR_EQUAL,
+                'label' => 'Usb Hub кол. портов'
+            ))
+        ;
     }
 
     public function getParent()

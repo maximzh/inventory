@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * UsbHub
@@ -12,6 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UsbHub
 {
+    const STATUS_OK = 'ok';
+    const STATUS_BROKEN = 'broken';
+    
     /**
      * @var int
      *
@@ -25,15 +30,21 @@ class UsbHub
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * 
+     * @Assert\NotBlank(message="Укажите название Usb Hub")
      */
     protected $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="ports_number", type="string", length=255, nullable=true)
+     * 
+     * @Assert\Type(type="integer")
+     * @Assert\GreaterThan(value = 0, message="Это значение должно быть положительным")
+     * 
      */
-    protected $type;
+    protected $portsNumber;
 
     /**
      * @var string
@@ -80,30 +91,7 @@ class UsbHub
     {
         return $this->name;
     }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return Monitor
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
+    
 
     /**
      * Set status
@@ -139,10 +127,16 @@ class UsbHub
 
     /**
      * @param Employee $employee
+     * @return $this
      */
     public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
+        if ($employee) {
+            $employee->setUsbHub($this);
+        }
+
+        return $this;
     }
 
     /**
@@ -150,5 +144,30 @@ class UsbHub
      */
     public function __toString() {
         return (string) $this->getName();
+    }
+    
+
+    /**
+     * Set portsNumber
+     *
+     * @param string $portsNumber
+     *
+     * @return UsbHub
+     */
+    public function setPortsNumber($portsNumber)
+    {
+        $this->portsNumber = $portsNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get portsNumber
+     *
+     * @return string
+     */
+    public function getPortsNumber()
+    {
+        return $this->portsNumber;
     }
 }

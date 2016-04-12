@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\AnotherDevice;
 use AppBundle\Entity\Employee;
 use AppBundle\Entity\Monitor;
 use AppBundle\Form\EmployeeType;
@@ -48,7 +49,7 @@ class EmployeeController extends Controller
                 'method' => 'POST',
             )
         );
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() == Request::METHOD_POST) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
@@ -58,7 +59,7 @@ class EmployeeController extends Controller
 
                 $this->addFlash(
                     'notice',
-                    'Новый сотрудник успешно добавлен.'
+                    'Новый сотрудник добавлен.'
                 );
 
                 return $this->redirectToRoute('homepage');
@@ -316,6 +317,36 @@ class EmployeeController extends Controller
         }
         if (in_array($monitor, $monitors)) {
             $employee->removeMonitor($monitor);
+            $em->flush();
+            $this->addFlash(
+                'notice',
+                "Устройство освободилось"
+            );
+        }
+
+        return $this->redirectToRoute('show_employee', ['id' => $employee->getId()]);
+    }
+
+    /**
+     * @param Employee $employee
+     *
+     * @Route("/{employee_id}/free_device/{device_id}", name="free_employee_device")
+     *
+     * @ParamConverter("employee", class="AppBundle:Employee", options={"mapping": {"employee_id": "id"}})
+     * @ParamConverter("device", class="AppBundle:AnotherDevice", options={"mapping": {"device_id": "id"}})
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function freeEmployeeDeviceAction(Employee $employee, AnotherDevice $device)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $devices = array();
+        foreach ($employee->getAnotherDevices() as $anotherDevice) {
+            $devices[] = $anotherDevice;
+        }
+        if (in_array($device, $devices)) {
+            $employee->removeAnotherDevice($device);
             $em->flush();
             $this->addFlash(
                 'notice',

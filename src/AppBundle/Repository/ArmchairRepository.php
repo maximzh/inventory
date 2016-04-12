@@ -21,4 +21,14 @@ class ArmchairRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+    
+    public function findAllOrdered()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a, e')
+            ->leftJoin('a.employee', 'e')
+            ->orderBy('e.lastName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

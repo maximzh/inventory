@@ -1,0 +1,83 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+
+                <div class="panel">
+                    <div class="panel-heading bg-purple">
+                        Мышь
+                    </div>
+                    <div class="panel-body bg-light-grey">
+                        <table class="table">
+                            <tr>
+                                <td>Название</td><td>{{ mouse.name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Тип</td>
+                                <td>
+
+                                    {% if mouse.type == 'wireless' %}
+                                        Беспроводная
+                                    {% elseif mouse.type == 'wired' %}
+                                        Проводная
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Состояние</td>
+                                <td>
+
+                                    {% if mouse.status == 'ok' %}
+                                        Исправная
+                                    {% elseif mouse.status == 'broken' %}
+                                        Сломанная
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="{{ asset('images/employ96.png') }}">
+
+                                </td>
+                                <td>
+                                    {% if mouse.employee is not null %}
+                                        <h3>
+                                            <a href="{{ path('show_employee', {'id': mouse.employee.id}) }}">
+                                                {{ mouse.employee.lastName }} {{ mouse.employee.firstName }}
+                                            </a>
+                                        </h3>
+
+
+                                    {% else %}
+                                        <h3 class="text-danger glyphicon glyphicon-ban-circle"></h3>
+
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <tr>
+                                    <td>
+                                        <a class="glyphicon glyphicon-pencil" href="{{ path('edit-mouse', {'id': mouse.id}) }}"></a>
+
+                                    </td>
+                                    <td class="text-right">
+                                        {% if deleteForm is not null %}
+                                            {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить мышь?");' }}) }}
+                                            {{ form_widget(deleteForm.submit) }}
+                                            {{ form_end(deleteForm) }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
