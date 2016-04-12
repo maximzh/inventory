@@ -8,6 +8,7 @@
 
 namespace AppBundle\Filter;
 
+use AppBundle\Entity\Armchair;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterOperands;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,10 +28,10 @@ class ArmchairFilterType extends AbstractType
             ->add('status', Filters\ChoiceFilterType::class, array(
                     'label' => 'состояние кресла',
                     'choices' => array(
-                        'Новое' => 'new',
-                        'Старое' => 'old',
-                        'Сломанное' => 'broken',
-                        'После ремонта' => 'fixed',
+                        'Новое' => Armchair::STATUS_NEW,
+                        'Старое' => Armchair::STATUS_OLD,
+                        'Сломанное' => Armchair::STATUS_BROKEN,
+                        'После ремонта' => Armchair::STATUS_FIXED,
                     ),
                     'choices_as_values' => true,
                 )
@@ -38,10 +39,10 @@ class ArmchairFilterType extends AbstractType
             ->add('material', Filters\ChoiceFilterType::class, array(
                     'label' => 'обивка кресла',
                     'choices' => array(
-                        'Кожа' => 'lether',
-                        'Эко кожа' => 'ecolether',
-                        'Ткань' => 'textile',
-                        'Другое' => 'other',
+                        'Кожа' => Armchair::MATERIAL_LETHER,
+                        'Экологическая кожа' => Armchair::MATERIAL_ECO_LETHER,
+                        'Ткань' => Armchair::MATERIAL_TEXTILE,
+                        'Другое' => Armchair::MATERIAL_OTHER,
                     ),
                     'choices_as_values' => true,
                 )

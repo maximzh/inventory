@@ -14,6 +14,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class UsbHub
 {
+    const STATUS_OK = 'ok';
+    const STATUS_BROKEN = 'broken';
+    
     /**
      * @var int
      *
@@ -124,10 +127,16 @@ class UsbHub
 
     /**
      * @param Employee $employee
+     * @return $this
      */
     public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
+        if ($employee) {
+            $employee->setUsbHub($this);
+        }
+
+        return $this;
     }
 
     /**

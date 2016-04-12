@@ -14,6 +14,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Headphones
 {
+    const TYPE_WIRED = 'wired';
+    const TYPE_WIRELESS = 'wireless';
+    
+    const STATUS_OK = 'ok';
+    const STATUS_BROKEN = 'broken';
+    
     /**
      * @var int
      *
@@ -143,10 +149,16 @@ class Headphones
 
     /**
      * @param Employee $employee
+     * @return $this
      */
-    public function setEmployee($employee)
+    public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
+        if ($employee) {
+            $employee->setHeadphones($this);
+        }
+
+        return $this;
     }
 
     /**

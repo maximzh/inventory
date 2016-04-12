@@ -13,6 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Monitor
 {
+    const STATUS_FIXED = 'fixed';
+    const STATUS_BROKEN = 'broken';
+    const STATUS_OK = 'ok';
+    
     /**
      * @var int
      *

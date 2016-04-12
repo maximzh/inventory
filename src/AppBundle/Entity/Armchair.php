@@ -12,6 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Armchair
 {
+    const STATUS_NEW = 'new';
+    const STATUS_OLD = 'old';
+    const STATUS_FIXED = 'fixed';
+    const STATUS_BROKEN = 'broken';
+    const STATUS_OK = 'ok';
+    
+    const MATERIAL_LETHER = 'lether';
+    const MATERIAL_TEXTILE = 'textile';
+    const MATERIAL_ECO_LETHER = 'ecolether';
+    const MATERIAL_OTHER = 'other';
+    
     /**
      * @var int
      *
@@ -151,6 +162,9 @@ class Armchair
     public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
+        if ($employee) {
+            $employee->setArmchair($this);
+        }
 
         return $this;
     }

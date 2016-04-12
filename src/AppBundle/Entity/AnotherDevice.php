@@ -20,6 +20,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class AnotherDevice
 {
+    const FURNITURE_DEVICE = 'furniture';
+    const ELECTRONIC_DEVICE = 'electronics';
+    const TECHNICS_DEVICE = 'technics';
+    const ANOTHER_DEVICE = 'another';
+    
+    const STATUS_NEW = 'new';
+    const STATUS_OLD = 'old';
+    const STATUS_FIXED = 'fixed';
+    const STATUS_BROKEN = 'broken';
+    const STATUS_OK = 'ok';
+    
     /**
      * @var int
      *

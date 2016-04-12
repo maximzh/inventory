@@ -14,6 +14,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Mouse
 {
+    const TYPE_WIRED = 'wired';
+    const TYPE_WIRELESS = 'wireless';
+    
+    const STATUS_OK = 'ok';
+    const STATUS_BROKEN = 'broken';
+    
     /**
      * @var int
      *
@@ -148,7 +154,10 @@ class Mouse
     public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
-        
+        if ($employee) {
+            $employee->setMouse($this);
+        }
+
         return $this;
     }
 

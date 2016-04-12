@@ -8,6 +8,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\AnotherDevice;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -32,10 +33,10 @@ class AnotherDeviceType extends AbstractType
             ->add('type', ChoiceType::class,
                 array(
                     'choices' => array(
-                        'Мебель' => 'furniture',
-                        'Электронное устройство' => 'electronics',
-                        'Офисная техника' => 'technics',
-                        'Другое' => 'another',
+                        'Мебель' => AnotherDevice::FURNITURE_DEVICE,
+                        'Электронное устройство' => AnotherDevice::ELECTRONIC_DEVICE,
+                        'Офисная техника' => AnotherDevice::TECHNICS_DEVICE,
+                        'Другое' => AnotherDevice::ANOTHER_DEVICE,
                     ),
                     'choices_as_values' => true,
                     'label' => 'Тип устройств',
@@ -45,11 +46,11 @@ class AnotherDeviceType extends AbstractType
             ->add('status', ChoiceType::class,
                 array(
                     'choices' => array(
-                        'Новое' => 'new',
-                        'Старое' => 'old',
-                        'После ремонта' => 'fixed',
-                        'Исправное' => 'ok',
-                        'Сломаное' => 'broken',
+                        'Новое' => AnotherDevice::STATUS_NEW,
+                        'Старое' => AnotherDevice::STATUS_OLD,
+                        'После ремонта' => AnotherDevice::STATUS_FIXED,
+                        'Исправное' => AnotherDevice::STATUS_OK,
+                        'Сломаное' => AnotherDevice::STATUS_BROKEN,
                     ),
                     'choices_as_values' => true,
                     'label' => 'Состояние',
@@ -61,12 +62,12 @@ class AnotherDeviceType extends AbstractType
                     'required' => false,
                 )
             )
-            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $device = $event->getData();
                 $form = $event->getForm();
 
                 if (null == $device->getEmployee()) {
-                    $form->add('employee', EntityType::class,[
+                    $form->add('employee', EntityType::class, [
                         'class' => 'AppBundle\Entity\Employee',
                         'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('e')
@@ -78,16 +79,13 @@ class AnotherDeviceType extends AbstractType
                                 ->leftJoin('e.mouse', 'ms')
                                 ->leftJoin('e.headphones', 'h')
                                 ->leftJoin('e.monitors', 'mo')
-                                ->leftJoin('e.anotherDevices', 'an')
-                                
-                                ;
+                                ->leftJoin('e.anotherDevices', 'an');
                         },
                         'required' => false,
                         'label' => 'Сотрудник'
                     ]);
                 }
-            })
-            ;
+            });
     }
 
     public function configureOptions(OptionsResolver $resolver)

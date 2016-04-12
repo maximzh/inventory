@@ -52,6 +52,25 @@ class EmployeeType extends AbstractType
                 'required' => false,
                 )
             )
+            /*
+            ->add('monitors', EntityType::class,[
+                'class' => 'AppBundle\Entity\Monitor',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('m')
+                        ->select('m, e')
+                        ->leftJoin('m.employee', 'e')
+                        //->leftJoin('e.keyboard', 'k')
+                        //->leftJoin('e.usbHub', 'u')
+                        //->leftJoin('e.mac', 'mc')
+                        //->leftJoin('e.mouse', 'ms')
+                        //->leftJoin('e.headphones', 'h')
+                        //->leftJoin('e.monitors', 'mo')
+                        ->where('m.employee IS NULL');
+                },
+                'required' => false,
+                'label' => 'Монитор'
+            ])
+            */
 
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $employee = $event->getData();

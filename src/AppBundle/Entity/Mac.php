@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Employee;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,6 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Mac 
 {
+    const STATUS_FIXED = 'fixed';
+    const STATUS_BROKEN = 'broken';
+    const STATUS_OK = 'ok';
+
     /**
      * @var int
      *
@@ -255,6 +258,9 @@ class Mac
     {
 
         $this->employee = $employee;
+        if ($employee) {
+            $employee->setMac($this);
+        }
 
         return $this;
     }

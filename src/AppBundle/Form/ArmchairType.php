@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Armchair;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -20,24 +21,35 @@ class ArmchairType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, array(
-                'label' => 'Название кресла',
-                'required' => true,
+                    'label' => 'Название кресла',
+                    'required' => true,
                 )
             )
             ->add('material', ChoiceType::class,
                 array(
                     'choices' => array(
-                        'Кожа' => 'lether',
-                        'Экологическая кожа' => 'ecolether',
-                        'Ткань' => 'textile',
-                        'Другое' => 'other',
+                        'Кожа' => Armchair::MATERIAL_LETHER,
+                        'Экологическая кожа' => Armchair::MATERIAL_ECO_LETHER,
+                        'Ткань' => Armchair::MATERIAL_TEXTILE,
+                        'Другое' => Armchair::MATERIAL_OTHER,
                     ),
                     'choices_as_values' => true,
                     'label' => 'Обивка',
                     'required' => false,
                 )
             )
-            /*
+            ->add('status', ChoiceType::class, array(
+                    'label' => 'Состояние',
+                    'required' => false,
+                    'choices' => array(
+                        'Новое' => Armchair::STATUS_NEW,
+                        'Старое' => Armchair::STATUS_OLD,
+                        'Сломанное' => Armchair::STATUS_BROKEN,
+                        'После ремонта' => Armchair::STATUS_FIXED,
+                    ),
+                    'choices_as_values' => true,
+                )
+            )
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $armchair = $event->getData();
                 $form = $event->getForm();
@@ -47,42 +59,17 @@ class ArmchairType extends AbstractType
                         'class' => 'AppBundle\Entity\Employee',
                         'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('e')
-                                ->select('e, a, k, u, mc, ms, h, mo')
-                                ->leftJoin('e.armchair', 'a')
-                                ->leftJoin('e.keyboard', 'k')
-                                ->leftJoin('e.usbHub', 'u')
-                                ->leftJoin('e.mac', 'mc')
-                                ->leftJoin('e.mouse', 'ms')
-                                ->leftJoin('e.headphones', 'h')
-                                ->leftJoin('e.monitors', 'mo')
-                                ->where('a.employee IS NULL');
+                                ->select('e')
+                                ->where('e.armchair IS NULL');
                         },
                         'required' => false,
                         'label' => 'Сотрудник'
                     ]);
                 }
             })
-            */
-            //->add('employee', EntityType::class,[
-            //    'class' => 'AppBundle\Entity\Employee',
-            //    'label' => 'Сотрудник',
-            //])
-
-            ->add('status', ChoiceType::class, array(
-                'label' => 'Состояние',
-                'required' => false,
-                    'choices'  => array(
-                        'Новое' => "new",
-                        'Старое' => "old",
-                        'Сломанное' => 'broken',
-                        'После ремонта' => 'fixed',
-                    ),
-                    'choices_as_values' => true,
-                )
-            )
-
-            ;
+        ;
     }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

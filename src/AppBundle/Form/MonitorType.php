@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Monitor;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,8 +22,8 @@ class MonitorType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, array(
-                'label' => 'Марка монитора',
-                'required' => false,
+                    'label' => 'Марка монитора',
+                    'required' => false,
                 )
             )
             ->add('diagonal', IntegerType::class, array(
@@ -33,22 +34,20 @@ class MonitorType extends AbstractType
             ->add('status', ChoiceType::class, array(
                     'label' => 'Состояние',
                     'required' => false,
-                    'choices'  => array(
-                        'Исправный' => "ok",
-                        //'Старое' => "old",
-                        'Сломанный' => 'broken',
-                        'После ремонта' => 'fixed',
+                    'choices' => array(
+                        'Исправный' => Monitor::STATUS_OK,
+                        'Сломанный' => Monitor::STATUS_BROKEN,
+                        'После ремонта' => Monitor::STATUS_FIXED,
                     ),
                     'choices_as_values' => true,
                 )
             )
-
-            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $monitor = $event->getData();
                 $form = $event->getForm();
 
                 if (null == $monitor->getEmployee()) {
-                    $form->add('employee', EntityType::class,[
+                    $form->add('employee', EntityType::class, [
                         'class' => 'AppBundle\Entity\Employee',
                         'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('e')
@@ -59,31 +58,15 @@ class MonitorType extends AbstractType
                                 ->leftJoin('e.mac', 'mc')
                                 ->leftJoin('e.mouse', 'ms')
                                 ->leftJoin('e.headphones', 'h')
-                                ->leftJoin('e.monitors', 'mo')
-                                ;
+                                ->leftJoin('e.monitors', 'mo');
                         },
                         'required' => false,
                         'label' => 'Сотрудник'
                     ]);
                 }
-            })
-
-            //->add('employee', EntityType::class,[
-            //    'class' => 'AppBundle\Entity\Employee'
-            //])
-            /*
-            ->add('status', ChoiceType::class, array(
-                'label' => 'Статус',
-                'required' => false,
-                    'choices'  => array(
-                        'free' => "Свободен",
-                        'busy' => "Занят",
-                    ),
-                )
-            )
-            */
-            ;
+            });
     }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

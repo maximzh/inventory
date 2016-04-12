@@ -14,6 +14,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Keyboard
 {
+    const TYPE_WIRED = 'wired';
+    const TYPE_WIRELESS = 'wireless';
+
+    const STATUS_OK = 'ok';
+    const STATUS_BROKEN = 'broken';
     /**
      * @var int
      *
@@ -149,7 +154,10 @@ class Keyboard
     public function setEmployee(Employee $employee = null)
     {
         $this->employee = $employee;
-        
+        if ($employee) {
+            $employee->setKeyboard($this);
+        }
+
         return $this;
     }
     
