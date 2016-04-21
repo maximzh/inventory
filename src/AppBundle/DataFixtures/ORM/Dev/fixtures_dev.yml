@@ -32,45 +32,54 @@ AppBundle\Entity\Armchair:
 AppBundle\Entity\Keyboard:
     keyboard{1..15}:
         name: 'Rapoo wireless'
+        type: 'wireless'
         status: 'ok'
     keyboard{16..20}:
         name: 'Logitech'
         status: 'ok'
+        type: 'wired'
     keyboard{21..35}:
         name: 'A4Tech'
+        type: 'wired'
         status: 'ok'
 
 AppBundle\Entity\Headphones:
     headphones{1..15}:
         name: 'Kingston HyperX Cloud'
         status: 'ok'
+        type: 'wireless'
     headphones{16..20}:
         name: 'Koss'
         status: 'ok'
+        type: 'wired'
     headphones{21..30}:
         name: 'Sven'
         status: 'ok'
+        type: 'wired'
 
 AppBundle\Entity\Mouse:
-    mouse{1..20}:
+    mouse{1..15}:
         name: 'Logitech Wireless'
-    headphone{16..30}:
+        status: 'ok'
+        type: 'wireless'
+    mouse{16..30}:
         name: 'Roccat Kone XTD'
         status: 'ok'
-    headphone{31..40}:
-        name: 'Razer Krait'
-        status: 'ok'
+        type: 'wired'
 
 AppBundle\Entity\UsbHub:
     usbhub{1..10}:
         name: 'SPEEDLINK Nobile Active'
         status: 'ok'
+        portsNumber: 3
     usbhub{11..16}:
-        name: 'PowerPlant 4 Ports'
+        name: 'PowerPlant'
         status: 'ok'
+        portsNumber: 4
     usbhub{17..20}:
         name: 'D-Link DUB-H7'
         status: 'ok'
+        portsNumber: 5
 
 AppBundle\Entity\Employee:
     employee{1..20}:
