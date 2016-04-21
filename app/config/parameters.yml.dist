@@ -17,3 +17,8 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    google_app_id:
+    google_app_secret:
+    google_client_email:
+    private_key_path:

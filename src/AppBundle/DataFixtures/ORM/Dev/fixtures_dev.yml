@@ -1,0 +1,130 @@
+AppBundle\Entity\Mac:
+    mac{1..5}:
+        name: 'Apple Mac Mini 2014'
+        ram: 4
+        hdd: 500
+        status: 'ok'
+    mac{6..15}:
+        name: 'Apple Mac Mini 2015'
+        ram: 8
+        hdd: 1000
+        status: 'ok'
+    mac{16..20}:
+        name: 'Apple Mac Mini 2016'
+        ram: 16
+        ssd: 1000
+        status: 'ok'
+
+AppBundle\Entity\Armchair:
+    armchair{1..5}:
+        name: 'old chair'
+        status: 'old'
+        material: 'textile'
+    armchair{6..15}:
+        name: 'soft armchair'
+        status: 'new'
+        material: 'ecolether'
+    armchair{16..30}:
+        name: 'premium soft'
+        status: 'new'
+        material: 'lether'
+
+AppBundle\Entity\Keyboard:
+    keyboard{1..15}:
+        name: 'Rapoo wireless'
+        type: 'wireless'
+        status: 'ok'
+    keyboard{16..20}:
+        name: 'Logitech'
+        status: 'ok'
+        type: 'wired'
+    keyboard{21..35}:
+        name: 'A4Tech'
+        type: 'wired'
+        status: 'ok'
+
+AppBundle\Entity\Headphones:
+    headphones{1..15}:
+        name: 'Kingston HyperX Cloud'
+        status: 'ok'
+        type: 'wireless'
+    headphones{16..20}:
+        name: 'Koss'
+        status: 'ok'
+        type: 'wired'
+    headphones{21..30}:
+        name: 'Sven'
+        status: 'ok'
+        type: 'wired'
+
+AppBundle\Entity\Mouse:
+    mouse{1..15}:
+        name: 'Logitech Wireless'
+        status: 'ok'
+        type: 'wireless'
+    mouse{16..30}:
+        name: 'Roccat Kone XTD'
+        status: 'ok'
+        type: 'wired'
+
+AppBundle\Entity\UsbHub:
+    usbhub{1..10}:
+        name: 'SPEEDLINK Nobile Active'
+        status: 'ok'
+        portsNumber: 3
+    usbhub{11..16}:
+        name: 'PowerPlant'
+        status: 'ok'
+        portsNumber: 4
+    usbhub{17..20}:
+        name: 'D-Link DUB-H7'
+        status: 'ok'
+        portsNumber: 5
+
+AppBundle\Entity\AnotherDevice:
+    device{1..5}:
+        name: 'Стол'
+        description: 'Компьютерный стол'
+        status: 'ok'
+        type: 'furniture'
+        employee (optional): '@employee*'
+    device{6..10}:
+        name: 'Trancsend'
+        status: 'ok'
+        description: 'Флешка 32Gb'
+        type: 'electronics'
+
+AppBundle\Entity\Employee:
+    employee{1..20}:
+        lastName: <lastName()>
+        firstName: <firstNameMale()>
+        employeeSince: <dateTimeBetween('-2 years', 'now')>
+        position: <randomElement(['engineer', 'designer', 'junior php developer', 'project manager', 'middle php developer', 'senior php developer', 'java developer'])>
+        mac (unique): '@mac*'
+        armchair (unique): '@armchair*'
+        keyboard (unique): '@keyboard*'
+        headphones (unique): '@headphones*'
+        mouse (unique): '@mouse*'
+        usbhub (unique): '@usbhub*'
+    employee{21..25}:
+        lastName: <lastName()>
+        firstName: <firstNameMale()>
+        employeeSince: <dateTimeBetween('-2 years', 'now')>
+        position: <randomElement(['engineer', 'designer', 'junior php developer', 'project manager', 'middle php developer', 'senior php developer', 'java developer'])>
+
+AppBundle\Entity\Monitor:
+    monitor{1..10}:
+        name: 'Dell'
+        diagonal: 23
+        status: 'ok'
+        employee (optional): '@employee*'
+    monitor{11..20}:
+        name: 'LG'
+        diagonal: 22
+        status: 'ok'
+        employee (optional): '@employee*'
+    monitor{21..25}:
+        name: 'Sony'
+        diagonal: 27
+        status: 'ok'
+        employee (optional): '@employee*'

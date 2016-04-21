@@ -1,0 +1,150 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 filter-div">
+                {% include '@App/Form/filterEmployees.html.twig' %}
+            </div>
+            <div class="col-md-9">
+
+                {% include '@App/Common/flash_message.html.twig' %}
+                <span class="text-large"> Всего сотрудников: {{ employees.getTotalItemCount }}</span>
+
+                <table class="table table-hover main-employees-list bg-light-grey">
+                    <thead>
+                    <tr style="background-color: #B19BD9">
+                        <th>
+                            ФИО
+                        </th>
+                        <th>
+                            Дата п.н.р.
+                        </th>
+                        <th>
+                            Позиция
+                        </th>
+                        <th>
+                            Мониторы
+                        </th>
+                        <th>
+                            RAM MacMini
+                        </th>
+                        <th>
+                            SSD MacMini
+                        </th>
+                        <th >
+                            Кресло
+                        </th>
+                        <th>
+                            USB HUB
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tr class="text-danger">
+                        {# sorting of properties based on query components #}
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span><br>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.lastName') }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span><br>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.employeeSince') }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span><br>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.position') }}
+                        </td>
+                        <td>
+
+                            <span class="glyphicon glyphicon-sort"></span><br>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'e.monitorsNumber') }}
+
+
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span><br>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'mc.ram') }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span><br>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'mc.ssd') }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span><br>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'a.name') }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-sort"></span><br>
+                            {{ knp_pagination_sortable(employees, 'Сортировать', 'u.name') }}
+                        </td>
+
+                    </tr>
+
+                    {% for employee in employees %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('show_employee', {'id': employee.id}) }}">
+                                    {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
+                                </a>
+
+                            </td>
+                            <td>
+                                {{ employee.employeeSince|date('d.m.Y') }}
+                            </td>
+                            <td>
+                                {{ employee.position }}
+                            </td>
+                            <td>
+                                <img src="{{ asset('images/monitor_24.png') }}">
+
+                                {% if employee.monitors|length != 0 and employee.monitors != null %}
+                                    {{ employee.monitors|length }}
+                                {% else %}
+                                    {{ employee.monitors|length }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <img src="{{ asset('images/ram.png') }}">
+
+                                {% if employee.mac.ram is defined%}
+                                    {{ employee.mac.ram }}
+                                {% else %}
+                                    {{ 0 }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <img src="{{ asset('images/ssd-icon24.png') }}">
+                                {% if employee.mac.ssd is defined and employee.mac.ssd > 0 %}
+                                    {{ 1 }}
+                                {% else %}
+                                    {{ 0 }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <img src="{{ asset('images/chair-24.png') }}">
+
+                                {% if employee.armchair is defined  and employee.armchair != null %}
+                                {{ employee.armchair|length }}
+                                {% else %}
+                                    {{ employee.armchair|length }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <img src="{{ asset('images/usb--icon24.png') }}">
+
+                                {% if employee.usbHub is defined  and employee.usbHub != null %}
+                                    {{ employee.usbHub|length }}
+                                {% else %}
+                                    {{ employee.usbHub|length }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                {{ knp_pagination_render(employees) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}

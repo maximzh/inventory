@@ -1,0 +1,29 @@
+{
+  "name": "inventory",
+  "version": "1.0.0",
+  "description": "inventory =========",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maximzh/inventory.git"
+  },
+  "author": "Maxim Zhurilo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maximzh/inventory/issues"
+  },
+  "homepage": "https://github.com/maximzh/inventory#readme",
+  "dependencies": {
+    "bower": "^1.7.7",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-less": "^3.0.5",
+    "gulp-rimraf": "^0.2.0",
+    "gulp-uglify": "^1.5.3",
+    "less": "^2.6.1"
+  }
+}

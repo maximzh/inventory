@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% if employees is empty %}
+                    <div class="alert alert-warning">
+                        <strong class="text-center">По вашему запросу ничего не найдено</strong>
+                        <a href="{{ path('homepage') }}">Вернуться на главную</a>
+                    </div>
+                {% else %}
+                    <table class="table table-hover">
+                        <thead>
+                        <tr class="bg-purple">
+                            <th>
+                                ФИО сотрудника
+                            </th>
+                            <th>
+                                Дата приема на работу
+                            </th>
+                            <th>
+                                Позиция
+                            </th>
+                        </tr>
+                        </thead>
+                        {% for employee in employees %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('show_employee', {'id': employee.id}) }}">
+                                        {{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}
+                                    </a>                                </td>
+                                <td>
+                                    {{ employee.employeeSince|date('d.m.Y') }}
+                                </td>
+                                <td>
+                                    {{ employee.position }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('homepage') }}">
+                                    <img src="{{ asset('images/icon-arrow-purple-left.png') }}">
+
+                                </a>
+                            </td>
+                            <td></td><td></td>
+                        </tr>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+

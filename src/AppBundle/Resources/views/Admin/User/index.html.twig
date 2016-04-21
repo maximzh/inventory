@@ -1,0 +1,110 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% for flash_message in app.session.flashBag.get('notice') %}
+                    <div class="alert alert-info">
+                        <strong>
+                            {{ flash_message }}
+                        </strong>
+                    </div>
+                {% endfor %}
+                <div class="panel">
+                    <div class="panel-heading bg-purple">
+                        <i class="glyphicon glyphicon-user"></i>
+                        Users
+                    </div>
+                    <div class="panel-body bg-light-grey">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Имя пользователя
+                                </th>
+                                <th>
+                                    Email пользователя
+                                </th>
+                                <th>
+                                    Права
+                                </th>
+                                <th>
+                                    Статус
+                                </th>
+
+                            </tr>
+                            </thead>
+
+                            {% if superAdmins is not empty %}
+
+                                {% for superAdmin in superAdmins %}
+                                    <tr class="bg-success">
+                                        <td>
+                                            {{ superAdmin.realName }}
+                                        </td>
+                                        <td>
+                                            {{ superAdmin.email }}
+                                        </td>
+                                        <td>
+                                <span class="text-uppercase">
+                                    Супер админ
+                                </span>
+                                        </td>
+                                        <td>
+                                            {% if superAdmin.email == app.user.email %}
+                                                <span class="text-success text-uppercase">
+                                                    Это Вы
+                                                  </span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                            {% endif %}
+
+                            {% for user in users %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('admin_show_user', {'id': user.id}) }}">
+                                            {{ user.realName }}
+                                        </a>
+
+                                    </td>
+                                    <td>
+                                        {{ user.email }}
+                                    </td>
+                                    <td>
+                                        {% if user.hasRole('ROLE_ADMIN') == true %}
+                                            <span class="text-danger">
+                                        Админ
+                                    </span>
+                                        {% else %}
+                                            <span class="text-success">
+                                        Пользователь
+                                    </span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if user.locked == true %}
+                                            <span class="text-danger">
+                                        Заблокирован
+                                    </span>
+                                        {% else %}
+                                            <span class="text-success">
+                                        Разблокирован
+                                    </span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock body %}

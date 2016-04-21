@@ -1,0 +1,372 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                {% include '@App/Common/flash_message.html.twig' %}
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color: #B19BD9">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <strong class="panel-title text-center">{{ employee.lastName }} {{ employee.firstName }} {{ employee.fatherName }}</strong>
+                    </div>
+                    <div class="panel-body" style="background-color: #F8F8F8">
+                        <div class="row">
+                            <div class=" col-md-12 col-lg-12 ">
+                                <table class="table table-user-information">
+                                    <tbody>
+                                    <tr>
+
+                                        <td>
+                                           <h4 class="text-info">
+                                               {#
+                                               <img src="{{ asset('images/position.png') }}">
+
+                                               #}
+                                                Позиция
+                                           </h4>
+                                        </td>
+                                        <td class="text-right">
+                                            <h4 class="text-info">
+                                                {{ employee.position }}
+                                            </h4>
+
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                           <h4 class="text-info">
+                                               {#
+                                                <img src="{{ asset('images/calendar64.png') }}">
+                                               #}
+                                               Дата приема на работу
+                                           </h4>
+
+                                        </td>
+                                        <td class="text-right">
+                                            <h4 class="text-info">
+                                                {{ employee.employeeSince|date('d.m.Y') }}
+                                            </h4>
+
+                                        </td>
+                                    </tr>
+                                    {#
+                                    <tr class="bg-info"><td><h4>Инвентарь:</h4></td><td></td></tr>
+
+                                    #}
+                                    <tr>
+                                        <td>
+                                            <img src="{{ asset('images/macmini32.png') }}">
+                                            Mac Mini
+                                        </td>
+                                        <td>
+                                            {% if employee.mac is not null %}
+                                                <div class="panel panel-warning">
+
+                                                    <div class="panel-body bg-warning">
+                                                        <strong>Model: <a href="{{ path('show_mac', {'id': employee.mac.id}) }}">{{ employee.mac.name }}</a></strong>
+                                                        <strong>RAM: </strong>{{ employee.mac.ram }}
+                                                        {% if employee.mac.ssd is not null %}
+                                                            <strong class="text-info">SSD: </strong>{{ employee.mac.ssd }}
+                                                        {% endif %}
+                                                        {% if employee.mac.hdd is not null %}
+                                                            <strong class="text-info">HDD: </strong>{{ employee.mac.hdd }}
+                                                        {% endif %}
+                                                            {% if is_granted('ROLE_ADMIN') %}
+
+                                                                <a href="{{ path('free_employee_mac', {'id': employee.id}) }}"
+                                                                   class="btn btn-sm btn-danger pull-right">
+                                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                                </a>
+                                                            {% endif %}
+                                                    </div>
+                                                </div>
+
+
+                                            {% else %}
+                                                <div class="text-right">
+                                                        <strong class="text-danger text-large">
+                                                            <i class="glyphicon glyphicon-ban-circle"></i>
+                                                        </strong>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <img src="{{ asset('images/office_chair.png') }}">
+
+                                            Кресло
+                                        </td>
+                                        <td>
+                                            {% if employee.armchair is not null %}
+                                                <div class="panel panel-warning">
+
+                                                    <div class="panel-body bg-warning">
+
+                                                        <span class="text-primary">
+                                                            <a href="{{ path('show_armchair', {'id': employee.armchair.id}) }}">
+                                                                {{ employee.armchair.name }}
+
+                                                            </a>
+                                                        </span>
+                                                        {% if is_granted('ROLE_ADMIN') %}
+                                                            <a href="{{ path('free_employee_armchair', {'id': employee.id}) }}"
+                                                               class="btn btn-sm btn-danger pull-right">
+
+                                                                <span class="glyphicon glyphicon-remove"></span>
+                                                            </a>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+
+                                            {% else %}
+                                                <br>
+                                                <div class="text-right">
+                                                    <strong class="text-danger text-large">
+                                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                                    </strong>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+
+                                            <img src="{{ asset('images/usbhub32.png') }}">
+
+                                            Usb Hub
+                                        </td>
+                                        <td>
+                                            {% if employee.usbHub is not null %}
+                                                <div class="panel panel-warning">
+                                                    <div class="panel-body bg-warning">
+                                                        <span class="text-primary">
+                                                            <a href="{{ path('show_usbhub', {'id': employee.usbHub.id}) }}">
+                                                                {{ employee.usbHub.name }}
+                                                            </a>
+                                                        </span>
+                                                        {% if is_granted('ROLE_ADMIN') %}
+                                                            <a href="{{ path('free_employee_usbhub', {'id': employee.id}) }}"
+                                                               class="btn btn-sm btn-danger pull-right">
+                                                                <span class="glyphicon glyphicon-remove"></span>
+                                                            </a>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+
+                                            {% else %}
+
+                                                <div class="text-right">
+                                                    <strong class="text-danger text-large">
+                                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                                    </strong>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+
+                                            <img src="{{ asset('images/keyboard32.png') }}">
+                                            Клавиатура
+                                        </td>
+                                        <td>
+                                            {% if employee.keyboard is not null %}
+                                                <div class="panel panel-warning">
+                                                    <div class="panel-body bg-warning">
+                                                        <a href="{{ path('show_keyboard', {'id': employee.keyboard.id}) }}">
+                                                            <span class="text-primary">{{ employee.keyboard.name }}</span>
+
+                                                        </a>
+                                                        {% if is_granted('ROLE_ADMIN') %}
+                                                            <a href="{{ path('free_employee_keyboard', {'id': employee.id}) }}"
+                                                               class="btn btn-sm btn-danger pull-right">
+                                                                <span class="glyphicon glyphicon-remove"></span>
+                                                            </a>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+
+                                            {% else %}
+
+                                                <div class="text-right">
+                                                    <strong class="text-danger text-large">
+                                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                                    </strong>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+
+                                            <img src="{{ asset('images/mouse32.png') }}">
+
+                                            Мышь
+                                        </td>
+                                        <td>
+                                            {% if employee.mouse is not null %}
+                                                <div class="panel panel-warning">
+                                                    <div class="panel-body bg-warning">
+                                                        <a href="{{ path('show_mouse', {'id': employee.mouse.id}) }}">
+                                                            <span class="text-primary">{{ employee.mouse.name }}</span>
+                                                        </a>
+                                                        {% if is_granted('ROLE_ADMIN') %}
+                                                            <a href="{{ path('free_employee_mouse', {'id': employee.id}) }}"
+                                                               class="btn btn-sm btn-danger pull-right">
+                                                                <span class="glyphicon glyphicon-remove"></span>
+                                                            </a>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+
+                                            {% else %}
+
+                                                <div class="text-right">
+                                                    <strong class="text-danger text-large">
+                                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                                    </strong>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+
+                                            <img src="{{ asset('images/headphone.png') }}">
+
+                                            Наушники
+                                        </td>
+                                        <td>
+                                            {% if employee.headphones is not null %}
+                                                <div class="panel panel-warning">
+                                                    <div class="panel-body bg-warning">
+                                                        <a href="{{ path('show_headphones', {'id': employee.headphones.id}) }}">
+                                                            <span class="text-primary">{{ employee.headphones.name }}</span>
+                                                        </a>
+                                                        {% if is_granted('ROLE_ADMIN') %}
+                                                            <a href="{{ path('free_employee_headphones', {'id': employee.id}) }}"
+                                                               class="btn btn-sm btn-danger pull-right">
+                                                                <span class="glyphicon glyphicon-remove"></span>
+                                                            </a>
+                                                        {% endif %}
+                                                        {% else %}
+                                                            <br>
+                                                            <div class="text-right">
+                                                                <strong class="text-danger text-large">
+                                                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                                                </strong>
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+
+                                            <img src="{{ asset('images/monitor32.png') }}">
+
+                                            Мониторы
+                                        </td>
+                                        <td>
+                                            {% if employee.monitors is not empty %}
+                                                <p>Количество: {{ employee.monitors|length }}</p>
+                                                {% for monitor in employee.monitors %}
+                                                    <div class="panel panel-warning">
+                                                        <div class="panel-body bg-warning">
+                                                            <a href="{{ path('show_monitor', {'id': monitor.id}) }}">
+                                                                {{ monitor.name }} {{ monitor.diagonal }}''
+                                                            </a>
+                                                            {% if is_granted('ROLE_ADMIN') %}
+                                                                <a href="{{ path('free_employee_monitor', {'employee_id': employee.id, 'monitor_id': monitor.id}) }}"
+                                                                   class="btn btn-sm btn-danger pull-right">
+                                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                                </a>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <div>
+                                                <a href="{{ path('available_monitors') }}">
+                                                    <strong class="text-danger text-large">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </strong>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img src="{{ asset('images/mobile-Multiple-Devices-icon.png') }}">
+                                            Другие устройства
+                                        </td>
+                                        <td>
+                                            {% if employee.anotherDevices is not empty %}
+                                                <p>Количество: {{ employee.anotherDevices|length }}</p>
+                                                {% for device in employee.anotherDevices %}
+                                                    <div class="panel panel-warning">
+                                                        <div class="panel-body bg-warning">
+                                                            <a href="{{ path('show_device', {'id': device.id}) }}">
+                                                                {{ device.name }}
+                                                            </a>
+
+                                                            {% if is_granted('ROLE_ADMIN') %}
+                                                                <a href="{{ path('free_employee_device', {'employee_id': employee.id, 'device_id': device.id}) }}"
+                                                                   class="btn btn-sm btn-danger pull-right">
+                                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                                </a>
+                                                            {% endif %}
+
+
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                            {#
+                                            <div>
+                                                <a href="{{ path('available_monitors') }}">
+                                                    <strong class="text-danger text-large">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </strong>
+                                                </a>
+                                            </div>
+                                            #}
+
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('edit_employee', {'id': employee.id}) }}" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                        Редактировать
+                                    </a>
+                                    <a href="{{ path('export_one', {'id': employee.id}) }}" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-export"></span>
+                                        Экспортировать
+                                    </a>
+                                    <br><br>
+                                    {% if employee.keyboard is null and employee.armchair is null and employee.keyboard is null and employee.headphones is null and employee.mac is null and employee.monitors is empty and employee.anotherDevices is empty %}
+                                        {% if deleteForm is not null %}
+                                            {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить сотрудника?");' }}) }}
+                                            {{ form_widget(deleteForm.submit) }}
+                                            {{ form_end(deleteForm) }}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

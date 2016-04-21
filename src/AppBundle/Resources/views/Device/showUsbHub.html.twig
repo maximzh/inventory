@@ -1,0 +1,96 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+
+                <div class="panel">
+                    <div class="panel-heading bg-purple">
+                        Usb Hub
+                    </div>
+                    <div class="panel-body bg-light-grey">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <img src="{{ asset('images/usbhub32.png') }}">
+                                    Название
+                                </td>
+                                <td>
+                                    <h4 class="text-right">
+                                        {{ usbHub.name }}
+
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Количество портов
+                                </td>
+                                <td>
+                                    <h4 class="text-right">
+                                        {{ usbHub.portsNumber }}
+
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Состояние
+                                </td>
+                                <td>
+                                    <h4 class="text-right">
+                                        {% if usbHub.status == 'ok' %}
+                                            Исправный
+                                        {% elseif usbHub.status == 'broken' %}
+                                            Сломанный
+                                        {% endif %}
+
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="{{ asset('images/employ96.png') }}">
+
+                                </td>
+                                <td>
+                                    {% if usbHub.employee is not null %}
+                                        <h3>
+                                            <a href="{{ path('show_employee', {'id': usbHub.employee.id}) }}">
+                                                {{ usbHub.employee.lastName }} {{ usbHub.employee.firstName }}
+                                            </a>
+                                        </h3>
+
+
+                                    {% else %}
+                                        <h3 class="text-danger glyphicon glyphicon-ban-circle"></h3>
+
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('edit-usbhub', {'id': usbHub.id}) }}"><h4 class="glyphicon glyphicon-pencil"></h4></a>
+
+                                    </td>
+                                    <td class="text-right">
+                                        {% if deleteForm is not null %}
+                                            {{ form_start(deleteForm, {attr : {onsubmit: 'return confirm("Удалить Usb Hub?");' }}) }}
+                                            {{ form_widget(deleteForm.submit) }}
+                                            {{ form_end(deleteForm) }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
