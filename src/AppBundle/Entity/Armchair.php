@@ -38,13 +38,7 @@ class Armchair
      * @ORM\Column(name="name", type="string", length=255)
      */
     protected $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255)
-     */
-    protected $type;
+    
 
     /**
      * @var string
@@ -98,31 +92,7 @@ class Armchair
     {
         return $this->name;
     }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return Monitor
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
+    
     /**
      * Set status
      *

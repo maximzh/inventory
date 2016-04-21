@@ -49,13 +49,6 @@ class Monitor
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
-     */
-    protected $type;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
     protected $status;
@@ -123,30 +116,6 @@ class Monitor
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return Monitor
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
