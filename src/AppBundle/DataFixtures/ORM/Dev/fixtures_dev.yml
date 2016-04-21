@@ -81,6 +81,19 @@ AppBundle\Entity\UsbHub:
         status: 'ok'
         portsNumber: 5
 
+AppBundle\Entity\AnotherDevice:
+    device{1..5}:
+        name: 'Стол'
+        description: 'Компьютерный стол'
+        status: 'ok'
+        type: 'furniture'
+        employee (optional): '@employee*'
+    device{6..10}:
+        name: 'Trancsend'
+        status: 'ok'
+        description: 'Флешка 32Gb'
+        type: 'electronics'
+
 AppBundle\Entity\Employee:
     employee{1..20}:
         lastName: <lastName()>
@@ -93,6 +106,11 @@ AppBundle\Entity\Employee:
         headphones (unique): '@headphones*'
         mouse (unique): '@mouse*'
         usbhub (unique): '@usbhub*'
+    employee{21..25}:
+        lastName: <lastName()>
+        firstName: <firstNameMale()>
+        employeeSince: <dateTimeBetween('-2 years', 'now')>
+        position: <randomElement(['engineer', 'designer', 'junior php developer', 'project manager', 'middle php developer', 'senior php developer', 'java developer'])>
 
 AppBundle\Entity\Monitor:
     monitor{1..10}:
